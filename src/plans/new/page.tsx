@@ -86,7 +86,7 @@ const NewPlan = () => {
       </div>
       <div className="border rounded-[.5rem] mt-[1.5rem]">
         {/* Editor container */}
-        <div ref={editorRef} className="rounded-[.5rem] w-full" style={{height: "100vh"}}/>
+        <div ref={editorRef} className="rounded-[.5rem] w-full" style={{height: "60vh"}}/>
       </div>
     </Layout>
   );

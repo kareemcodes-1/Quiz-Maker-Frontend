@@ -14,7 +14,6 @@ const AllMemories = () => {
     const {data, error, isFetching} = useGetAllMemoriesQuery('');
 
     useEffect(() => {
-      console.log(error);
       if (data && !isFetching) {
         dispatch(allMemories(data));
       }
@@ -22,15 +21,19 @@ const AllMemories = () => {
 
 
   return (
+    <>
+    {memories.length > 0 ? (
     <div className='grid grid-cols-4 gap-[1rem]'>
-        {memories.length > 0 ? (
-          memories.map((memory) => (
+          {memories.map((memory) => (
             <MemoryCard memory={memory} key={memory._id}/>
-        ))
-        ) : (
-          <EmptyState />
-        )}
+        ))}
+
     </div>
+    )
+     : (
+      <EmptyState />
+    )}
+    </>
   )
 }
 
