@@ -35,7 +35,7 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
   const [selectedProjectId, setSelectedProjectId] = useState<string>("");
 
   const dispatch = useDispatch();
-  const [createMemory, {error}] = useCreateMemoryMutation();
+  const [createMemory] = useCreateMemoryMutation();
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e?.target?.files?.[0];
