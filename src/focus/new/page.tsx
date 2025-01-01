@@ -53,8 +53,6 @@ const NewFocus = () => {
           date
       }
 
-      console.log(note);
-
       try {
         const res = await createFocus(note);
         if(res.data){

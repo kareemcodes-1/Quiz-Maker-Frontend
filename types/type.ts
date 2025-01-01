@@ -10,7 +10,7 @@ export type Todo = {
 export type Focus = {
     _id: string;
     content: string;
-    date: string;
+    date: string | null;
 }
 
 export type WIL = {
