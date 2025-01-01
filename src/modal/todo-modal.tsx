@@ -58,7 +58,7 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [today, setToday] = useState<boolean>(false);
   const [tomorrow, setTomorrow] = useState<boolean>(false);
-  const [selectedProjectId, setSelectedProjectId] = useState<string | null>(null);
+  const [selectedProjectId, setSelectedProjectId] = useState<string>('');
   const [time, setTime] = useState<string>('morning');
   const dispatchReduxAction = useDispatch();
 
@@ -80,9 +80,11 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
     if(editingMode && editingTodo){
       const todo = {
         _id: editingTodo._id,
+        projectId: selectedProjectId,
         name: state.name,
         completed: editingTodo.completed,
-        date
+        date,
+        time
       };
 
        const res = await updateTodo({data: todo, id: editingTodo._id});
@@ -93,15 +95,13 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
        }
     }else{
       const todo = {
+        _id: '',
         projectId: selectedProjectId,
         name: formData.get("name") as string,
         date,
         time,
-        isToday: today,
-        isTomorrow: tomorrow,
         completed: false,
       };
-      console.log(todo);
       const res = await createTodo(todo);
       if(res.data){
         dispatchReduxAction(addTodo(res.data));

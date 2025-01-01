@@ -1,12 +1,10 @@
 export type Todo = {
     _id: string;
-    projectId: Project;
+    projectId: Project | string;
     name: string;
     completed: boolean;
     date: string | null;
     time: string;
-    isToday: boolean;
-    isTomorrow: boolean;
 }
 
 export type Focus = {

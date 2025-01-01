@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import Layout from '../layout'
 import { useGetAllFocusQuery } from '../../src/slices/focusApiSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import { allFocusNotes, deleteFocusState, findFocus } from '../../src/slices/focusSlice';
 import { RootState } from '../../store/store';
-import { BookOpen } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { AdjustmentsVerticalIcon, ArchiveBoxIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useDeleteFocusMutation } from '../../src/slices/focusApiSlice';

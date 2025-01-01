@@ -1,4 +1,4 @@
-import React from 'react'
+
 import Layout from '../layout'
 import GoalModal from '../modal/goal-modal'
 import { handleFilter, setOpenGoalModal } from '../../src/slices/goalSlice'

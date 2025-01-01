@@ -1,9 +1,9 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import  {useEffect, useRef, useState } from "react";
 import Layout from "../../layout";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import {useUpdatePlanMutation } from "../../../src/slices/planApiSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { RootState } from "../../../store/store";
 import { CircleStackIcon } from "@heroicons/react/24/outline";
@@ -13,7 +13,6 @@ const PlanEditPage = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const quillInstance = useRef<Quill | null>(null);
   const [value, setValue] = useState<string>('');
-  const dispatch = useDispatch();
   const {editingPlan} = useSelector((state: RootState) => state.plan);
   const [updatePlan] = useUpdatePlanMutation();
   const {projects} = useSelector((state: RootState) => state.project);

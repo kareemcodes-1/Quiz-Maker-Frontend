@@ -1,15 +1,12 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Layout from './layout'
 import TodoModal from './modal/todo-modal';
 import { Dialog } from './components/ui/dialog';
 import Todos from './components/todos';
-import ProjectModal from './modal/project-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { setOpenProjectModal } from '../src/slices/projectSlice';
 import { setEditing, setOpenTodoModal } from '../src/slices/todoSlice';
 import { AdjustmentsVerticalIcon } from '@heroicons/react/24/outline';
-import { createPortal } from 'react-dom';
    
 
 const Dashboard = () => {

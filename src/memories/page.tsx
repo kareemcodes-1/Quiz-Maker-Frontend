@@ -1,4 +1,4 @@
-import React from 'react'
+
 import Layout from '../layout'
 import AllMemories from '../components/all-memories'
 import { setOpenMemoryModal } from '../../src/slices/memorySlice'
