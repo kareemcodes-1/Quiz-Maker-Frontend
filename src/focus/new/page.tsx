@@ -6,6 +6,7 @@ import { useCreateFocusMutation } from "../../../src/slices/focusApiSlice";
 import { addFocusNotes,} from "../../../src/slices/focusSlice";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router";
 
 
 const NewFocus = () => {
@@ -16,6 +17,7 @@ const NewFocus = () => {
   const dispatch = useDispatch();
     const [today, setToday] = useState<boolean>(false);
     const [tomorrow, setTomorrow] = useState<boolean>(false);
+    const navigate = useNavigate();
 
   useEffect(() => {
     if (editorRef.current) {
@@ -57,6 +59,7 @@ const NewFocus = () => {
         if(res.data){
             toast.success('Created focus note');
             dispatch(addFocusNotes(res.data));
+            navigate('/focus');
         }
       } catch (error) {
         console.log(error);

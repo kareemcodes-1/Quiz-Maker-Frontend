@@ -66,14 +66,14 @@ const items = [
 export function AppSidebar() {
   const dispatch = useDispatch();
   const {data, isFetching} = useGetAllProjectsQuery('');
+  const {projects} = useSelector((state: RootState) => state.project);
   
   useEffect(() => {
-      if (data && !isFetching) {
+      if (data) {
         dispatch(allProjects(data));
       }
-  }, [data, isFetching, dispatch]);
+  }, [data, dispatch]);
 
-  const {projects} = useSelector((state: RootState) => state.project);
   const {openProjectModal} = useSelector((state: RootState) => state.project);
   return (
     <Sidebar>

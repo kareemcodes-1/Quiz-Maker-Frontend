@@ -23,6 +23,15 @@ const PlanCard = ({plan} : {plan: Plan}) => {
     }
   }
 
+  const getPreviewText = (html: string, maxLength: number) => {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    const textContent = tempDiv.textContent || tempDiv.innerText || '';
+    return textContent.length > maxLength
+      ? textContent.slice(0, maxLength) + '...'
+      : textContent;
+  };
+
   return (
     <button
     type="button"
@@ -32,13 +41,14 @@ const PlanCard = ({plan} : {plan: Plan}) => {
       <div className="flex items-center gap-[1rem]">
         <PresentationChartBarIcon className="text-gray-500 lg:w-[1.5rem] w-[1.2rem]" />
         <div
-          onClick={() => {
-            dispatch(findPlan(plan._id));
-            navigate(`/plans/edit/${plan._id}`);
-          }}
-          className="hover:underline text-[.9rem] lg:text-[1rem]"
-          dangerouslySetInnerHTML={{ __html: plan.content as string }}
-        />
+            onClick={() => {
+              dispatch(findPlan(plan._id));
+              navigate(`/plans/edit/${plan._id}`);
+            }}
+            className="hover:underline text-[.9rem] lg:text-[1rem] text-start"
+          >
+            {getPreviewText(plan.content as string, 50)}
+          </div>
       </div>
   
       <div className="flex items-center gap-[1rem]">

@@ -12,7 +12,7 @@ import { RootState } from "../../store/store";
 import { PhotoIcon} from '@heroicons/react/24/solid'
 import { useCreateMemoryMutation } from "../../src/slices/memoryApiSlice";
 import { Badge } from "../components/ui/badge";
-import { setOpenMemoryModal } from "../slices/memorySlice";
+import { addMemory, setOpenMemoryModal } from "../slices/memorySlice";
 
 const SubmitBtn = () => {
   const { pending } = useFormStatus();
@@ -64,6 +64,7 @@ const MemoryModal = ({closeModal}: {closeModal: () => void;}) => {
     const res = await createMemory(memory);
     if(res.data){
        toast.success('Created Memory');
+       dispatch(addMemory(res.data))
        closeModal();
     }
   };

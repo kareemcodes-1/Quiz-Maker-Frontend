@@ -15,9 +15,9 @@ const memorySlice = createSlice({
     name: 'memory',
     initialState,
     reducers: {
-        // addMemory(state, action: PayloadAction<Todo>){
-        //             state.memories.push(action.payload);
-        // },
+        addMemory(state, action: PayloadAction<Memory>){
+                    state.memories.push(action.payload);
+        },
         allMemories(state, action: PayloadAction<Memory[]>){
             state.memories = action.payload;
         },
@@ -27,5 +27,5 @@ const memorySlice = createSlice({
     }
 });
 
-export const {allMemories, setOpenMemoryModal} = memorySlice.actions;
+export const {allMemories, setOpenMemoryModal, addMemory} = memorySlice.actions;
 export default memorySlice.reducer;

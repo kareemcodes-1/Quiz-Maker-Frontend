@@ -1,7 +1,6 @@
 import { Goal } from "../../types/type";
 import { Pencil, Trash } from "lucide-react";
 import { Badge } from "../components/ui/badge";
-// import { completeAgoal, deletegoals, editgoal } from "../../src/slices/goalSlice";
 import { useDispatch } from "react-redux";
 import { useCompleteGoalMutation, useDeleteGoalMutation } from "../../src/slices/goalApiSlice";
 import toast from "react-hot-toast";
@@ -75,7 +74,7 @@ const GoalCard = ({ goal }: { goal: Goal}) => {
           style={{ background: goal.projectId.color }}
           className="rounded-full p-[.3rem]"
         />{" "}
-        <div className="text-[.9rem]">{goal.projectId.name}</div>
+        <div className="text-[.8rem]">{goal.projectId.name}</div>
       </Badge>
     </div>
     <div className="flex items-center gap-[1rem]">

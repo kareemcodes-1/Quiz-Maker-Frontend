@@ -24,7 +24,7 @@ const Dashboard = () => {
              <button type="button" className='yena-btn' onClick={() => {dispatch(setOpenTodoModal(true)); dispatch(setEditing())}}>Create Todo</button>
              <button type="button" className='yena-btn' onClick={() => setOpenFilterDropDown(!openFilterDropDown)}><AdjustmentsVerticalIcon className='w-[1.5rem]'/></button>
               {openFilterDropDown && (
-                 <div className='absolute top-[3rem] right-[1rem]'>
+                 <div className='absolute top-[3rem] right-[1rem] z-[100]'>
                     <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-[10rem] p-2 shadow">
                   <li><a>All</a></li>
                  <li><a>Today</a></li>

@@ -22,6 +22,9 @@ const goalSlice = createSlice({
     name: 'goal',
     initialState,
     reducers: {
+        addGoal(state, action: PayloadAction<Goal>){
+            state.goals.push(action.payload);
+        },
         allGoals(state, action: PayloadAction<Goal[]>){
             state.goals = action.payload;
         },
@@ -60,5 +63,5 @@ const goalSlice = createSlice({
     }
 });
 
-export const {allGoals, setOpenGoalModal, handleFilter, completeAGoal, editGoal, deleteGoals, setEditing} = goalSlice.actions;
+export const {allGoals, setOpenGoalModal, handleFilter, completeAGoal, editGoal, deleteGoals, setEditing, addGoal} = goalSlice.actions;
 export default goalSlice.reducer;

@@ -38,7 +38,7 @@ const TodoCard = ({ todo }: { todo: Todo }) => {
         return "Tomorrow";
       }
 
-      return format(todoDate, "yyyy-MM-dd");
+      return format(todoDate, "dd-MM-yyyy");
     }
 
     return "";

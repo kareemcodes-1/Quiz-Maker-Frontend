@@ -45,7 +45,7 @@ const FocusPage = () => {
           return "Tomorrow";
         }
   
-        return format(todoDate, "yyyy-MM-dd");
+        return format(todoDate, "dd-MM-yyyy");
       }
   
       return "";
@@ -60,6 +60,15 @@ const FocusPage = () => {
         console.log(error);
       }
   }
+
+  const getPreviewText = (html: string, maxLength: number) => {
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = html;
+    const textContent = tempDiv.textContent || tempDiv.innerText || '';
+    return textContent.length > maxLength
+      ? textContent.slice(0, maxLength) + '...'
+      : textContent;
+  };
   
 
   return (
@@ -95,14 +104,15 @@ const FocusPage = () => {
                   >
                     <div className="flex items-center gap-[.5rem] lg:gap-[1rem] w-full lg:w-auto">
                       <ArchiveBoxIcon className="text-gray-500 w-[1.2rem] lg:w-[1.5rem]" />
-                      <div
-                        className="hover:underline text-sm lg:text-base truncate"
-                        onClick={() => {
-                          dispatch(findFocus(note._id));
-                          navigate(`/focus/edit/${note._id}`);
-                        }}
-                        dangerouslySetInnerHTML={{ __html: note.content as string }}
-                      />
+                                 <div
+                                  onClick={() => {
+                                    dispatch(findFocus(note._id));
+                                    navigate(`/focus/edit/${note._id}`);
+                                  }}
+                                  className="hover:underline text-[.9rem] lg:text-[1rem] text-start"
+                                >
+                                  {getPreviewText(note.content as string, 50)}
+                                </div>
                     </div>
                   
                     <div className="flex items-center gap-[.5rem] lg:gap-[1rem] w-full lg:w-auto justify-between lg:justify-end">

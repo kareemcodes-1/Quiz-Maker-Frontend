@@ -8,6 +8,7 @@ import { RootState } from "../../../store/store";
 import { CircleStackIcon } from "@heroicons/react/24/outline";
 import { Project } from "../../../types/type";
 import { useCreatePlanMutation } from "../../../src/slices/planApiSlice";
+import { useNavigate } from "react-router";
 
 const NewPlan = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
@@ -17,6 +18,7 @@ const NewPlan = () => {
   const [createPlan] = useCreatePlanMutation();
   const {projects} = useSelector((state: RootState) => state.project);
   const [openFilterDropDown, setOpenFilterDropDown] = useState<boolean>(false);
+  const navigate = useNavigate();
 
 
   useEffect(() => {
@@ -56,7 +58,7 @@ const NewPlan = () => {
         const res = await createPlan(note);
         if(res.data){
             toast.success('Created Plan');
-            // dispatch(addPlan(res.data));
+            navigate('/plans');
         }
       } catch (error) {
         console.log(error);

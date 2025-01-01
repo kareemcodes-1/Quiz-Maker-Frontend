@@ -8,8 +8,9 @@ import {
 import { useFormStatus } from "react-dom";
 import toast from "react-hot-toast";
 import { useCreateProjectMutation } from "../../src/slices/projectApiSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { addProject } from "../slices/projectSlice";
 
 const SubmitBtn = () => {
   const { pending } = useFormStatus();
@@ -28,6 +29,7 @@ const SubmitBtn = () => {
 const ProjectModal = ({closeModal}: {closeModal: () => void;}) => {
 
   const {openProjectModal} = useSelector((state: RootState) => state.project);
+  const dispatch = useDispatch();
 
   const [createProject] = useCreateProjectMutation();
   const formAction = async (formData: any) => {
@@ -39,6 +41,7 @@ const ProjectModal = ({closeModal}: {closeModal: () => void;}) => {
     const res = await createProject(project);
     if(res.data){
        toast.success('Created Project');
+       dispatch(addProject(res.data));
        closeModal()
     }
   };

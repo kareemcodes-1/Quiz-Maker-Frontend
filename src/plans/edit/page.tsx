@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { RootState } from "../../../store/store";
 import { CircleStackIcon } from "@heroicons/react/24/outline";
 import { Project } from "../../../types/type";
+import {useNavigate } from "react-router";
 
 const PlanEditPage = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
@@ -19,7 +20,7 @@ const PlanEditPage = () => {
   const [openFilterDropDown, setOpenFilterDropDown] = useState<boolean>(false);
   const [selectedProjectId, setSelectedProjectId] = useState<string | undefined>(editingPlan?.projectId._id);
 
-  console.log(selectedProjectId);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (editorRef.current) {
@@ -68,6 +69,7 @@ const PlanEditPage = () => {
           const res = await updatePlan({id: editingPlan._id, data: plan});
           if(res.data){
               toast.success('Updated Plan');
+              navigate('/plans')
           }
         } catch (error) {
           console.log(error);

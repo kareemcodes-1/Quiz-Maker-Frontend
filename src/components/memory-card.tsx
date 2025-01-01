@@ -22,7 +22,7 @@ const MemoryCard = ({memory}: {memory: Memory}) => {
               />{" "}
               <div>{memory.projectId.name}</div>
         </Badge>
-      <Badge>{format(new Date(memory.createdAt).toISOString(), "yyyy/MM/dd")}</Badge>
+      <Badge>{format(new Date(memory.createdAt).toISOString(), "dd-MM-yyyy")}</Badge>
     </div>
   </div>
 </div>
