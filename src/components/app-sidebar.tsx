@@ -69,10 +69,10 @@ export function AppSidebar() {
   const {projects} = useSelector((state: RootState) => state.project);
   
   useEffect(() => {
-      if (data) {
+      if (data && !isFetching) {
         dispatch(allProjects(data));
       }
-  }, [data, dispatch]);
+  }, [data, dispatch, isFetching]);
 
   const {openProjectModal} = useSelector((state: RootState) => state.project);
   return (
