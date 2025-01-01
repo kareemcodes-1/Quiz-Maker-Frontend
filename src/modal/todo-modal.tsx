@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { addTodo, updateTodos } from "../../src/slices/todoSlice";
 import { Badge } from "../components/ui/badge";
+import { Project } from "../../types/type";
 
 
 const SubmitBtn = () => {
@@ -58,7 +59,7 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [today, setToday] = useState<boolean>(false);
   const [tomorrow, setTomorrow] = useState<boolean>(false);
-  const [selectedProjectId, setSelectedProjectId] = useState<string>('');
+  const [selectedProjectId, setSelectedProjectId] = useState<Project | null>(null);
   const [time, setTime] = useState<string>('morning');
   const dispatchReduxAction = useDispatch();
 
@@ -78,36 +79,45 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
     const date = today ? new Date().toISOString() : tomorrow ? new Date(new Date().setDate(new Date().getDate() + 1)).toISOString() : null
 
     if(editingMode && editingTodo){
-      const todo = {
-        _id: editingTodo._id,
-        projectId: selectedProjectId,
-        name: state.name,
-        completed: editingTodo.completed,
-        date,
-        time
-      };
-
-       const res = await updateTodo({data: todo, id: editingTodo._id});
-       if(res.data){
-        dispatchReduxAction(updateTodos(res.data));
-        toast.success('Updated Todo');
-        closeModal()
-       }
+      if(selectedProjectId){
+        const todo = {
+          _id: editingTodo._id,
+          projectId: {
+            ...editingTodo.projectId,
+            _id: selectedProjectId._id
+          },
+          name: state.name,
+          completed: editingTodo.completed,
+          date,
+          time
+        };
+  
+         const res = await updateTodo({data: todo, id: editingTodo._id});
+         if(res.data){
+          dispatchReduxAction(updateTodos(res.data));
+          toast.success('Updated Todo');
+          closeModal()
+         }
+      }
     }else{
-      const todo = {
-        _id: '',
-        projectId: selectedProjectId,
-        name: formData.get("name") as string,
-        date,
-        time,
-        completed: false,
-      };
-      const res = await createTodo(todo);
-      if(res.data){
-        dispatchReduxAction(addTodo(res.data));
-        toast.success('Created Todo');
-        closeModal()
-     }
+      if(selectedProjectId){
+        const todo = {
+          _id: '',
+          projectId: {
+            ...selectedProjectId,
+          },
+          name: formData.get("name") as string,
+          date,
+          time,
+          completed: false,
+        };
+        const res = await createTodo(todo);
+        if(res.data){
+          dispatchReduxAction(addTodo(res.data));
+          toast.success('Created Todo');
+          closeModal()
+       }
+      }
     }
   };
 
@@ -147,7 +157,7 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
           
           <div className="tags flex items-center gap-[.5rem] overflow-x-scroll w-full">
               {projects.map((project) => (
-                <Badge key={project._id} className={`cursor-pointer flex items-center gap-[.5rem] ${selectedProjectId === project._id ? 'bg-black text-white' : ''}`} onClick={() => setSelectedProjectId(project._id)}>
+                <Badge key={project._id} className={`cursor-pointer flex items-center gap-[.5rem] ${selectedProjectId?._id === project._id ? 'bg-black text-white' : ''}`} onClick={() => setSelectedProjectId(project)}>
                   <div style={{background: project.color}} className="rounded-full p-[.3rem]" />
                   <span>{project.name}</span>
                 </Badge>

@@ -1,6 +1,6 @@
 export type Todo = {
     _id: string;
-    projectId: Project | string;
+    projectId: Project;
     name: string;
     completed: boolean;
     date: string | null;

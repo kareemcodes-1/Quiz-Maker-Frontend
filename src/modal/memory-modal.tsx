@@ -9,7 +9,6 @@ import {
 } from "../components/ui/dialog";
 import { useFormStatus } from "react-dom";
 import toast from "react-hot-toast";
-import { useCreateProjectMutation } from "../../src/slices/projectApiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { PhotoIcon} from '@heroicons/react/24/solid'
@@ -65,7 +64,6 @@ const MemoryModal = ({closeModal}: {closeModal: () => void;}) => {
 
 
     const res = await createMemory(memory);
-    console.log(res);
     if(res.data){
        toast.success('Created Memory');
        closeModal();

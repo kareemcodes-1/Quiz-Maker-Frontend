@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import {Focus} from "../types/type";
+import {Focus} from "../../types/type";
 
 export const focusApi = createApi({
     reducerPath: 'focusApi',
