@@ -3,8 +3,7 @@ import react from '@vitejs/plugin-react-swc'
 import path from "path"
 
 
-//@ts-expect-error
-const BACKENDURL = import.meta.env.VITE_BACKEND_URL as string;
+const BACKENDURL = process.env.VITE_BACKEND_URL as string;
 
 // https://vite.dev/config/
 export default defineConfig({
