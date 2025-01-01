@@ -57,7 +57,7 @@ const PlanCard = ({plan} : {plan: Plan}) => {
             style={{ background: plan.projectId.color }}
             className="rounded-full p-[.3rem]"
           />{" "}
-          <div className="text-[.9rem]">{plan.projectId.name}</div>
+          <div className="text-[.8rem]">{plan.projectId.name}</div>
         </Badge>
   
         <button

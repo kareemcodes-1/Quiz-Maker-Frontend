@@ -1,18 +1,23 @@
-import { useState } from 'react'
+
 import Layout from './layout'
 import TodoModal from './modal/todo-modal';
 import { Dialog } from './components/ui/dialog';
 import Todos from './components/todos';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store/store';
-import { setEditing, setOpenTodoModal } from '../src/slices/todoSlice';
-import { AdjustmentsVerticalIcon } from '@heroicons/react/24/outline';
+import { handleTodosFilter, setEditing, setOpenTodoModal } from '../src/slices/todoSlice';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "./components/ui/select";
    
 
 const Dashboard = () => {
 
     const {openTodoModal} = useSelector((state: RootState) => state.todo);
-    const [openFilterDropDown, setOpenFilterDropDown] = useState<boolean>(false);
     const dispatch = useDispatch();
 
   return (
@@ -22,7 +27,8 @@ const Dashboard = () => {
 
              <div className='flex items-center gap-[.5rem] relative'>
              <button type="button" className='yena-btn' onClick={() => {dispatch(setOpenTodoModal(true)); dispatch(setEditing())}}>Create Todo</button>
-             <button type="button" className='yena-btn' onClick={() => setOpenFilterDropDown(!openFilterDropDown)}><AdjustmentsVerticalIcon className='w-[1.5rem]'/></button>
+
+             {/* <button type="button" className='yena-btn' onClick={() => setOpenFilterDropDown(!openFilterDropDown)}><AdjustmentsVerticalIcon className='w-[1.5rem]'/></button>
               {openFilterDropDown && (
                  <div className='absolute top-[3rem] right-[1rem] z-[100]'>
                     <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-[10rem] p-2 shadow">
@@ -32,7 +38,18 @@ const Dashboard = () => {
                   <li><a>Last Week</a></li>
                 </ul>
                  </div>
-              )}
+              )} */}
+
+          <Select onValueChange={(value) => dispatch(handleTodosFilter(value))}>
+            <SelectTrigger className="w-[120px] outline-none yena-btn">
+              <SelectValue placeholder="Today" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Todos</SelectItem>
+              <SelectItem value={'today'}>Today</SelectItem>
+              <SelectItem value="tomorrow">Tomorrow</SelectItem>
+            </SelectContent>
+          </Select>
              </div>
         </div>
 

@@ -3,12 +3,13 @@ import Layout from "../../layout";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import {useUpdatePlanMutation } from "../../../src/slices/planApiSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { RootState } from "../../../store/store";
 import { CircleStackIcon } from "@heroicons/react/24/outline";
 import { Project } from "../../../types/type";
 import {useNavigate } from "react-router";
+import { updatePlans } from "../../slices/planSlice";
 
 const PlanEditPage = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
@@ -21,6 +22,7 @@ const PlanEditPage = () => {
   const [selectedProjectId, setSelectedProjectId] = useState<string | undefined>(editingPlan?.projectId._id);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (editorRef.current) {
@@ -69,6 +71,7 @@ const PlanEditPage = () => {
           const res = await updatePlan({id: editingPlan._id, data: plan});
           if(res.data){
               toast.success('Updated Plan');
+              dispatch(updatePlans(res.data));
               navigate('/plans')
           }
         } catch (error) {

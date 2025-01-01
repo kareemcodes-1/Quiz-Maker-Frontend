@@ -29,6 +29,19 @@ const planSlice = createSlice({
                 state.editingPlan = findPlan;
             }
         },
+        updatePlans(state, action: PayloadAction<Plan>) {
+              const updatedPlan = state.plans.map((plan) => {
+                if (plan._id === action.payload._id) {
+                  return {
+                    ...action.payload,
+                  };
+                } else {
+                  return plan;
+                }
+              });
+        
+              state.plans = updatedPlan;
+            },
         deletePlans(state, action: PayloadAction<string>){
             const updatedPlan = state.plans.filter((plan) => plan._id !== action.payload);
             state.plans = updatedPlan;
@@ -36,5 +49,5 @@ const planSlice = createSlice({
     }
 });
 
-export const {allPlans, setOpenPlanModal, findPlan, deletePlans} = planSlice.actions;
+export const {allPlans, setOpenPlanModal, findPlan, deletePlans, updatePlans} = planSlice.actions;
 export default planSlice.reducer;

@@ -7,7 +7,7 @@ import TodoCard from './todo-card';
 import EmptyState from './empty-state';
 
 const Todos = () => {
-      const {todos, value} = useSelector((state: RootState) => state.todo);
+      const {filteredTodos, value} = useSelector((state: RootState) => state.todo);
       const dispatch = useDispatch();
 
       const {data, isFetching} = useFetchTodosQuery('');
@@ -18,7 +18,7 @@ const Todos = () => {
         }
       }, [data, isFetching, dispatch]);
 
-      const filteredTodos = todos.filter((todo) => todo.time === value)
+      const filteredTodo = filteredTodos.filter((todo) => todo.time === value)
 
   return (
       <div className='flex flex-col gap-[1rem] mt-[2rem]'>
@@ -28,8 +28,8 @@ const Todos = () => {
                <div className={`yena-btn ${value === 'night' && '--black'} !h-[2.3rem] cursor-pointer`} onClick={() => dispatch(handleFilter('night'))}>Night</div>
            </div>
 
-            {filteredTodos.length > 0 ? (
-              filteredTodos.map((todo) => (
+            {filteredTodo.length > 0 ? (
+              filteredTodo.map((todo) => (
                 <TodoCard key={todo._id} todo={todo}/>
            ))
           ) : (

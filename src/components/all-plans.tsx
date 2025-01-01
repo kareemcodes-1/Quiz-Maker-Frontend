@@ -16,7 +16,7 @@ const AllPlans = () => {
     if (data && !isFetching) {
       dispatch(allPlans(data));
     }
-  }, [data, dispatch]);
+  }, [data, dispatch, isFetching]);
 
   return (
     <div className="flex flex-col gap-[1rem]">

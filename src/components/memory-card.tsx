@@ -4,7 +4,7 @@ import { format } from "date-fns";
 
 const MemoryCard = ({memory}: {memory: Memory}) => {
   return (
-    <div className="card bg-base-100 w-[20rem] shadow-xl h-[20rem]">
+    <div className="card bg-base-100 shadow-xl h-[20rem]">
      <figure className='cursor-pointer'>
     <img
       src={memory.image}

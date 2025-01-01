@@ -56,6 +56,19 @@ const goalSlice = createSlice({
         
                     state.goals = updatedGoal;
                 },
+                updatedGoal(state, action: PayloadAction<Goal>){
+                    const updatedGoals = state.goals.map((goal) => {
+                        if(goal._id === action.payload._id){
+                            return {
+                                ...action.payload
+                            }
+                        }else{
+                            return goal;
+                        }
+                    });
+
+                    state.goals = updatedGoals;
+                },
         deleteGoals(state, action: PayloadAction<string>){
                     const updatedGoal = state.goals.filter((goal) => goal._id !== action.payload);
                     state.goals = updatedGoal;
@@ -63,5 +76,5 @@ const goalSlice = createSlice({
     }
 });
 
-export const {allGoals, setOpenGoalModal, handleFilter, completeAGoal, editGoal, deleteGoals, setEditing, addGoal} = goalSlice.actions;
+export const {allGoals, setOpenGoalModal, handleFilter, completeAGoal, editGoal, deleteGoals, setEditing, addGoal, updatedGoal} = goalSlice.actions;
 export default goalSlice.reducer;

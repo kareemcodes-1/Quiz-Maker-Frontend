@@ -7,10 +7,12 @@ type State = {
     editingMode: boolean;
     openTodoModal: boolean;
     value: string;
+    filteredTodos: Todo[];
 }
 
 const initialState: State = {
     todos: [],
+    filteredTodos: [],
     editingTodo: null,
     editingMode: false,
     value: 'morning',
@@ -23,9 +25,11 @@ const todoSlice = createSlice({
     reducers: {
         allTodos(state, action: PayloadAction<Todo[]>){
             state.todos = action.payload;
+            state.filteredTodos = action.payload;
         },
         addTodo(state, action: PayloadAction<Todo>){
             state.todos.push(action.payload);
+            state.filteredTodos.push(action.payload)
         },
         editTodo(state, action: PayloadAction<Todo>){
             state.editingMode = true;
@@ -58,6 +62,24 @@ const todoSlice = createSlice({
         handleFilter(state, action: PayloadAction<string>){
             state.value = action.payload;
         },
+        handleTodosFilter(state, action: PayloadAction<string>){
+            const today = new Date();
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+
+            state.filteredTodos = state.todos.filter((todo) => {
+                if(todo.date){
+                    const todoDate = new Date(todo.date);
+                    if(action.payload === 'today'){
+                        return todoDate.toDateString() === today.toDateString();
+                    }else if(action.payload === 'tomorrow'){
+                        return todoDate.toDateString() === tomorrow.toDateString();
+                    }else if(action.payload === 'all'){
+                        return true;
+                    }
+                }
+            });
+        },
         completeATodo(state, action: PayloadAction<Todo>){
             const updatedTodo = state.todos.map((todo) => {
                 if(todo._id === action.payload._id){
@@ -74,5 +96,5 @@ const todoSlice = createSlice({
     }
 });
 
-export const {addTodo, allTodos, editTodo, setOpenTodoModal, updateTodos, deleteTodos, handleFilter, completeATodo, setEditing} = todoSlice.actions;
+export const {addTodo, allTodos, editTodo, setOpenTodoModal, updateTodos, deleteTodos, handleFilter, completeATodo, setEditing, handleTodosFilter} = todoSlice.actions;
 export default todoSlice.reducer;

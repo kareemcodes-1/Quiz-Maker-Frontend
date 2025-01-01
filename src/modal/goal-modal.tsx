@@ -14,7 +14,7 @@ import {
   useUpdateGoalMutation,
 } from "../../src/slices/goalApiSlice";
 import { Badge } from "../components/ui/badge";
-import { addGoal, setOpenGoalModal } from "../slices/goalSlice";
+import { addGoal, setOpenGoalModal, updatedGoal } from "../slices/goalSlice";
 import {
   Select,
   SelectContent,
@@ -77,6 +77,7 @@ const GoalModal = ({ closeModal }: { closeModal: () => void }) => {
       const res = await updateGoal({ data: goal, id: editingGoal._id });
       if (res.data) {
         toast.success("Updated Goal");
+        dispatch(updatedGoal(res.data));
         closeModal();
       }
     } else {

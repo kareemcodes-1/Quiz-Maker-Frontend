@@ -1,33 +1,39 @@
-import { useEffect, useState } from 'react'
+import { useEffect, } from 'react'
 import Layout from '../layout'
 import { useGetAllFocusQuery } from '../../src/slices/focusApiSlice'
 import { useDispatch, useSelector } from 'react-redux';
-import { allFocusNotes, deleteFocusState, findFocus } from '../../src/slices/focusSlice';
+import { allFocusNotes, deleteFocusState, findFocus, handleFocusFilter } from '../../src/slices/focusSlice';
 import { RootState } from '../../store/store';
 import { useNavigate } from 'react-router';
-import { AdjustmentsVerticalIcon, ArchiveBoxIcon, TrashIcon } from '@heroicons/react/24/outline';
+import {  ArchiveBoxIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useDeleteFocusMutation } from '../../src/slices/focusApiSlice';
 import toast from 'react-hot-toast';
 import { Badge } from '../components/ui/badge';
 import { addDays, format, isSameDay } from 'date-fns';
 import { Focus } from '../../types/type';
 import EmptyState from '../components/empty-state';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../components/ui/select";
 
 const FocusPage = () => {
 
   const {data, isFetching} = useGetAllFocusQuery('');
-  const {focusNotes} = useSelector((state: RootState) => state.focus);
+  const {filteredFocus} = useSelector((state: RootState) => state.focus);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [deleteFocus] = useDeleteFocusMutation();
-  const [openFilterDropDown, setOpenFilterDropDown] = useState<boolean>(false);
   
 
   useEffect(() => {
     if(data && !isFetching){
        dispatch(allFocusNotes(data));
     }
-  }, [data, dispatch]);
+  }, [data, dispatch, isFetching]);
   
   const displayDate = (note: Focus) => {
   
@@ -79,25 +85,24 @@ const FocusPage = () => {
             <div className='relative flex items-center gap-[.5rem]'>
                <a href='/focus/new' className='yena-btn'>Create new</a>
 
-             <button type="button" className='yena-btn' onClick={() => setOpenFilterDropDown(!openFilterDropDown)}><AdjustmentsVerticalIcon className='w-[1.5rem]'/></button>
-              {openFilterDropDown && (
-                 <div className='absolute top-[3rem] right-[1rem]'>
-                    <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-[10rem] p-2 shadow">
-                  <li><a>All</a></li>
-                 <li><a>Today</a></li>
-                  <li><a>Tomorrow</a></li>
-                  <li><a>Last Week</a></li>
-                </ul>
-                 </div>
-              )}
+               <Select onValueChange={(value) => dispatch(handleFocusFilter(value))}>
+            <SelectTrigger className="w-[120px] outline-none yena-btn">
+              <SelectValue placeholder="Today" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Focus</SelectItem>
+              <SelectItem value={'today'}>Today</SelectItem>
+              <SelectItem value="tomorrow">Tomorrow</SelectItem>
+            </SelectContent>
+          </Select>
             </div>
         </div>
 
         
 
         <div className='flex flex-col gap-[1rem]'>
-                 {focusNotes.length > 0 ? (
-                  focusNotes.map((note) => (
+                 {filteredFocus.length > 0 ? (
+                  filteredFocus.map((note) => (
                     <button
                     type="button"
                     className="border hover:bg-gray-50 transition rounded-[.5rem] shadow-md w-full p-[.8rem] cursor-pointer flex flex-col lg:flex-row items-start lg:items-center justify-between gap-[1rem]"

@@ -72,10 +72,24 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
   );
   const [time, setTime] = useState<string>("morning");
   const dispatchReduxAction = useDispatch();
+  
+  const todayDate = new Date();
+  const tomorrowDate = todayDate;
+  tomorrowDate.setDate(tomorrowDate.getDate() + 1);
 
   useEffect(() => {
     if (editingMode && editingTodo) {
       dispatch({ type: "SET_NAME", payload: editingTodo.name });
+      setSelectedProjectId(editingTodo.projectId);
+      setTime(editingTodo.time);
+      // if(editingTodo.date && new Date(editingTodo.date).toDateString() === todayDate.toDateString()){
+      //   setToday(true);
+      //   setTomorrow(false);
+      //   console.log(true);
+      // }else if(editingTodo.date && new Date(editingTodo.date).toDateString() === tomorrowDate.toDateString()){
+      //   setTomorrow(true);
+      //   setToday(false);
+      // }
     } else {
       dispatch({ type: "SET_NAME", payload: "" });
     }

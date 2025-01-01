@@ -3,10 +3,11 @@ import Layout from "../../layout";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import {useUpdateFocusMutation } from "../../../src/slices/focusApiSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { RootState } from "../../../store/store";
 import { useNavigate } from "react-router";
+import { updatedFocusNote } from "../../slices/focusSlice";
 
 const EditFocusPage = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
@@ -17,6 +18,7 @@ const EditFocusPage = () => {
   const [today, setToday] = useState<boolean>(false);
   const [tomorrow, setTomorrow] = useState<boolean>(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (editorRef.current) {
@@ -63,6 +65,7 @@ const EditFocusPage = () => {
           const res = await updateFocus({id: editingFocus._id, data: note});
           if(res.data){
               toast.success('Updated focus note');
+              dispatch(updatedFocusNote(res.data));
               navigate('/focus');
           }
         } catch (error) {

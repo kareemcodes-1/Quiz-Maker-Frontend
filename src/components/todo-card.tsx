@@ -1,6 +1,6 @@
 
 import { Todo } from "../../types/type";
-import { Pencil, Trash } from "lucide-react";
+import { Pencil,} from "lucide-react";
 import { Badge } from "../components/ui/badge";
 import { completeATodo, deleteTodos, editTodo } from "../../src/slices/todoSlice";
 import { useDispatch } from "react-redux";
@@ -14,6 +14,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../components/ui/tooltip"
+import { TrashIcon } from "@heroicons/react/24/outline";
 
 
 
@@ -130,7 +131,7 @@ const TodoCard = ({ todo }: { todo: Todo }) => {
         onClick={() => handleDeleteTodo(todo._id)}
         className="text-red-500"
       >
-        <Trash className="w-[1rem] lg:w-[1.4rem]" />
+        <TrashIcon className="w-[1rem] lg:w-[1.4rem]" />
       </button>
     </div>
   </div>

@@ -23,7 +23,7 @@ const AllMemories = () => {
   return (
     <>
     {memories.length > 0 ? (
-    <div className='grid grid-cols-4 gap-[1rem]'>
+    <div className='lg:grid flex flex-col grid-cols-3 gap-[1rem]'>
           {memories.map((memory) => (
             <MemoryCard memory={memory} key={memory._id}/>
         ))}
