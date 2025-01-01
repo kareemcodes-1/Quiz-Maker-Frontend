@@ -2,6 +2,10 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import path from "path"
 
+
+//@ts-expect-error
+const BACKENDURL = import.meta.env.VITE_BACKEND_URL as string;
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
@@ -13,7 +17,7 @@ export default defineConfig({
   server: {
     proxy: {
        '/api': {
-           target: "http://localhost:8000",
+           target: BACKENDURL,
            changeOrigin: true,
        }
     }
