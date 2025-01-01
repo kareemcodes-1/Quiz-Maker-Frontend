@@ -16,7 +16,7 @@ export default defineConfig({
   server: {
     proxy: {
        '/api': {
-           target: "https://productivity-app-server-429hbhnu5.vercel.app//",
+           target: BACKENDURL,
            changeOrigin: true,
        }
     }
