@@ -1,4 +1,3 @@
-import React from 'react'
 import { Memory } from '../../types/type'
 import { Badge } from './ui/badge';
 import { format } from "date-fns";

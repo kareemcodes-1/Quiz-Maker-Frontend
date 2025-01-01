@@ -1,9 +1,8 @@
-import React from 'react'
 import { Plan } from '../../types/type';
 import { deletePlans, findPlan } from '../slices/planSlice';
 import { PresentationChartBarIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Badge } from "./ui/badge";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, } from "react-redux";
 import { useNavigate } from "react-router";
 import { useDeletePlanMutation } from '../slices/planApiSlice';
 import toast from 'react-hot-toast';

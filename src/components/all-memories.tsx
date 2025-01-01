@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { RootState } from '../../store/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { useGetAllMemoriesQuery } from '../../src/slices/memoryApiSlice';

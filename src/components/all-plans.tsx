@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import  { useEffect } from "react";
 import { useGetAllPlansQuery } from "../../src/slices/planApiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { useNavigate } from "react-router";
-import { allPlans, findPlan } from "../../src/slices/planSlice";
+import { allPlans, } from "../../src/slices/planSlice";
 
 import PlanCard from "./plan-card";
 import EmptyState from "./empty-state";

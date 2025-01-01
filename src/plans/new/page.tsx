@@ -1,8 +1,8 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Layout from "../../layout";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { RootState } from "../../../store/store";
 import { CircleStackIcon } from "@heroicons/react/24/outline";
@@ -15,7 +15,6 @@ const NewPlan = () => {
   const [value, setValue] = useState<string>('');
   const [selectedProjectId, setSelectedProjectId] = useState<string>('');
   const [createPlan] = useCreatePlanMutation();
-  const dispatch = useDispatch();
   const {projects} = useSelector((state: RootState) => state.project);
   const [openFilterDropDown, setOpenFilterDropDown] = useState<boolean>(false);
 

@@ -1,4 +1,4 @@
-import { Calendar, Home, Inbox, Plus, Search, Settings } from "lucide-react"
+import { Home,Plus } from "lucide-react"
 
 import {
   Sidebar,
@@ -15,8 +15,7 @@ import { RootState } from "../../store/store"
 import { allProjects, setOpenProjectModal } from "../../src/slices/projectSlice"
 import { useGetAllProjectsQuery } from "../../src/slices/projectApiSlice"
 import { useEffect } from "react"
-import { ArchiveBoxIcon, BeakerIcon, CalendarDateRangeIcon, CalendarDaysIcon, PhotoIcon, PresentationChartBarIcon, RectangleStackIcon } from "@heroicons/react/24/outline"
-import { createPortal } from "react-dom"
+import { ArchiveBoxIcon,  PhotoIcon, PresentationChartBarIcon, RectangleStackIcon } from "@heroicons/react/24/outline"
 import { Dialog } from "@radix-ui/react-dialog"
 import ProjectModal from "../modal/project-modal"
 
