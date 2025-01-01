@@ -1,7 +1,7 @@
 /// <reference types="vite/client" />
 
 interface ImportMetaEnv {
-    VITE_BACKEND_URL: string; // Add your environment variables here
+    readonly VITE_BACKEND_URL: string; // Add your environment variables here
   }
   
   interface ImportMeta {

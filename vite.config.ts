@@ -1,13 +1,16 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import path from "path"
+import {configDotenv} from "dotenv";
 
-
-const BACKENDURL = import.meta.env.VITE_BACKEND_URL as string;
+configDotenv();
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
+  define: {
+    'process.env.VITE_BACKEND_URL': JSON.stringify(process.env.VITE_BACKEND_URL),
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
@@ -16,7 +19,7 @@ export default defineConfig({
   server: {
     proxy: {
        '/api': {
-           target: BACKENDURL,
+           target: process.env.VITE_BACKEND_URL,
            changeOrigin: true,
        }
     }
