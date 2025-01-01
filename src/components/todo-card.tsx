@@ -106,9 +106,9 @@ const TodoCard = ({ todo }: { todo: Todo }) => {
             <Badge className="flex items-center gap-[.3rem]">
               <div
                 style={{ background: todo.projectId.color }}
-                className="rounded-full w-[.8rem] h-[.8rem]"
+                className="rounded-full w-[.5rem] h-[.5rem]"
               />
-              <div className="hidden lg:block truncate">{todo.projectId.name}</div>
+              <div className=" truncate">{todo.projectId.name}</div>
             </Badge>
           </TooltipTrigger>
           <TooltipContent>
