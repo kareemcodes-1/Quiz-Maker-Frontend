@@ -1,4 +1,4 @@
-import React from "react";
+
 import { Todo } from "../../types/type";
 import { Pencil, Trash } from "lucide-react";
 import { Badge } from "../components/ui/badge";

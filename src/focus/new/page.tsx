@@ -1,12 +1,12 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import  { useEffect, useRef, useState } from "react";
 import Layout from "../../layout";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import { useCreateFocusMutation } from "../../../src/slices/focusApiSlice";
-import { addFocusNotes, allFocusNotes } from "../../../src/slices/focusSlice";
+import { addFocusNotes,} from "../../../src/slices/focusSlice";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
-import { CalendarDaysIcon, CircleStackIcon } from "@heroicons/react/24/outline";
+
 
 const NewFocus = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
@@ -14,7 +14,6 @@ const NewFocus = () => {
   const [value, setValue] = useState<string>('');
   const [createFocus] = useCreateFocusMutation();
   const dispatch = useDispatch();
-  const [openFilterDropDown, setOpenFilterDropDown] = useState<boolean>(false);
     const [today, setToday] = useState<boolean>(false);
     const [tomorrow, setTomorrow] = useState<boolean>(false);
 

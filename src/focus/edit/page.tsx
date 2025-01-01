@@ -1,10 +1,9 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Layout from "../../layout";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
-import { useCreateFocusMutation, useUpdateFocusMutation } from "../../../src/slices/focusApiSlice";
-import { addFocusNotes, allFocusNotes } from "../../../src/slices/focusSlice";
-import { useDispatch, useSelector } from "react-redux";
+import {useUpdateFocusMutation } from "../../../src/slices/focusApiSlice";
+import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { RootState } from "../../../store/store";
 
@@ -12,7 +11,6 @@ const EditFocusPage = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const quillInstance = useRef<Quill | null>(null);
   const [value, setValue] = useState<string>('');
-  const dispatch = useDispatch();
   const {editingFocus} = useSelector((state: RootState) => state.focus);
   const [updateFocus] = useUpdateFocusMutation();
   const [today, setToday] = useState<boolean>(false);
