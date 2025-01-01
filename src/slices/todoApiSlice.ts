@@ -3,7 +3,7 @@ import { Todo } from '../../types/type'
 
 export const todoApi = createApi({
     reducerPath: 'todoApi',
-    baseQuery: fetchBaseQuery({baseUrl: '/api/todos'}),
+    baseQuery: fetchBaseQuery({baseUrl: `${import.meta.env.VITE_BACKEND_URL}/api/todos`}),
     endpoints: (builder) => ({
         fetchTodos: builder.query({
             query: () => ({

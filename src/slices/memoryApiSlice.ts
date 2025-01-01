@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const memoryApi = createApi({
     reducerPath: 'memoryApi',
-    baseQuery: fetchBaseQuery({baseUrl: "/api/memories"}),
+    baseQuery: fetchBaseQuery({baseUrl: `${import.meta.env.VITE_BACKEND_URL}/api/memories`}),
     endpoints: (builder) => ({
         createMemory: builder.mutation({
             query: (data) => ({

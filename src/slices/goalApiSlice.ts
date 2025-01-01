@@ -3,7 +3,7 @@ import { Goal } from "../../types/type";
 
 export const goalApi = createApi({
   reducerPath: "goalApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "/api/goals" }),
+  baseQuery: fetchBaseQuery({ baseUrl: `${import.meta.env.VITE_BACKEND_URL}/api/goals` }),
   endpoints: (builder) => ({
     createGoal: builder.mutation({
       query: (data) => ({

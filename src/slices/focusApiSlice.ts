@@ -3,7 +3,7 @@ import {Focus} from "../../types/type";
 
 export const focusApi = createApi({
     reducerPath: 'focusApi',
-    baseQuery: fetchBaseQuery({baseUrl: '/api/focus'}),
+    baseQuery: fetchBaseQuery({baseUrl: `${import.meta.env.VITE_BACKEND_URL}/api/focus`}),
     endpoints: (builder) => ({
         createFocus: builder.mutation({
             query: (data: Focus) => ({

@@ -3,7 +3,7 @@ import { Plan } from '../../types/type';
 
 export const planApi = createApi({
     reducerPath: 'planApi',
-    baseQuery: fetchBaseQuery({baseUrl: "/api/plans"}),
+    baseQuery: fetchBaseQuery({baseUrl: `${import.meta.env.VITE_BACKEND_URL}/api/plans`}),
     endpoints: (builder) => ({
         createPlan: builder.mutation({
             query: (data) => ({
