@@ -11,7 +11,7 @@ const AllMemories = () => {
     const {memories} = useSelector((state: RootState) => state.memory);
     const dispatch = useDispatch();
 
-    const {data, error, isFetching} = useGetAllMemoriesQuery('');
+    const {data,isFetching} = useGetAllMemoriesQuery('');
 
     useEffect(() => {
       if (data && !isFetching) {
