@@ -23,7 +23,7 @@ const SubmitBtn = () => {
       type="submit"
       className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
     >
-      Save
+     {pending ? 'Submitting': ' Save'}
     </button>
   );
 };
@@ -35,7 +35,7 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
   const [selectedProjectId, setSelectedProjectId] = useState<string>("");
 
   const dispatch = useDispatch();
-  const [createMemory] = useCreateMemoryMutation();
+  const [createMemory, {error}] = useCreateMemoryMutation();
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e?.target?.files?.[0];
@@ -62,11 +62,15 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
       image: imagePreview,
     };
 
-    const res = await createMemory(memory);
-    if (res.data) {
+    try {
+      const res = await createMemory(memory);
+      if (res.data) {
       toast.success("Created Memory");
       dispatch(addMemory(res.data));
       closeModal();
+      }
+    } catch (error) {
+      toast.error(error);
     }
   };
 
