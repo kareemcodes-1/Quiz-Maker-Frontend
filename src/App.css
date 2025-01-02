@@ -14,6 +14,7 @@ body {
   height: 100vh;
   width: 100%;
   font-family: 'CabinetGrotesk-Medium', sans-serif;
+  background: #fff;
 }
 
 
@@ -108,14 +109,6 @@ body {
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
 
 
 .yena-btn{
