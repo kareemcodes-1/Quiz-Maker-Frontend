@@ -37,19 +37,33 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
   const dispatch = useDispatch();
   const [createMemory] = useCreateMemoryMutation();
 
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e?.target?.files?.[0];
     if (file) {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        if (typeof fileReader.result === "string") {
-          setImagePreview(fileReader.result);
+      try {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", "productivity_app"); // Replace with your Cloudinary upload preset
+        const response = await fetch(
+          `https://api.cloudinary.com/v1_1/datpkisht/image/upload`, // Replace with your Cloudinary URL
+          {
+            method: "POST",
+            body: formData,
+          }
+        );
+
+        const data = await response.json();
+
+        if (data.secure_url) {
+          setImagePreview(data.secure_url);
+          toast.success("Image uploaded successfully!");
+        } else {
+          throw new Error("Failed to upload image");
         }
-      };
-      fileReader.onerror = () => {
-        toast.error("Failed to load the image. Please try again.");
-      };
+      } catch (error) {
+        toast.error("Failed to upload the image. Please try again.");
+        console.error(error);
+      }
     }
   };
 
