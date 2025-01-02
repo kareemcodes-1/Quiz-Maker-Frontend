@@ -2,28 +2,26 @@ import  { useEffect, useRef, useState } from "react";
 import Layout from "../../layout";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
-import { useCreateFocusMutation } from "../../../src/slices/focusApiSlice";
-import { addFocusNotes,} from "../../../src/slices/focusSlice";
 import { useDispatch } from "react-redux";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
+import { addGratitude } from "../../slices/gratitudeSlice";
+import { useCreateGratitudeMutation } from "../../slices/gratitudeApiSlice";
 
 
-const NewFocus = () => {
+const GratitudeNew = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const quillInstance = useRef<Quill | null>(null);
   const [value, setValue] = useState<string>('');
-  const [createFocus] = useCreateFocusMutation();
+  const [createGratitude] = useCreateGratitudeMutation();
   const dispatch = useDispatch();
-    const [today, setToday] = useState<boolean>(false);
-    const [tomorrow, setTomorrow] = useState<boolean>(false);
     const navigate = useNavigate();
 
   useEffect(() => {
     if (editorRef.current) {
       quillInstance.current = new Quill(editorRef.current, {
         theme: "snow", 
-        placeholder: "Write your focus for the day...",
+        placeholder: "Write your gratitude for the day...",
         modules: {
           toolbar: [
             [{ header: [1, 2, false] }],
@@ -47,19 +45,18 @@ const NewFocus = () => {
   }, []);
 
   const handleSubmit = async () => {
-      const date = today ? new Date().toISOString() : tomorrow ? new Date(new Date().setDate(new Date().getDate() + 1)).toISOString() : null
-      const note = {
+      const gratitude = {
            _id: '',
           content: value,
-          date
+          createdAt: '',
       }
 
       try {
-        const res = await createFocus(note);
-        if(res.data){
-            toast.success('Created focus note');
-            dispatch(addFocusNotes(res.data));
-            navigate('/focus');
+        const res = await createGratitude(gratitude).unwrap();
+        if(res){
+            toast.success('Created gratitude');
+            dispatch(addGratitude(res));
+            navigate('/gratitudes');
         }
       } catch (error) {
         console.log(error);
@@ -70,11 +67,9 @@ const NewFocus = () => {
   return (
     <Layout>
       <div className="flex lg:flex-row flex-col lg:items-center items-start justify-between w-full">
-      <h1 className="text-[2.5rem]">Create Focus</h1>
+      <h1 className="text-[2.5rem]">Create Gratitude</h1>
       <div className="flex items-center gap-[.5rem] relative">
       <button type="button" className="yena-btn" onClick={handleSubmit}>Save Note</button>
-      <button type="button" className={`yena-btn ${today ? '--black' : ''} !h-[2rem]`} onClick={() => {setToday(true); setTomorrow(false)}}>Today</button>
-      <button type="button" className={`yena-btn ${tomorrow ? '--black' : ''} !h-[2rem]`} onClick={() => {setTomorrow(true); setToday(false)}}>Tomorrow</button>
       </div>
       </div>
       <div className="border rounded-[.5rem] mt-[1.5rem]">
@@ -85,4 +80,4 @@ const NewFocus = () => {
   );
 };
 
-export default NewFocus;
+export default GratitudeNew;

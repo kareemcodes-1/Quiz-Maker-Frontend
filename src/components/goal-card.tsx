@@ -30,7 +30,6 @@ const GoalCard = ({ goal }: { goal: Goal}) => {
       const updatedGoal = { ...goal, completed: !goal.completed };
 
       const res = await completeGoal({ id, data: updatedGoal }).unwrap();
-      console.log(res);
       if (res.completed) {
         jsConfetti.addConfetti();
         toast.success("Completed Goal");
@@ -108,10 +107,7 @@ const GoalCard = ({ goal }: { goal: Goal}) => {
   <div className="flex flex-col lg:flex-row items-start lg:items-center gap-[1rem] lg:gap-[2rem]">
     <div className="flex items-center gap-[1rem]">
       <Badge className="flex items-center gap-[.3rem]">
-        <div
-          style={{ background: goal.projectId.color }}
-          className="rounded-full p-[.3rem]"
-        />{" "}
+      <div className="text-[.8rem]">{goal.projectId.emoji}</div>{" "}
         <div className="text-[.8rem]">{goal.projectId.name}</div>
       </Badge>
     </div>

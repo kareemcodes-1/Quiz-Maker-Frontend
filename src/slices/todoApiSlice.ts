@@ -39,13 +39,13 @@ export const todoApi = createApi({
         }),
 
         completeTodo: builder.mutation({
-            query: ({id, data}: {id: string, data: Todo}) => ({
+            query: ({id, data}: {id: string, data: boolean}) => ({
                 url: `/complete/todo/${id}`,
                 method: "PUT",
                 headers: {
-                   'Comtent-Type' : 'application/json',
+                   'Content-Type' : 'application/json',
                 },
-                body: data,
+                body: {completed: data},
             })
         }),
     })

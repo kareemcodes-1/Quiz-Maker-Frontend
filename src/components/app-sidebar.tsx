@@ -15,7 +15,7 @@ import { RootState } from "../../store/store"
 import { allProjects, setOpenProjectModal } from "../../src/slices/projectSlice"
 import { useGetAllProjectsQuery } from "../../src/slices/projectApiSlice"
 import { useEffect } from "react"
-import { ArchiveBoxIcon,  PhotoIcon, PresentationChartBarIcon, RectangleStackIcon } from "@heroicons/react/24/outline"
+import { ArchiveBoxIcon,  BeakerIcon,  PhotoIcon, PresentationChartBarIcon, RectangleStackIcon, SparklesIcon } from "@heroicons/react/24/outline"
 import { Dialog } from "@radix-ui/react-dialog"
 import ProjectModal from "../modal/project-modal"
 
@@ -31,11 +31,16 @@ const items = [
     url: "/focus",
     icon: ArchiveBoxIcon,
   },
-  // {
-  //   title: "What I Learnt",
-  //   url: "/wil",
-  //   icon: BeakerIcon,
-  // },
+  {
+    title: "What I Learnt",
+    url: "/learnings",
+    icon: BeakerIcon,
+  },
+  {
+    title: "Gratitude",
+    url: "/gratitudes",
+    icon: SparklesIcon,
+  },
   // {
   //   title: "Philosophy",
   //   url: "/philosophy",
@@ -104,7 +109,7 @@ export function AppSidebar() {
                 <SidebarMenuItem key={item._id}>
                   <SidebarMenuButton asChild>
                     <a href={'/'}>
-                      <div style={{background: item.color}} className="rounded-full p-[.3rem]" />
+                      <span>{item.emoji}</span>
                       <span>{item.name}</span>
                     </a>
                   </SidebarMenuButton>

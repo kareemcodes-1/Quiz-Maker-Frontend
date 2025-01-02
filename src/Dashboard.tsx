@@ -14,12 +14,17 @@ import {
   SelectValue,
 } from "./components/ui/select";
 import { PlusIcon } from '@heroicons/react/24/outline';
+import { useEffect } from 'react';
    
 
 const Dashboard = () => {
+    const dispatch = useDispatch();
+  
+    useEffect(() => {
+      dispatch(handleTodosFilter("today"));
+    }, [dispatch]);
 
     const {openTodoModal} = useSelector((state: RootState) => state.todo);
-    const dispatch = useDispatch();
 
   return (
     <Layout>
@@ -28,18 +33,6 @@ const Dashboard = () => {
 
              <div className='flex items-center gap-[.5rem] relative'>
              <button type="button" className='yena-btn' onClick={() => {dispatch(setOpenTodoModal(true)); dispatch(setEditing())}}><span className='lg:block hidden'>Create Todo</span><PlusIcon className='lg:hidden block w-[1.3rem]'/><span></span></button>
-
-             {/* <button type="button" className='yena-btn' onClick={() => setOpenFilterDropDown(!openFilterDropDown)}><AdjustmentsVerticalIcon className='w-[1.5rem]'/></button>
-              {openFilterDropDown && (
-                 <div className='absolute top-[3rem] right-[1rem] z-[100]'>
-                    <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-[10rem] p-2 shadow">
-                  <li><a>All</a></li>
-                 <li><a>Today</a></li>
-                  <li><a>Tomorrow</a></li>
-                  <li><a>Last Week</a></li>
-                </ul>
-                 </div>
-              )} */}
 
           <Select onValueChange={(value) => dispatch(handleTodosFilter(value))}>
             <SelectTrigger className="w-[120px] outline-none yena-btn">

@@ -27,13 +27,16 @@ const FocusPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [deleteFocus] = useDeleteFocusMutation();
-  
+
 
   useEffect(() => {
     if(data && !isFetching){
        dispatch(allFocusNotes(data));
+       dispatch(handleFocusFilter("today"));
     }
+    
   }, [data, dispatch, isFetching]);
+ 
   
   const displayDate = (note: Focus) => {
   

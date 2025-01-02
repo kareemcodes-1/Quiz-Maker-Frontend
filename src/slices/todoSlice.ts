@@ -54,6 +54,7 @@ const todoSlice = createSlice({
                 }
             });
             state.todos = updatedTodo;
+            state.filteredTodos = updatedTodo;
         },
         deleteTodos(state, action: PayloadAction<string>){
             const updatedTodo = state.todos.filter((todo) => todo._id !== action.payload);
@@ -80,21 +81,8 @@ const todoSlice = createSlice({
                 }
             });
         },
-        completeATodo(state, action: PayloadAction<Todo>){
-            const updatedTodo = state.todos.map((todo) => {
-                if(todo._id === action.payload._id){
-                    return {
-                        ...action.payload
-                    }
-                }else{
-                    return todo
-                }
-            });
-
-            state.todos = updatedTodo;
-        }
     }
 });
 
-export const {addTodo, allTodos, editTodo, setOpenTodoModal, updateTodos, deleteTodos, handleFilter, completeATodo, setEditing, handleTodosFilter} = todoSlice.actions;
+export const {addTodo, allTodos, editTodo, setOpenTodoModal, updateTodos, deleteTodos, handleFilter, setEditing, handleTodosFilter} = todoSlice.actions;
 export default todoSlice.reducer;

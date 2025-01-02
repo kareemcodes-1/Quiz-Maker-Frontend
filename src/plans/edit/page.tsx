@@ -6,10 +6,15 @@ import {useUpdatePlanMutation } from "../../../src/slices/planApiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { RootState } from "../../../store/store";
-import { CircleStackIcon } from "@heroicons/react/24/outline";
-import { Project } from "../../../types/type";
 import {useNavigate } from "react-router";
 import { updatePlans } from "../../slices/planSlice";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../components/ui/select";
 
 const PlanEditPage = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
@@ -18,7 +23,6 @@ const PlanEditPage = () => {
   const {editingPlan} = useSelector((state: RootState) => state.plan);
   const [updatePlan] = useUpdatePlanMutation();
   const {projects} = useSelector((state: RootState) => state.project);
-  const [openFilterDropDown, setOpenFilterDropDown] = useState<boolean>(false);
   const [selectedProjectId, setSelectedProjectId] = useState<string | undefined>(editingPlan?.projectId._id);
 
   const navigate = useNavigate();
@@ -87,17 +91,28 @@ const PlanEditPage = () => {
 
       <div className="flex items-center gap-[.5rem] relative">
       <button type="button" className="yena-btn" onClick={handleSubmit}>Save Note</button>
-      <button type="button" className="yena-btn" onClick={() => setOpenFilterDropDown(!openFilterDropDown)}><CircleStackIcon className="w-[1.5rem]"/></button>
-      
-         {openFilterDropDown && (
-                 <div className='absolute top-[3rem] right-[1rem] z-[100]'>
-                    <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-[10rem] p-2 shadow">
-                      {projects.map((project: Project) => (
-                         <li key={project._id} onClick={() => setSelectedProjectId(project._id)}><a>{project.name}</a></li>
-                      ))}
-                   </ul>
-                 </div>
+
+      <Select onValueChange={(value) => setSelectedProjectId(value)}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue
+                placeholder={editingPlan?.projectId.name || "Select a project"}
+              />
+            </SelectTrigger>
+            <SelectContent>
+              {projects?.length > 0 ? (
+                projects.map((project) => (
+                  <SelectItem key={project._id} value={project._id}>
+                      <span> {project.emoji}</span>
+                      <span> {project.name}</span>
+                  </SelectItem>
+                ))
+              ) : (
+                <SelectItem disabled value="No projects">
+                  No projects available
+                </SelectItem>
               )}
+            </SelectContent>
+          </Select>
       </div>
       </div>
       <div className="border rounded-[.5rem] mt-[1.5rem]">

@@ -67,8 +67,8 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [today, setToday] = useState<boolean>(false);
   const [tomorrow, setTomorrow] = useState<boolean>(false);
-  const [selectedProjectId, setSelectedProjectId] = useState<Project | null>(
-    null
+  const [selectedProjectId, setSelectedProjectId] = useState<string>(
+    ''
   );
   const [time, setTime] = useState<string>("morning");
   const dispatchReduxAction = useDispatch();
@@ -80,16 +80,8 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
   useEffect(() => {
     if (editingMode && editingTodo) {
       dispatch({ type: "SET_NAME", payload: editingTodo.name });
-      setSelectedProjectId(editingTodo.projectId);
+      setSelectedProjectId(editingTodo.projectId._id);
       setTime(editingTodo.time);
-      // if(editingTodo.date && new Date(editingTodo.date).toDateString() === todayDate.toDateString()){
-      //   setToday(true);
-      //   setTomorrow(false);
-      //   console.log(true);
-      // }else if(editingTodo.date && new Date(editingTodo.date).toDateString() === tomorrowDate.toDateString()){
-      //   setTomorrow(true);
-      //   setToday(false);
-      // }
     } else {
       dispatch({ type: "SET_NAME", payload: "" });
     }
@@ -106,12 +98,11 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
       : null;
 
     if (editingMode && editingTodo) {
-      if (selectedProjectId) {
         const todo = {
           _id: editingTodo._id,
           projectId: {
             ...editingTodo.projectId,
-            _id: selectedProjectId._id,
+            _id: selectedProjectId,
           },
           name: state.name,
           completed: editingTodo.completed,
@@ -125,26 +116,27 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
           toast.success("Updated Todo");
           closeModal();
         }
-      }
     } else {
-      if (selectedProjectId) {
-        const todo = {
-          _id: "",
-          projectId: {
-            ...selectedProjectId,
-          },
-          name: formData.get("name") as string,
-          date,
-          time,
-          completed: false,
-        };
-        const res = await createTodo(todo);
-        if (res.data) {
-          dispatchReduxAction(addTodo(res.data));
-          toast.success("Created Todo");
-          closeModal();
+        const findProject = projects.find((project) => project._id === selectedProjectId);
+        if(findProject){
+          const todo = {
+            _id: "",
+            projectId: {
+              ...findProject,
+              _id: selectedProjectId
+            },
+            name: formData.get("name") as string,
+            date,
+            time,
+            completed: false,
+          };
+          const res = await createTodo(todo);
+          if (res.data) {
+            dispatchReduxAction(addTodo(res.data));
+            toast.success("Created Todo");
+            closeModal();
         }
-      }
+        }
     }
   };
 
@@ -203,28 +195,31 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
             </button>
           </div>
 
-          <div className="tags flex items-center gap-[.5rem] overflow-x-scroll w-full">
-            {projects.map((project) => (
-              <Badge
-                key={project._id}
-                className={`cursor-pointer flex items-center gap-[.5rem] ${
-                  selectedProjectId?._id === project._id
-                    ? "bg-black text-white"
-                    : ""
-                }`}
-                onClick={() => setSelectedProjectId(project)}
-              >
-                <div
-                  style={{ background: project.color }}
-                  className="rounded-full p-[.3rem]"
-                />
-                <span>{project.name}</span>
-              </Badge>
-            ))}
-          </div>
+          <div className="flex items-center gap-[.5rem]">
+          <Select onValueChange={(value) => setSelectedProjectId(value)}>
+            <SelectTrigger className="w-full">
+              <SelectValue
+                placeholder={editingMode ? editingTodo?.projectId.name : projects?.[0]?.name}
+              />
+            </SelectTrigger>
+            <SelectContent>
+              {projects?.length > 0 ? (
+                projects.map((project) => (
+                  <SelectItem key={project._id} value={project._id}>
+                      <span> {project.emoji}</span>
+                      <span> {project.name}</span>
+                  </SelectItem>
+                ))
+              ) : (
+                <SelectItem disabled value="No projects">
+                  No projects available
+                </SelectItem>
+              )}
+            </SelectContent>
+          </Select>
 
           <Select onValueChange={(value) => setTime(value)}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full">
               <SelectValue placeholder="Morning" />
             </SelectTrigger>
             <SelectContent>
@@ -233,6 +228,7 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
               <SelectItem value="night">Night</SelectItem>
             </SelectContent>
           </Select>
+          </div>
 
           <SubmitBtn />
         </form>

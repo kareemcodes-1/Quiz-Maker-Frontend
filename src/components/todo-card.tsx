@@ -1,7 +1,7 @@
 import { Todo } from "../../types/type";
 import { Pencil } from "lucide-react";
 import { Badge } from "../components/ui/badge";
-import { completeATodo, deleteTodos, editTodo } from "../../src/slices/todoSlice";
+import { deleteTodos, editTodo, updateTodos } from "../../src/slices/todoSlice";
 import { useDispatch } from "react-redux";
 import { useCompleteTodoMutation, useDeleteTodoMutation } from "../../src/slices/todoApiSlice";
 import toast from "react-hot-toast";
@@ -56,18 +56,16 @@ const TodoCard = ({ todo }: { todo: Todo }) => {
 
   async function completedTodo(id: string) {
     try {
-      const updatedTodo = { ...todo, completed: !todo.completed };
-
-      const res = await completeTodo({ id, data: updatedTodo }).unwrap();
-      if (res.completed) {
-        jsConfetti.addConfetti();
-        toast.success("Completed Todo");
-      }
-
-      dispatch(completeATodo(res));
+         const res = await completeTodo({ id, data: !todo.completed}).unwrap();
+         if(res){
+            dispatch(updateTodos(res));
+            if(res.completed){
+              toast.success('Todo completed')
+              jsConfetti.addConfetti();
+            }
+         }
     } catch (error) {
-      console.error("Failed to complete todo:", error);
-      toast.error("Failed to mark Todo as completed");
+      console.log(error);
     }
   }
 
@@ -75,57 +73,57 @@ const TodoCard = ({ todo }: { todo: Todo }) => {
     <div className="border w-full shadow-md rounded-[.5rem] p-[1rem] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-[1rem] lg:gap-[.5rem]">
       <div className="flex items-center gap-[.5rem] lg:gap-[1rem] w-full lg:w-auto">
         {todo.completed ? (
-          <div className="inline-flex items-center">
-            <label className="flex items-center cursor-pointer relative">
-              <input
-                onClick={() => completedTodo(todo._id)}
-                type="checkbox"
-                defaultChecked
-                className="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-green-600 checked:border-green-600"
-              />
-              <span className="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-3.5 w-3.5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </span>
-            </label>
-          </div>
+                <div className="inline-flex items-center">
+                <label className="flex items-center cursor-pointer relative">
+                  <input
+                    defaultChecked
+                    onClick={() => completedTodo(todo._id)}
+                    type="checkbox"
+                    className="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-green-600 checked:border-green-600"
+                  />
+                  <span className="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-3.5 w-3.5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      stroke="currentColor"
+                      strokeWidth="1"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      ></path>
+                    </svg>
+                  </span>
+                </label>
+                </div>
         ) : (
           <div className="inline-flex items-center">
-            <label className="flex items-center cursor-pointer relative">
-              <input
-                onClick={() => completedTodo(todo._id)}
-                type="checkbox"
-                className="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-green-600 checked:border-green-600"
-              />
-              <span className="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-3.5 w-3.5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                  stroke="currentColor"
-                  strokeWidth="1"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clipRule="evenodd"
-                  ></path>
-                </svg>
-              </span>
-            </label>
+          <label className="flex items-center cursor-pointer relative">
+            <input
+              onClick={() => completedTodo(todo._id)}
+              type="checkbox"
+              className="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-green-600 checked:border-green-600"
+            />
+            <span className="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-3.5 w-3.5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                stroke="currentColor"
+                strokeWidth="1"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clipRule="evenodd"
+                ></path>
+              </svg>
+            </span>
+          </label>
           </div>
         )}
         <h1 className="text-[1rem] lg:text-[1.2rem] truncate">{todo.name}</h1>
@@ -138,11 +136,8 @@ const TodoCard = ({ todo }: { todo: Todo }) => {
             <Tooltip>
               <TooltipTrigger>
                 <Badge className="flex items-center gap-[.3rem]">
-                  {todo.projectId?.color && (
-                    <div
-                      style={{ background: todo.projectId.color }}
-                      className="rounded-full w-[.5rem] h-[.5rem]"
-                    />
+                  {todo.projectId?.emoji && (
+                     <div className="truncate">{todo.projectId?.emoji}</div>
                   )}
                   <div className="truncate">{todo.projectId?.name || "No Project"}</div>
                 </Badge>

@@ -7,7 +7,6 @@ import {store} from "../store/store.ts";
 import {Provider} from "react-redux";
 import ToastProvider from './providers/ToastProvider.tsx';
 import FocusPage from './focus/page.tsx';
-import WILPage from './WIL/page.tsx';
 import NewFocus from './focus/new/page.tsx';
 import Memories from './memories/page.tsx';
 import FocusEditPage from './focus/edit/page.tsx';
@@ -15,6 +14,12 @@ import Goals from './goals/page.tsx';
 import Plans from './plans/page.tsx';
 import NewPlan from './plans/new/page.tsx';
 import PlanEditPage from './plans/edit/page.tsx';
+import Gratitudes from './gratitudes/page.tsx';
+import LearningEdit from './learnings/edit/page.tsx';
+import LearningNew from './learnings/new/page.tsx';
+import Learnings from './learnings/page.tsx';
+import GratitudeNew from './gratitudes/new/page.tsx';
+import GratitudeEdit from './gratitudes/edit/page.tsx';
 
 createRoot(document.getElementById('root')!).render(
   // <StrictMode>
@@ -27,7 +32,12 @@ createRoot(document.getElementById('root')!).render(
                    <Route path='/focus/new' element={<NewFocus />}></Route>
                    <Route path='/focus/edit/:id' element={<FocusEditPage />}></Route>
                    <Route path='/memories' element={<Memories />}></Route>
-                   <Route path='/wil' element={<WILPage />}></Route>
+                   <Route path='/learnings' element={<Learnings />}></Route>
+                   <Route path='/learnings/new' element={<LearningNew />}></Route>
+                   <Route path='/learnings/edit/:id' element={<LearningEdit />}></Route>
+                   <Route path='/gratitudes' element={<Gratitudes />}></Route>
+                   <Route path='/gratitudes/new' element={<GratitudeNew />}></Route>
+                   <Route path='/gratitudes/edit/:id' element={<GratitudeEdit />}></Route>
                    <Route path='/goals' element={<Goals />}></Route>
                    <Route path='/plans' element={<Plans />}></Route>
                    <Route path='/plans/new' element={<NewPlan />}></Route>

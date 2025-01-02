@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { Memory } from '../../types/type';
 
 export const memoryApi = createApi({
     reducerPath: 'memoryApi',
@@ -19,8 +20,26 @@ export const memoryApi = createApi({
                 url: '/',
                 method: "GET",
             })
-        })
+        }),
+
+         updateMemory: builder.mutation({
+            query: ({ data, id }: { data: Memory; id: string }) => ({
+              url: `/edit/${id}`,
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: data,
+            }),
+          }),
+
+          deleteMemory: builder.mutation({
+            query: (id: string) => ({
+              url: `/delete/${id}`,
+              method: "DELETE",
+            }),
+          }),
     })
 });
 
-export const {useCreateMemoryMutation, useGetAllMemoriesQuery} = memoryApi;
+export const {useCreateMemoryMutation, useGetAllMemoriesQuery, useDeleteMemoryMutation, useUpdateMemoryMutation} = memoryApi;

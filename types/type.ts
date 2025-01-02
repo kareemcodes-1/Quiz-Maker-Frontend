@@ -16,6 +16,13 @@ export type Focus = {
 export type WIL = {
     _id: string;
     content: string;
+    createdAt: string;
+}
+
+export type Gratitude = {
+    _id: string;
+    content: string;
+    createdAt: string;
 }
 
 export type Memory = {
@@ -23,7 +30,7 @@ export type Memory = {
     name: string;
     projectId: Project;
     image: string
-    createdAt: Date;
+    createdAt: string;
 }
 
 export type Goal = {
@@ -43,5 +50,5 @@ export type Plan = {
 export type Project = {
     _id: string;
     name: string;
-    color: string;
+    emoji: string;
 }

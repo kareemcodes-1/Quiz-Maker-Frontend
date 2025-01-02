@@ -1,4 +1,4 @@
-import{ ChangeEvent, useState } from "react";
+import{ ChangeEvent, useEffect, useRef, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -10,9 +10,17 @@ import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { PhotoIcon} from '@heroicons/react/24/solid'
-import { useCreateMemoryMutation } from "../../src/slices/memoryApiSlice";
-import { Badge } from "../components/ui/badge";
-import { addMemory, setOpenMemoryModal } from "../slices/memorySlice";
+import { useCreateMemoryMutation, useUpdateMemoryMutation } from "../../src/slices/memoryApiSlice";
+import { addMemory, setOpenMemoryModal, updateMemories } from "../slices/memorySlice";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../components/ui/select";
+import { PencilIcon } from "@heroicons/react/24/outline";
+
 
 const SubmitBtn = () => {
   const { pending } = useFormStatus();
@@ -29,13 +37,28 @@ const SubmitBtn = () => {
 };
 
 const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
-  const { openMemoryModal } = useSelector((state: RootState) => state.memory);
+  const { openMemoryModal, editingMemory, editingMode } = useSelector((state: RootState) => state.memory);
   const { projects } = useSelector((state: RootState) => state.project);
   const [imagePreview, setImagePreview] = useState<string>("");
   const [selectedProjectId, setSelectedProjectId] = useState<string>("");
+  const [name, setName] = useState('');
+  const imageRef = useRef<HTMLInputElement | null>(null);
 
   const dispatch = useDispatch();
   const [createMemory] = useCreateMemoryMutation();
+  const [updateMemory] = useUpdateMemoryMutation();
+
+  useEffect(() => {
+    if (editingMemory && editingMode) {
+      setName(editingMemory.name);
+      setImagePreview(editingMemory.image);
+      setSelectedProjectId(editingMemory.projectId._id);
+    } else {
+      setName("");
+      setImagePreview("");
+      setSelectedProjectId('');
+    }
+  }, [editingMemory, editingMode])
 
   const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e?.target?.files?.[0];
@@ -70,21 +93,44 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
   const formAction = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const memory = {
-      projectId: selectedProjectId,
-      name: formData.get("name"),
-      image: imagePreview,
-    };
-
+    
+    if(editingMode && editingMemory){
+      const memory = {
+        _id: editingMemory._id,
+        projectId: {
+          ...editingMemory.projectId,
+          _id: selectedProjectId
+        },
+        name,
+        image: imagePreview,
+        createdAt: '',
+      };
+      try {
+        const res = await updateMemory({id: editingMemory._id, data: memory}).unwrap();
+        if(res) {
+        toast.success("Updated Memory");
+        dispatch(updateMemories(res));
+        closeModal();
+        }
+      } catch (error) {
+        toast.error(error);
+      }
+    }else{
+      const memory = {
+        projectId: selectedProjectId,
+        name: formData.get("name"),
+        image: imagePreview,
+      };
     try {
-      const res = await createMemory(memory);
-      if (res.data) {
+      const res = await createMemory(memory).unwrap();
+      if (res) {
       toast.success("Created Memory");
-      dispatch(addMemory(res.data));
+      dispatch(addMemory(res));
       closeModal();
       }
     } catch (error) {
       toast.error(error);
+    }
     }
   };
 
@@ -92,7 +138,7 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
     <Dialog open={openMemoryModal} onOpenChange={(isOpen) => dispatch(setOpenMemoryModal(isOpen))}>
       <DialogContent className="w-full max-w-md p-4 lg:p-6">
         <DialogHeader>
-          <DialogTitle className="lg:text-[1.5rem] text-[1.3rem] text-start">Create Memory</DialogTitle>
+          <DialogTitle className="lg:text-[1.5rem] text-[1.3rem] text-start">{editingMode ? 'Edit' : 'Create'} Memory</DialogTitle>
           <form onSubmit={formAction} className="space-y-6">
             <div className="flex items-center w-full gap-[.5rem]">
               <div className="w-full">
@@ -104,6 +150,8 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
                     id="name"
                     name="name"
                     type="text"
+                    value={name}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
                     required
                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   />
@@ -111,7 +159,13 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
               </div>
             </div>
 
-            <div className="col-span-full">
+            <div className="col-span-full relative">
+              {editingMode && (
+                <>
+                <div className="yena-btn !absolute !right-0 cursor-pointer" onClick={() => imageRef.current?.click()}><PencilIcon className="w-[1rem]"/></div>
+                <input ref={imageRef} id="file-upload" name="file-upload" type="file" onChange={handleImageChange} className="sr-only" />
+                </>
+              )}
               <label htmlFor="cover-photo" className="block text-sm/6 font-medium text-gray-900 text-start">
                 Cover photo
               </label>
@@ -141,20 +195,29 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
               )}
             </div>
 
-            <div className="tags flex items-center gap-[.5rem] w-full overflow-x-scroll">
-              {projects.map((project) => (
-                <Badge
-                  key={project._id}
-                  className={`cursor-pointer flex items-center gap-[.5rem] ${
-                    selectedProjectId === project._id ? "bg-black text-white" : ""
-                  }`}
-                  onClick={() => setSelectedProjectId(project._id)}
-                >
-                  <div style={{ background: project.color }} className="rounded-full p-[.3rem]" />
-                  <span>{project.name}</span>
-                </Badge>
-              ))}
-            </div>
+
+          <Select onValueChange={(value) => setSelectedProjectId(value)}>
+            <SelectTrigger className="w-full">
+              <SelectValue
+                placeholder={editingMode ? editingMemory?.projectId.name : projects?.[0]?.name}
+              />
+            </SelectTrigger>
+            <SelectContent>
+              {projects?.length > 0 ? (
+                projects.map((project) => (
+                  <SelectItem key={project._id} value={project._id}>
+                      <span> {project.emoji}</span>
+                      <span> {project.name}</span>
+                  </SelectItem>
+                ))
+              ) : (
+                <SelectItem disabled value="No projects">
+                  No projects available
+                </SelectItem>
+              )}
+            </SelectContent>
+          </Select>
+
 
             <SubmitBtn />
           </form>

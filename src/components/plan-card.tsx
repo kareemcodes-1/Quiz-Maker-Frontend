@@ -53,10 +53,7 @@ const PlanCard = ({plan} : {plan: Plan}) => {
   
       <div className="flex items-center gap-[1rem]">
         <Badge className="flex items-center gap-[.3rem]">
-          <div
-            style={{ background: plan.projectId.color }}
-            className="rounded-full p-[.3rem]"
-          />{" "}
+        <div className="text-[.8rem]">{plan.projectId.emoji}</div>{" "}
           <div className="text-[.8rem]">{plan.projectId.name}</div>
         </Badge>
   
