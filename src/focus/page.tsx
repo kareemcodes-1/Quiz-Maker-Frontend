@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { allFocusNotes, deleteFocusState, findFocus, handleFocusFilter } from '../../src/slices/focusSlice';
 import { RootState } from '../../store/store';
 import { useNavigate } from 'react-router';
-import {  ArchiveBoxIcon, TrashIcon } from '@heroicons/react/24/outline';
+import {  ArchiveBoxIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { useDeleteFocusMutation } from '../../src/slices/focusApiSlice';
 import toast from 'react-hot-toast';
 import { Badge } from '../components/ui/badge';
@@ -83,7 +83,7 @@ const FocusPage = () => {
              <h1 className='lg:text-[3rem] text-[2.5rem]'>Focus </h1>
 
             <div className='relative flex items-center gap-[.5rem]'>
-               <a href='/focus/new' className='yena-btn'>Create new</a>
+               <a href='/focus/new' className='yena-btn'><span className='lg:block hidden'>Create new</span><PlusIcon className='lg:hidden block w-[1.3rem]'/><span></span></a>
 
                <Select onValueChange={(value) => dispatch(handleFocusFilter(value))}>
             <SelectTrigger className="w-[120px] outline-none yena-btn">

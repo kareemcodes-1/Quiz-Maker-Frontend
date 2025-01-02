@@ -13,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./components/ui/select";
+import { PlusIcon } from '@heroicons/react/24/outline';
    
 
 const Dashboard = () => {
@@ -26,7 +27,7 @@ const Dashboard = () => {
              <h1 className='lg:text-[3rem] text-[2rem]'>Todos</h1>
 
              <div className='flex items-center gap-[.5rem] relative'>
-             <button type="button" className='yena-btn' onClick={() => {dispatch(setOpenTodoModal(true)); dispatch(setEditing())}}>Create Todo</button>
+             <button type="button" className='yena-btn' onClick={() => {dispatch(setOpenTodoModal(true)); dispatch(setEditing())}}><span className='lg:block hidden'>Create Todo</span><PlusIcon className='lg:hidden block w-[1.3rem]'/><span></span></button>
 
              {/* <button type="button" className='yena-btn' onClick={() => setOpenFilterDropDown(!openFilterDropDown)}><AdjustmentsVerticalIcon className='w-[1.5rem]'/></button>
               {openFilterDropDown && (

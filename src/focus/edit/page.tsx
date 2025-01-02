@@ -76,7 +76,7 @@ const EditFocusPage = () => {
 
   return (
     <Layout>
-      <div className="flex items-center justify-between w-full">
+      <div className="flex lg:tems-center items-start lg:flex-row flex-col justify-between w-full">
       <h1 className="text-[2.5rem]">Edit Focus</h1>
       <div className="flex items-center gap-[.5rem] relative">
       <button type="button" className="yena-btn" onClick={handleSubmit}>Save Note</button>
