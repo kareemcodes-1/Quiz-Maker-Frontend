@@ -13,8 +13,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { addTodo, updateTodos } from "../../src/slices/todoSlice";
-import { Badge } from "../components/ui/badge";
-import { Project } from "../../types/type";
 import {
   Select,
   SelectContent,
