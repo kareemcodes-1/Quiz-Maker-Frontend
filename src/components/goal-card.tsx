@@ -13,6 +13,8 @@ const GoalCard = ({ goal }: { goal: Goal}) => {
   const [deleteGoal] = useDeleteGoalMutation();
   const [completeGoal] = useCompleteGoalMutation();
 
+  const jsConfetti = new JSConfetti();
+
   async function handleDeleteGoal(id: string) {
     try {
       await deleteGoal(id);
@@ -23,25 +25,21 @@ const GoalCard = ({ goal }: { goal: Goal}) => {
     }
   }
 
-  async function completedGoal(id: string){
+  async function completedGoal(id: string) {
     try {
-      const data = {
-        ...goal,
-        completed: !goal.completed,
+      const updatedGoal = { ...goal, completed: !goal.completed };
+
+      const res = await completeGoal({ id, data: updatedGoal }).unwrap();
+      console.log(res);
+      if (res.completed) {
+        jsConfetti.addConfetti();
+        toast.success("Completed Goal");
       }
 
-      const res = await completeGoal({id, data});
-      console.log(res.data);
-      if(res.data){
-        if(res.data.completed){
-          const jsConfetti = new JSConfetti()
-          jsConfetti.addConfetti()
-          toast.success("Completed goal");
-        }
-        dispatch(completeAGoal(res.data));
-      }
+      dispatch(completeAGoal(res));
     } catch (error) {
-      console.log(error);
+      console.error("Failed to complete todo:", error);
+      toast.error("Failed to mark Todo as completed");
     }
   }
 
@@ -49,20 +47,60 @@ const GoalCard = ({ goal }: { goal: Goal}) => {
   return (
     <div className="border w-full shadow-md rounded-[.5rem] p-[1rem] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-[1rem]">
   <div className="flex items-center gap-[1rem]">
-    {goal.completed ? (
-      <input
-        onClick={() => completedGoal(goal._id)}
-        type="checkbox"
-        defaultChecked
-        className="checkbox checkbox-success !border-gray-400 !text-white lg:w-[1.5rem] w-[1.2rem] lg:h-[1.5rem] h-[1.2rem]"
-      />
-    ) : (
-      <input
-        onClick={() => completedGoal(goal._id)}
-        type="checkbox"
-        className="checkbox checkbox-success !border-gray-400 !text-white lg:w-[1.5rem] w-[1.2rem] lg:h-[1.5rem] h-[1.2rem]"
-      />
-    )}
+     {goal.completed ? (
+          <div className="inline-flex items-center">
+            <label className="flex items-center cursor-pointer relative">
+              <input
+                onClick={() => completedGoal(goal._id)}
+                type="checkbox"
+                defaultChecked
+                className="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-green-600 checked:border-green-600"
+              />
+              <span className="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-3.5 w-3.5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+              </span>
+            </label>
+          </div>
+        ) : (
+          <div className="inline-flex items-center">
+            <label className="flex items-center cursor-pointer relative">
+              <input
+                onClick={() => completedGoal(goal._id)}
+                type="checkbox"
+                className="peer h-5 w-5 cursor-pointer transition-all appearance-none rounded shadow hover:shadow-md border border-slate-300 checked:bg-green-600 checked:border-green-600"
+              />
+              <span className="absolute text-white opacity-0 peer-checked:opacity-100 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-3.5 w-3.5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  stroke="currentColor"
+                  strokeWidth="1"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  ></path>
+                </svg>
+              </span>
+            </label>
+          </div>
+        )}
 
     <h1 className="text-[1.2rem]">{goal.name}</h1>
   </div>
