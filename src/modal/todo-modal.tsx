@@ -12,7 +12,7 @@ import {
 } from "../../src/slices/todoApiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { addTodo, updateTodos } from "../../src/slices/todoSlice";
+import { addTodo, handleTodosFilter, updateTodos } from "../../src/slices/todoSlice";
 import {
   Select,
   SelectContent,
@@ -108,9 +108,9 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
           time,
         };
 
-        const res = await updateTodo({ data: todo, id: editingTodo._id });
-        if (res.data) {
-          dispatchReduxAction(updateTodos(res.data));
+        const res = await updateTodo({ data: todo, id: editingTodo._id }).unwrap();
+        if (res) {
+          dispatchReduxAction(updateTodos(res));
           toast.success("Updated Todo");
           closeModal();
         }
@@ -128,11 +128,12 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
             time,
             completed: false,
           };
-          const res = await createTodo(todo);
-          if (res.data) {
-            dispatchReduxAction(addTodo(res.data));
+          const res = await createTodo(todo).unwrap();
+          if (res) {
+            dispatchReduxAction(addTodo(res));
             toast.success("Created Todo");
             dispatch({type: "SET_NAME", payload: ""});
+            dispatchReduxAction(handleTodosFilter("today"));
             closeModal();
           }
         }

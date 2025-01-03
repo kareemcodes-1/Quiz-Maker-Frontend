@@ -76,6 +76,7 @@ const TodoCard = ({ todo }: { todo: Todo }) => {
               toast.success('Todo completed')
               jsConfetti.addConfetti();
             }
+            dispatch(handleTodosFilter("today"));
          }
     } catch (error) {
       console.log(error);

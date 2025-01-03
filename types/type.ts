@@ -25,6 +25,12 @@ export type Gratitude = {
     createdAt: string;
 }
 
+export type Philosophy = {
+    readonly _id: string;
+    content: string;
+    createdAt: string;
+}
+
 export type Memory = {
     _id: string;
     name: string;
