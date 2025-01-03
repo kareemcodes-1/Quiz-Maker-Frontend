@@ -14,16 +14,10 @@ import {
   SelectValue,
 } from "./components/ui/select";
 import { PlusIcon } from '@heroicons/react/24/outline';
-import { useEffect } from 'react';
    
 
 const Dashboard = () => {
-    const dispatch = useDispatch();
-  
-    useEffect(() => {
-      dispatch(handleTodosFilter("today"));
-    }, [dispatch]);
-
+  const dispatch = useDispatch();
     const {openTodoModal} = useSelector((state: RootState) => state.todo);
 
   return (

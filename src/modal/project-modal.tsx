@@ -35,13 +35,13 @@ const ProjectModal = ({closeModal}: {closeModal: () => void;}) => {
   const formAction = async (formData: any) => {
     const project = {
       name: formData.get("name"),
-      color: formData.get("color"),
+      emoji: formData.get("emoji"),
     };
 
-    const res = await createProject(project);
-    if(res.data){
+    const res = await createProject(project).unwrap();
+    if(res){
        toast.success('Created Project');
-       dispatch(addProject(res.data));
+       dispatch(addProject(res));
        closeModal()
     }
   };
@@ -79,13 +79,13 @@ const ProjectModal = ({closeModal}: {closeModal: () => void;}) => {
                 htmlFor="emoji"
                 className="block text-sm/6 font-medium text-gray-900 text-start"
               >
-                Color
+                Emoji
               </label>
               <div className="mt-2">
                 <input
-                  id="color"
-                  name="color"
-                  type="color"
+                  id="emoji"
+                  name="emoji"
+                  type="text"
                   required
                   className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
@@ -93,25 +93,6 @@ const ProjectModal = ({closeModal}: {closeModal: () => void;}) => {
             </div>
             
           </div>
-
-          {/* <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="description" className="block text-sm/6 font-medium text-gray-900">
-                  Description
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="description"
-                  name="description"
-                  type="text"
-                  autoComplete="description"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                />
-              </div>
-            </div> */}
           <SubmitBtn />
         </form>
       </DialogHeader>

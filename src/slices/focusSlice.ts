@@ -23,6 +23,7 @@ const focusSlice = createSlice({
     },
     addFocusNotes(state, action: PayloadAction<Focus>) {
       state.focusNotes.push(action.payload);
+      state.filteredFocus.push(action.payload);
     },
     findFocus(state, action: PayloadAction<string>) {
       const findFocusNote = state.focusNotes.find(
@@ -44,12 +45,14 @@ const focusSlice = createSlice({
       });
 
       state.focusNotes = updatedFocus;
+      state.filteredFocus = updatedFocus;
     },
     deleteFocusState(state, action: PayloadAction<string>) {
       const updatedFocus = state.focusNotes.filter(
         (focus) => focus._id !== action.payload
       );
       state.focusNotes = updatedFocus;
+      state.filteredFocus = updatedFocus;
     },
 
     handleFocusFilter(state, action: PayloadAction<string>){

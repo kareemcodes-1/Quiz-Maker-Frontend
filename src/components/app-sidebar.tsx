@@ -80,6 +80,7 @@ export function AppSidebar() {
   }, [data, dispatch, isFetching]);
 
   const {openProjectModal} = useSelector((state: RootState) => state.project);
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -122,7 +123,7 @@ export function AppSidebar() {
       
       <Dialog
       open={openProjectModal}
-      onOpenChange={(isOpen) => dispatch(setOpenProjectModal(isOpen))}
+      onOpenChange={(isOpen) => {dispatch(setOpenProjectModal(isOpen)); console.log(isOpen) }}
     >
       <ProjectModal closeModal={() => dispatch(setOpenProjectModal(false))} />
     </Dialog>

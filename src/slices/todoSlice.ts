@@ -59,6 +59,7 @@ const todoSlice = createSlice({
         deleteTodos(state, action: PayloadAction<string>){
             const updatedTodo = state.todos.filter((todo) => todo._id !== action.payload);
             state.todos = updatedTodo;
+            state.filteredTodos = updatedTodo;
         },
         handleFilter(state, action: PayloadAction<string>){
             state.value = action.payload;

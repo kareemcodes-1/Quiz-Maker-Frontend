@@ -62,10 +62,10 @@ const EditFocusPage = () => {
         }
   
         try {
-          const res = await updateFocus({id: editingFocus._id, data: note});
-          if(res.data){
+          const res = await updateFocus({id: editingFocus._id, data: note}).unwrap();
+          if(res){
               toast.success('Updated focus note');
-              dispatch(updatedFocusNote(res.data));
+              dispatch(updatedFocusNote(res));
               navigate('/focus');
           }
         } catch (error) {
@@ -82,16 +82,6 @@ const EditFocusPage = () => {
       <button type="button" className="yena-btn" onClick={handleSubmit}>Save Note</button>
       <button type="button" className={`yena-btn ${today ? '--black' : ''} !h-[2rem]`} onClick={() => {setToday(true); setTomorrow(false)}}>Today</button>
       <button type="button" className={`yena-btn ${tomorrow ? '--black' : ''} !h-[2rem]`} onClick={() => {setTomorrow(true); setToday(false)}}>Tomorrow</button>
-      {/* <button type="button" className="yena-btn" onClick={() => setOpenFilterDropDown(!openFilterDropDown)}><CalendarDaysIcon className="w-[1.5rem]"/></button>
-      
-         {openFilterDropDown && (
-                 <div className='absolute top-[3rem] right-[1rem]'>
-                    <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-[10rem] p-2 shadow">
-                        <li><a className="font-medium">Today</a></li>
-                        <li><a className="font-medium">Tomorrow</a></li>
-                   </ul>
-                 </div>
-              )} */}
       </div>
       </div>
       <div className="border rounded-[.5rem] mt-[1.5rem]">

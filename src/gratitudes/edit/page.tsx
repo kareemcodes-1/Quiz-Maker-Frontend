@@ -63,7 +63,7 @@ const GratitudeEdit = () => {
           if(res){
               toast.success('Updated Gratitude');
               dispatch(updateGratitude(res));
-              navigate('/gratitude');
+              navigate('/gratitudes');
           }
         } catch (error) {
           console.log(error);

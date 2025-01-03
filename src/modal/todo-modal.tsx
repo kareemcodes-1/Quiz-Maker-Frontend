@@ -132,8 +132,9 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
           if (res.data) {
             dispatchReduxAction(addTodo(res.data));
             toast.success("Created Todo");
+            dispatch({type: "SET_NAME", payload: ""});
             closeModal();
-        }
+          }
         }
     }
   };
@@ -169,7 +170,7 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
             </div>
           </div>
 
-          <div className="flex items-center gap-[1rem]">
+          <div className="flex items-center gap-[.5rem]">
             <h1>Select Date: </h1>
             <button
               type="button"

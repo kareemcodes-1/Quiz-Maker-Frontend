@@ -1,7 +1,7 @@
 import { Todo } from "../../types/type";
 import { Pencil } from "lucide-react";
 import { Badge } from "../components/ui/badge";
-import { deleteTodos, editTodo, updateTodos } from "../../src/slices/todoSlice";
+import { deleteTodos, editTodo, handleTodosFilter, updateTodos } from "../../src/slices/todoSlice";
 import { useDispatch } from "react-redux";
 import { useCompleteTodoMutation, useDeleteTodoMutation } from "../../src/slices/todoApiSlice";
 import toast from "react-hot-toast";
@@ -43,11 +43,24 @@ const TodoCard = ({ todo }: { todo: Todo }) => {
     return "";
   };
 
+  const renderTime = (time: string) => {
+      if(time === 'morning'){
+        return "🌤️";
+      }else if (time === "afternoon"){
+        return "🌇";
+      }else if(time === "night"){
+         return "🌆";
+      }else{
+        return "";
+      }
+  }
+
   async function handleDeleteTodo(id: string) {
     try {
       await deleteTodo(id).unwrap(); // Use `.unwrap()` to handle potential RTK Query errors
       dispatch(deleteTodos(id));
       toast.success("Deleted Todo");
+      dispatch(handleTodosFilter('today'));
     } catch (error) {
       console.error("Failed to delete todo:", error);
       toast.error("Failed to delete Todo");
@@ -131,7 +144,7 @@ const TodoCard = ({ todo }: { todo: Todo }) => {
 
       <div className="flex flex-col lg:flex-row items-start lg:items-center gap-[1rem] lg:gap-[2rem] w-full lg:w-auto">
         <div className="flex items-center gap-[.5rem] lg:gap-[1rem]">
-          <Badge>{displayDate()}</Badge>
+          <Badge>{renderTime(todo.time)} {displayDate()}</Badge>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
