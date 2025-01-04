@@ -8,15 +8,24 @@ import { RootState } from "../../../store/store";
 import { useNavigate } from "react-router";
 import { updateLearning } from "../../slices/whatILearntSlice";
 import { useUpdateLearningMutation } from "../../slices/whatILearntApiSlice";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../components/ui/select";
 
 const LearningEdit = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const quillInstance = useRef<Quill | null>(null);
   const [value, setValue] = useState<string>('');
   const {editingLearning} = useSelector((state: RootState) => state.learning);
+  const [selectedProjectId, setSelectedProjectId] = useState<string>('');
   const [updatedLearning] = useUpdateLearningMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const {projects} = useSelector((state: RootState) => state.project);
 
   useEffect(() => {
     if (editorRef.current) {
@@ -36,6 +45,7 @@ const LearningEdit = () => {
       if (editingLearning?.content) {
         quillInstance.current.root.innerHTML = editingLearning.content;
         setValue(editingLearning?.content);
+        setSelectedProjectId(editingLearning.projectId._id);
       }
 
       quillInstance.current.on("text-change", () => {
@@ -51,9 +61,14 @@ const LearningEdit = () => {
   }, []);
 
   const handleSubmit = async () => {
-     if(editingLearning){
+    const foundProject = projects.find((project) => project._id === selectedProjectId);
+    if(foundProject && editingLearning){
         const learning = {
             _id: editingLearning._id,
+            projectId: {
+              ...foundProject,
+              _id: foundProject._id
+            },
             content: value,
             createdAt: editingLearning.createdAt
         }
@@ -63,12 +78,12 @@ const LearningEdit = () => {
           if(res){
               toast.success('Updated Learning');
               dispatch(updateLearning(res));
-              navigate('/learning');
+              navigate('/learnings');
           }
         } catch (error) {
           console.log(error);
         }
-     }
+    }
   }
 
   return (
@@ -77,6 +92,28 @@ const LearningEdit = () => {
       <h1 className="text-[2.5rem]">Edit Learning</h1>
       <div className="flex items-center gap-[.5rem] relative">
       <button type="button" className="yena-btn" onClick={handleSubmit}>Save Note</button>
+
+      <Select onValueChange={(value) => setSelectedProjectId(value)}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue
+                placeholder={editingLearning?.projectId.name || "Select a project"}
+              />
+            </SelectTrigger>
+            <SelectContent>
+              {projects?.length > 0 ? (
+                projects.map((project) => (
+                  <SelectItem key={project._id} value={project._id}>
+                      <span> {project.emoji}</span>
+                      <span> {project.name}</span>
+                  </SelectItem>
+                ))
+              ) : (
+                <SelectItem disabled value="No projects">
+                  No projects available
+                </SelectItem>
+              )}
+            </SelectContent>
+          </Select>
       </div>
       </div>
       <div className="border rounded-[.5rem] mt-[1.5rem]">

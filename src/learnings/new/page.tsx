@@ -2,18 +2,28 @@ import  { useEffect, useRef, useState } from "react";
 import Layout from "../../layout";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import { addLearning } from "../../slices/whatILearntSlice";
 import { useCreateLearningMutation } from "../../slices/whatILearntApiSlice";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../components/ui/select";
+import { RootState } from "../../../store/store";
 
 
 const LearningNew = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
+  const {projects} = useSelector((state: RootState) => state.project);
   const quillInstance = useRef<Quill | null>(null);
   const [value, setValue] = useState<string>('');
   const [createLearning] = useCreateLearningMutation();
+  const [selectedProjectId, setSelectedProjectId] = useState<string>(projects[0]?._id);
   const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -44,13 +54,21 @@ const LearningNew = () => {
     }
   }, []);
 
-  const handleSubmit = async () => {
-      const learning = {
-           _id: '',
-          content: value,
-          createdAt: '',
-      }
 
+  const handleSubmit = async () => {
+      const findProject = projects.find((project) => project._id === selectedProjectId)
+      if(findProject){
+        const learning = {
+          _id: '',
+         projectId: {
+           ...findProject,
+           _id: findProject._id
+         },
+         content: value,
+         createdAt: '',
+        }
+
+        
       try {
         const res = await createLearning(learning).unwrap();
         if(res){
@@ -61,7 +79,7 @@ const LearningNew = () => {
       } catch (error) {
         console.log(error);
       }
-
+      }
   }
 
   return (
@@ -70,6 +88,31 @@ const LearningNew = () => {
       <h1 className="text-[2.5rem]">Create Learning</h1>
       <div className="flex items-center gap-[.5rem] relative">
       <button type="button" className="yena-btn" onClick={handleSubmit}>Save Note</button>
+
+      
+      <Select onValueChange={(value) => setSelectedProjectId(value)}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue
+                placeholder={projects?.[0]?.name || "Select a project"}
+              />
+            </SelectTrigger>
+            <SelectContent>
+              {projects?.length > 0 ? (
+                projects.map((project) => (
+                  <SelectItem key={project._id} value={project._id}>
+                    <div className="flex items-center gap-[.5rem]">
+                    <div>{project.emoji}</div>
+                    <div>{project.name}</div>
+                    </div>
+                  </SelectItem>
+                ))
+              ) : (
+                <SelectItem disabled value="No projects">
+                  No projects available
+                </SelectItem>
+              )}
+            </SelectContent>
+          </Select>
       </div>
       </div>
       <div className="border rounded-[.5rem] mt-[1.5rem]">

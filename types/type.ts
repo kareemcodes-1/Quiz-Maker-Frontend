@@ -16,6 +16,7 @@ export type Focus = {
 export type WIL = {
     _id: string;
     content: string;
+    projectId: Project;
     createdAt: string;
 }
 
@@ -35,7 +36,11 @@ export type Memory = {
     _id: string;
     name: string;
     projectId: Project;
-    image: string
+    image: string;
+    steps: string,
+    mins: string;
+    kilometers: string;
+    calories: string;
     createdAt: string;
 }
 

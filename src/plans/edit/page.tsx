@@ -112,7 +112,7 @@ const PlanEditPage = () => {
                 </SelectItem>
               )}
             </SelectContent>
-          </Select>
+        </Select>
       </div>
       </div>
       <div className="border rounded-[.5rem] mt-[1.5rem]">

@@ -42,7 +42,13 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
   const [imagePreview, setImagePreview] = useState<string>("");
   const [selectedProjectId, setSelectedProjectId] = useState<string>("");
   const [name, setName] = useState('');
+  const [steps, setSteps] = useState('');
+  const [kilometers, setKilometers] = useState('');
+  const [mins, setMins] = useState('');
+  const [calories, setCalories] = useState('');
+  
   const imageRef = useRef<HTMLInputElement | null>(null);
+  const [showField, setShowField] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   const [createMemory] = useCreateMemoryMutation();
@@ -53,6 +59,13 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
       setName(editingMemory.name);
       setImagePreview(editingMemory.image);
       setSelectedProjectId(editingMemory.projectId._id);
+      if(editingMemory.projectId.name === 'Fitness'){
+        setShowField(true);
+        setCalories(editingMemory.calories);
+        setMins(editingMemory.mins);
+        setKilometers(editingMemory.kilometers);
+        setSteps(editingMemory.steps);
+      }
     } else {
       setName("");
       setImagePreview("");
@@ -95,42 +108,109 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
     const formData = new FormData(event.currentTarget);
     
     if(editingMode && editingMemory){
-      const memory = {
-        _id: editingMemory._id,
-        projectId: {
-          ...editingMemory.projectId,
-          _id: selectedProjectId
-        },
-        name,
-        image: imagePreview,
-        createdAt: '',
-      };
-      try {
-        const res = await updateMemory({id: editingMemory._id, data: memory}).unwrap();
-        if(res) {
-        toast.success("Updated Memory");
-        dispatch(updateMemories(res));
-        closeModal();
+      const foundProject = projects.find((project) => project._id === selectedProjectId);
+      if(foundProject?.name === 'Fitness'){
+        const memory = {
+          _id: editingMemory._id,
+          projectId: {
+            ...foundProject,
+            _id: selectedProjectId
+          },
+          name,
+          steps,
+          kilometers,
+          mins,
+          calories,
+          image: imagePreview,
+          createdAt: '',
+        };
+        try {
+          const res = await updateMemory({id: editingMemory._id, data: memory}).unwrap();
+          if(res) {
+          toast.success("Updated Memory");
+          dispatch(updateMemories(res));
+          closeModal();
+          }
+        } catch (error) {
+          toast.error(error);
         }
-      } catch (error) {
-        toast.error(error);
+      }else{
+        if(foundProject){
+          const memory = {
+            _id: editingMemory._id,
+            projectId: {
+              ...foundProject,
+              _id: selectedProjectId
+            },
+            name,
+            mins: '',
+            kilometers: '',
+            calories: '',
+            steps: '',
+            image: imagePreview,
+            createdAt: '',
+          };
+          try {
+            const res = await updateMemory({id: editingMemory._id, data: memory}).unwrap();
+            if(res) {
+            toast.success("Updated Memory");
+            dispatch(updateMemories(res));
+            closeModal();
+            }
+          } catch (error) {
+            toast.error(error);
+          }
+        }
       }
+      
     }else{
-      const memory = {
-        projectId: selectedProjectId,
-        name: formData.get("name"),
-        image: imagePreview,
-      };
-    try {
-      const res = await createMemory(memory).unwrap();
-      if (res) {
-      toast.success("Created Memory");
-      dispatch(addMemory(res));
-      closeModal();
+      const foundProject = projects.find((project) => project._id === selectedProjectId);
+      if(foundProject?.name === 'Fitness') {
+        const memory = {
+          projectId: selectedProjectId,
+          name: formData.get("name"),
+          image: imagePreview,
+          kilometers: formData.get("kilometers"),
+          calories: formData.get("calories"),
+          steps: formData.get("steps"),
+          mins: formData.get('mins'),
+        };
+        try {
+          const res = await createMemory(memory).unwrap();
+          if (res) {
+          toast.success("Created Memory");
+          dispatch(addMemory(res));
+          closeModal();
+          }
+        } catch (error) {
+          toast.error(error);
+        }
+      }else{
+        const memory = {
+          projectId: selectedProjectId,
+          name: formData.get("name"),
+          image: imagePreview,
+        };
+        try {
+          const res = await createMemory(memory).unwrap();
+          if (res) {
+          toast.success("Created Memory");
+          dispatch(addMemory(res));
+          closeModal();
+          }
+        } catch (error) {
+          toast.error(error);
+        }
       }
-    } catch (error) {
-      toast.error(error);
     }
+  };
+
+  const showFitnessFields = (selectedProjectId: string) => {
+    const foundProject = projects.find((project) => project._id === selectedProjectId);
+    if(foundProject?.name === 'Fitness'){
+        setShowField(true);
+    }else{
+      setShowField(false);
     }
   };
 
@@ -173,7 +253,7 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
                 <img
                   src={imagePreview}
                   alt="preview-img"
-                  className="h-[15rem] w-full rounded-lg border object-cover border-dashed"
+                  className={`${showField ? 'h-[10rem]' : 'h-[15rem]'} w-full rounded-lg border object-cover border-dashed`}
                 />
               ) : (
                 <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
@@ -196,7 +276,7 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
             </div>
 
 
-          <Select onValueChange={(value) => setSelectedProjectId(value)}>
+          <Select onValueChange={(value) => {setSelectedProjectId(value); showFitnessFields(value);}}>
             <SelectTrigger className="w-full">
               <SelectValue
                 placeholder={editingMode ? editingMemory?.projectId.name : projects?.[0]?.name}
@@ -217,6 +297,82 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
               )}
             </SelectContent>
           </Select>
+
+          {showField && (
+              <>
+              <div className="flex items-center w-full gap-[.5rem]">
+              <div className="w-full">
+                <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900 text-start">
+                  Steps
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="steps"
+                    name="steps"
+                    type="text"
+                    value={steps}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setSteps(e.target.value)}
+                    required
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  />
+                </div>
+              </div>
+
+              <div className="w-full">
+                <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900 text-start">
+                Kilometers
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="kilometers"
+                    name="kilometers"
+                    type="text"
+                    value={kilometers}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setKilometers(e.target.value)}
+                    required
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center w-full gap-[.5rem]">
+              <div className="w-full">
+                <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900 text-start">
+                  Calories
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="calories"
+                    name="calories"
+                    type="text"
+                    value={calories}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setCalories(e.target.value)}
+                    required
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  />
+                </div>
+              </div>
+
+              <div className="w-full">
+                <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900 text-start">
+                  Mins
+                </label>
+                <div className="mt-2">
+                  <input
+                    id="mins"
+                    name="mins"
+                    type="text"
+                    value={mins}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => setMins(e.target.value)}
+                    required
+                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
+                  />
+                </div>
+              </div>
+            </div>
+              </>
+          )}
 
 
             <SubmitBtn />
