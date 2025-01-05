@@ -12,7 +12,7 @@ import { createPortal } from "react-dom";
 const MemoryCard = ({ memory }: { memory: Memory }) => {
   const dispatch = useDispatch();
   const [deleteMemory] = useDeleteMemoryMutation();
-  const [showImagePreview, setShowImagePreview] = useState<string>('');
+  const [showImagePreview, setShowImagePreview] = useState<string>("");
   const [, setOpenImageModal] = useState<boolean>(false);
 
   async function handleDeleteMemory(id: string) {
@@ -28,28 +28,39 @@ const MemoryCard = ({ memory }: { memory: Memory }) => {
   }
 
   const showImage = (img: string) => {
-      setShowImagePreview(img)
-      setOpenImageModal(true);
-  }
+    setShowImagePreview(img);
+    setOpenImageModal(true);
+  };
 
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg">
-      <img onClick={() => showImage(memory.image)}
+      <img
+        onClick={() => showImage(memory.image)}
         className="w-full h-[15rem] object-cover cursor-pointer"
         src={memory.image}
         alt={memory.name}
       />
 
-      {showImagePreview && (
+      {showImagePreview &&
         createPortal(
-            <div className="fixed top-0 right-0 left-0 z-[100] h-screen">
-                <div className="bg-[#000000c7] backdrop-blur-sm w-full h-full absolute cursor-pointer" onClick={() => {setShowImagePreview(''); setOpenImageModal(false);}}/>
-                <div className=" flex items-center justify-center">
-                <img src={showImagePreview} className="lg:w-[30rem] w-[20rem] lg:h-screen h-[20rem] lg:mt-0 mt-[10rem] z-[100] rounded-[.5rem] object-cover" alt="" />
-                </div>
-            </div>, document.body
-        )
-      )}
+          <div className="fixed top-0 right-0 left-0 z-[100] h-screen">
+            <div
+              className="bg-[#000000c7] backdrop-blur-sm w-full h-full absolute cursor-pointer"
+              onClick={() => {
+                setShowImagePreview("");
+                setOpenImageModal(false);
+              }}
+            />
+            <div className=" flex items-center justify-center">
+              <img
+                src={showImagePreview}
+                className="lg:w-[30rem] w-[20rem] lg:h-screen h-[20rem] lg:mt-0 mt-[10rem] z-[100] rounded-[.5rem] object-cover"
+                alt=""
+              />
+            </div>
+          </div>,
+          document.body
+        )}
 
       <div className="flex items-center justify-between px-[1rem] py-[1rem]">
         <div className="font-semibold">{memory.name}</div>
@@ -70,13 +81,28 @@ const MemoryCard = ({ memory }: { memory: Memory }) => {
           </button>
         </div>
       </div>
-      <div className="flex items-center gap-[.5rem] p-[1rem]">
-        <Badge className="flex items-center gap-[.3rem]">
-          <div>{memory.projectId.emoji}</div> <div>{memory.projectId.name}</div>
-        </Badge>
-        <Badge>
-          {format(new Date(memory.createdAt).toISOString(), "dd-MM-yyyy")}
-        </Badge>
+
+      <div className="flex items-start flex-col gap-[.5rem] p-[1rem]">
+        {memory.mins && memory.calories && memory.kilometers && memory.steps ? (
+          <div className="flex items-start flex-col gap-[.5rem]">
+            <div className="flex items-center gap-[.5rem]">
+              <Badge>{memory.mins}</Badge>
+              <Badge>{memory.steps}</Badge>
+              <Badge>{memory.calories}</Badge>
+              <Badge>{memory.kilometers}</Badge>
+            </div>
+          </div>
+        ) : null}
+
+        <div className="flex items-center gap-[.5rem]">
+          <Badge className="flex items-center gap-[.3rem]">
+            <div>{memory.projectId.emoji}</div>{" "}
+            <div>{memory.projectId.name}</div>
+          </Badge>
+          <Badge>
+            {format(new Date(memory.createdAt).toISOString(), "dd-MM-yyyy")}
+          </Badge>
+        </div>
       </div>
     </div>
   );
