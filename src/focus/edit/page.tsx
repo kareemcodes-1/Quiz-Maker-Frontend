@@ -58,7 +58,7 @@ const EditFocusPage = () => {
         const note = {
             _id: editingFocus._id,
             content: value,
-            date
+            date: today || tomorrow ? date : editingFocus.date 
         }
   
         try {

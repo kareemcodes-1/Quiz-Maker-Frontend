@@ -1,9 +1,9 @@
 import { Todo } from "../../types/type";
 import { Pencil } from "lucide-react";
 import { Badge } from "../components/ui/badge";
-import { deleteTodos, editTodo, handleTodosFilter, updateTodos } from "../../src/slices/todoSlice";
+import { addTodo, deleteTodos, editTodo, handleTodosFilter, updateTodos } from "../../src/slices/todoSlice";
 import { useDispatch } from "react-redux";
-import { useCompleteTodoMutation, useDeleteTodoMutation } from "../../src/slices/todoApiSlice";
+import { useCompleteTodoMutation, useCreateTodoMutation, useDeleteTodoMutation } from "../../src/slices/todoApiSlice";
 import toast from "react-hot-toast";
 import JSConfetti from "js-confetti";
 import { addDays, format, isSameDay } from "date-fns";
@@ -13,7 +13,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../components/ui/tooltip";
-import { TrashIcon } from "@heroicons/react/24/outline";
+import { PlusIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 const jsConfetti = new JSConfetti();
 
@@ -21,6 +21,7 @@ const TodoCard = ({ todo }: { todo: Todo }) => {
   const dispatch = useDispatch();
   const [deleteTodo] = useDeleteTodoMutation();
   const [completeTodo] = useCompleteTodoMutation();
+  const [createTodo] = useCreateTodoMutation();
 
   const displayDate = () => {
     const today = new Date();
@@ -83,6 +84,27 @@ const TodoCard = ({ todo }: { todo: Todo }) => {
     }
   }
 
+  async function markTodoTomorrow(todo: Todo){
+       if(todo.date){
+        try {
+          const data = {
+              ...todo,
+              id: '',
+              completed: false,
+              date: new Date(new Date().setDate(new Date().getDate() + 1)).toISOString(),
+          }
+          const res = await createTodo(data).unwrap();
+          if(res){
+            dispatch(addTodo(res));
+            toast.success("Created Todo");
+            dispatch(handleTodosFilter('today'));
+          }
+      } catch (error) {
+       console.log(error);
+        }
+      }
+  }
+
   return (
     <div className="border w-full shadow-md rounded-[.5rem] p-[1rem] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-[1rem] lg:gap-[.5rem]">
       <div className="flex items-center gap-[.5rem] lg:gap-[1rem] w-full lg:w-auto">
@@ -140,11 +162,12 @@ const TodoCard = ({ todo }: { todo: Todo }) => {
           </label>
           </div>
         )}
-        <h1 className="text-[1rem] lg:text-[1.2rem] truncate">{todo.name}</h1>
+        <h1 className={`text-[1rem] lg:text-[1.2rem] truncate ${todo.completed ? 'line-through' : ''}`}>{todo.name}</h1>
       </div>
 
       <div className="flex flex-col lg:flex-row items-start lg:items-center gap-[1rem] lg:gap-[2rem] w-full lg:w-auto">
         <div className="flex items-center gap-[.5rem] lg:gap-[1rem]">
+        <Badge className="flex items-center cursor-pointer" onClick={() => markTodoTomorrow(todo)}><PlusIcon className="w-[.7rem]"/><div>Tomorrow?</div></Badge>
           <Badge>{renderTime(todo.time)} {displayDate()}</Badge>
           <TooltipProvider>
             <Tooltip>

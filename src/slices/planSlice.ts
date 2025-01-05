@@ -3,14 +3,18 @@ import { Plan } from "../../types/type";
 
 type State = {
     plans: Plan[],
+    filteredPlans: Plan[],
     openPlanModal: boolean;
     editingPlan: Plan | null;
+    value: string;
 }
 
 const initialState: State = {
     plans: [],
+    filteredPlans: [],
     openPlanModal: false,
-    editingPlan: null
+    editingPlan: null,
+    value: 'all',
 }
 
 const planSlice = createSlice({
@@ -19,6 +23,7 @@ const planSlice = createSlice({
     reducers: {
         allPlans(state, action: PayloadAction<Plan[]>){
             state.plans = action.payload;
+            state.filteredPlans = action.payload;
         },
         setOpenPlanModal(state, action: PayloadAction<boolean>){
             state.openPlanModal = action.payload;
@@ -29,6 +34,18 @@ const planSlice = createSlice({
                 state.editingPlan = findPlan;
             }
         },
+        handlePlansFilter(state, action: PayloadAction<string>){
+            state.value = action.payload;
+            const updatedPlans = state.filteredPlans.filter((plan) => {
+               if(state.value === 'all'){
+                  return plan;
+               }else if(state.value === action.payload.toLowerCase()){
+                   return plan.projectId.name.toLowerCase() === state.value.toLowerCase();
+               }
+            });
+      
+            state.plans = updatedPlans;
+          },
         updatePlans(state, action: PayloadAction<Plan>) {
               const updatedPlan = state.plans.map((plan) => {
                 if (plan._id === action.payload._id) {
@@ -49,5 +66,5 @@ const planSlice = createSlice({
     }
 });
 
-export const {allPlans, setOpenPlanModal, findPlan, deletePlans, updatePlans} = planSlice.actions;
+export const {allPlans, setOpenPlanModal, findPlan, deletePlans, updatePlans, handlePlansFilter} = planSlice.actions;
 export default planSlice.reducer;
