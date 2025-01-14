@@ -120,6 +120,10 @@ const GoalCard = ({ goal }: { goal: Goal}) => {
       </Badge>
     </div>
 
+    <Badge className="flex items-center gap-[.3rem] text-rose-500 border-dashed border-rose-500">
+          Deadline: {new Date(goal.endDeadlineDate).toLocaleString('en-US', { month: 'short', day: 'numeric' })}
+      </Badge>
+
    <DropdownMenu
           open={openActions}
           onOpenChange={(open) => setOpenActions(open)}

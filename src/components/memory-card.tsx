@@ -84,7 +84,7 @@ const MemoryCard = ({ memory }: { memory: Memory }) => {
 
       <div className="flex items-start flex-col gap-[.5rem] p-[1rem]">
         {memory.mins && memory.calories && memory.kilometers && memory.steps ? (
-          <div className="flex items-start flex-col gap-[.5rem]">
+          <div className="flex items-start flex-col gap-[.5rem] lg:overflow-auto overflow-x-scroll">
             <div className="flex items-center gap-[.5rem]">
               <Badge>{memory.mins}</Badge>
               <Badge>{memory.steps}</Badge>

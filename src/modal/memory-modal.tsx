@@ -312,7 +312,6 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
                     type="text"
                     value={steps}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setSteps(e.target.value)}
-                    required
                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   />
                 </div>
@@ -329,7 +328,6 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
                     type="text"
                     value={kilometers}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setKilometers(e.target.value)}
-                    required
                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   />
                 </div>
@@ -348,7 +346,6 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
                     type="text"
                     value={calories}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setCalories(e.target.value)}
-                    required
                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   />
                 </div>
@@ -365,7 +362,6 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
                     type="text"
                     value={mins}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setMins(e.target.value)}
-                    required
                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   />
                 </div>
