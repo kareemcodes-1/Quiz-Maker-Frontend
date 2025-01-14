@@ -49,6 +49,8 @@ export type Goal = {
     name: string;
     projectId: Project;
     time: string;
+    startDeadlineDate: Date;
+    endDeadlineDate: Date;
     completed: boolean;
 }
 

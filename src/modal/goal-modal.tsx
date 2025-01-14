@@ -21,6 +21,16 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../components/ui/select";
+import { format } from "date-fns"
+import { CalendarIcon } from "lucide-react"
+import { Button } from "../components/ui/button"
+import { Calendar } from "../components/ui/calendar"
+import { cn } from "../lib/utils"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "../components/ui/popover"
 
 const SubmitBtn = () => {
   const { pending } = useFormStatus();
@@ -44,20 +54,27 @@ const GoalModal = ({ closeModal }: { closeModal: () => void }) => {
   const [selectedProjectId, setSelectedProjectId] = useState<string>("");
   const [time, setTime] = useState<string>("present");
   const [name, setName] = useState<string>("");
+  const [startDeadlineDate, setStartDeadlineDate] = useState<Date>()
+  const [endDeadlineDate, setEndDeadlineDate] = useState<Date>()
 
   const [createGoal] = useCreateGoalMutation();
   const [updateGoal] = useUpdateGoalMutation();
   const dispatch = useDispatch();
+  console.log(startDeadlineDate);
 
   useEffect(() => {
     if (editingGoal && editingMode) {
       setName(editingGoal.name);
       setTime(editingGoal.time);
       setSelectedProjectId(editingGoal.projectId._id);
+      setStartDeadlineDate(editingGoal.startDeadlineDate);
+      setEndDeadlineDate(editingGoal.endDeadlineDate);
     } else {
       setName("");
       setTime("");
       setSelectedProjectId("");
+      setStartDeadlineDate(undefined);
+      setEndDeadlineDate(undefined);
     }
   }, [editingGoal, editingMode]);
 
@@ -71,6 +88,8 @@ const GoalModal = ({ closeModal }: { closeModal: () => void }) => {
         },
         name,
         time,
+        startDeadlineDate: startDeadlineDate as Date,
+        endDeadlineDate: endDeadlineDate as Date,
         completed: false,
       };
       const res = await updateGoal({ data: goal, id: editingGoal._id });
@@ -164,6 +183,55 @@ const GoalModal = ({ closeModal }: { closeModal: () => void }) => {
             </SelectContent>
           </Select>
             </div>
+
+
+                <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant={"outline"}
+          className={cn(
+            "w-[240px] justify-start text-left font-normal",
+            !startDeadlineDate && "text-muted-foreground"
+          )}
+        >
+          <CalendarIcon />
+          {startDeadlineDate ? format(startDeadlineDate, "PPP") : <span>Start deadline</span>}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-full p-0" align="start">
+        <Calendar
+          mode="single"
+          selected={startDeadlineDate}
+          onSelect={setStartDeadlineDate}
+          initialFocus
+        />
+      </PopoverContent>
+    </Popover>
+
+        
+
+            <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          variant={"outline"}
+          className={cn(
+            "w-[240px] justify-start text-left font-normal",
+            !endDeadlineDate && "text-muted-foreground"
+          )}
+        >
+          <CalendarIcon />
+          {endDeadlineDate ? format(endDeadlineDate, "PPP") : <span>Ending deadline</span>}
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="w-full p-0" align="start">
+        <Calendar
+          mode="single"
+          selected={endDeadlineDate}
+          onSelect={setEndDeadlineDate}
+          initialFocus
+        />
+      </PopoverContent>
+    </Popover>
 
             <SubmitBtn />
           </form>

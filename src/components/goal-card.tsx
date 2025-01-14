@@ -1,17 +1,25 @@
 import { Goal } from "../../types/type";
-import { Pencil, Trash } from "lucide-react";
 import { Badge } from "../components/ui/badge";
 import { useDispatch } from "react-redux";
 import { useCompleteGoalMutation, useDeleteGoalMutation } from "../../src/slices/goalApiSlice";
 import toast from "react-hot-toast";
 import JSConfetti from 'js-confetti'
 import { completeAGoal, deleteGoals, editGoal } from "../../src/slices/goalSlice";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../components/ui/dropdown-menu";
+import { useState } from "react";
+import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
 
 
 const GoalCard = ({ goal }: { goal: Goal}) => {
   const dispatch = useDispatch();
   const [deleteGoal] = useDeleteGoalMutation();
   const [completeGoal] = useCompleteGoalMutation();
+  const [openActions, setOpenActions] = useState<boolean>(false);
 
   const jsConfetti = new JSConfetti();
 
@@ -44,7 +52,7 @@ const GoalCard = ({ goal }: { goal: Goal}) => {
 
 
   return (
-    <div className="border w-full shadow-md rounded-[.5rem] p-[1rem] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-[1rem]">
+    <div className="relative border w-full shadow-md rounded-[.5rem] p-[1rem] flex flex-col lg:flex-row items-start lg:items-center justify-between gap-[1rem]">
   <div className="flex items-center gap-[1rem]">
      {goal.completed ? (
           <div className="inline-flex items-center">
@@ -111,22 +119,22 @@ const GoalCard = ({ goal }: { goal: Goal}) => {
         <div className="text-[.8rem]">{goal.projectId.name}</div>
       </Badge>
     </div>
-    <div className="flex items-center gap-[1rem]">
-      <button
-        type="button"
-        onClick={() => dispatch(editGoal(goal))}
-        className="text-gray-500"
-      >
-        <Pencil className="w-[1.4rem]" />
-      </button>
-      <button
-        type="button"
-        onClick={() => handleDeleteGoal(goal._id)}
-        className="text-red-500"
-      >
-        <Trash className="w-[1.4rem]" />
-      </button>
-    </div>
+
+   <DropdownMenu
+          open={openActions}
+          onOpenChange={(open) => setOpenActions(open)}
+        >
+          <DropdownMenuTrigger className="lg:static absolute right-[.5rem] top-[.5rem]">
+            <EllipsisHorizontalIcon
+              onClick={() => setOpenActions(!openActions)}
+              className="w-[2rem] h-[2rem] text-muted-foreground"
+            />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuItem onClick={() => dispatch(editGoal(goal))} className="cursor-pointer">Edit</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => handleDeleteGoal(goal._id)} className="cursor-pointer">Delete</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
   </div>
    </div>
   );
