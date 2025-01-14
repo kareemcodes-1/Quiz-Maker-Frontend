@@ -33,7 +33,7 @@ const MemoryCard = ({ memory }: { memory: Memory }) => {
   };
 
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg">
+    <div className="max-w-sm rounded shadow-lg">
       <img
         onClick={() => showImage(memory.image)}
         className="w-full h-[15rem] object-cover cursor-pointer"
