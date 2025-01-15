@@ -139,7 +139,7 @@ const GoalModal = ({ closeModal }: { closeModal: () => void }) => {
         projectId: selectedProjectId,
         name: formData.get("name"),
         time,
-        images: imagePreview,
+        image: imagePreview,
         completed: false,
       };
       const res = await createGoal(goal);
@@ -222,8 +222,8 @@ const GoalModal = ({ closeModal }: { closeModal: () => void }) => {
                 </SelectContent>
               </Select>
             </div>
-
-            <div className="flex gap-[.5rem]">
+{/* 
+            <div className="flex gap-[.5rem]"> */}
               <Popover>
                 <PopoverTrigger asChild>
                   <Button
@@ -277,7 +277,7 @@ const GoalModal = ({ closeModal }: { closeModal: () => void }) => {
                   />
                 </PopoverContent>
               </Popover>
-            </div>
+            {/* </div> */}
 
             <div className="col-span-full relative">
               {editingMode && (
