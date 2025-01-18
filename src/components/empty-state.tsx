@@ -3,7 +3,7 @@
 const EmptyState = () => {
   return (
     <div className="flex flex-col items-center justify-center">
-      <picture>
+      {/* <picture>
         <source
           srcSet="https://fonts.gstatic.com/s/e/notoemoji/latest/1f62d/512.webp"
           type="image/webp"
@@ -15,7 +15,7 @@ const EmptyState = () => {
           height="32"
           className="w-[8rem] flex items-center justify-center"
         />
-      </picture>
+      </picture> */}
       <h1 className="text-[2rem]">Here is empty.</h1>
     </div>
   );
