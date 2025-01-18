@@ -12,7 +12,9 @@ import {
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
 import { useState } from "react";
-import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
+import { EllipsisHorizontalIcon, PhotoIcon } from "@heroicons/react/24/outline";
+import { createPortal } from "react-dom";
+import { differenceInDays } from "date-fns";
 
 
 const GoalCard = ({ goal }: { goal: Goal}) => {
@@ -20,6 +22,8 @@ const GoalCard = ({ goal }: { goal: Goal}) => {
   const [deleteGoal] = useDeleteGoalMutation();
   const [completeGoal] = useCompleteGoalMutation();
   const [openActions, setOpenActions] = useState<boolean>(false);
+  const [showImage, setShowImage] = useState<boolean>(false);
+  const [imagePreview, setImagePreview] = useState<string>("");
 
   const jsConfetti = new JSConfetti();
 
@@ -48,6 +52,11 @@ const GoalCard = ({ goal }: { goal: Goal}) => {
       console.error("Failed to complete todo:", error);
       toast.error("Failed to mark Todo as completed");
     }
+  }
+
+  function previewGoalImage(image: string){
+      setShowImage(true);
+      setImagePreview(image);
   }
 
 
@@ -113,6 +122,30 @@ const GoalCard = ({ goal }: { goal: Goal}) => {
   </div>
 
   <div className="flex flex-col lg:flex-row items-start lg:items-center gap-[1rem] lg:gap-[2rem]">
+
+       {showImage &&
+            createPortal(
+              <div className="fixed top-0 right-0 left-0 z-[100] h-screen">
+                <div
+                  className="bg-[#000000c7] backdrop-blur-sm w-full h-full absolute cursor-pointer"
+                  onClick={() => {
+                    setShowImage(false);
+                    setImagePreview("");
+                  }}
+                />
+                <div className=" flex items-center justify-center">
+                  <img
+                    src={imagePreview}
+                    className="lg:w-[30rem] w-[20rem] lg:h-screen h-[20rem] lg:mt-0 mt-[10rem] z-[100] rounded-[.5rem] object-cover"
+                    alt="image preview"
+                  />
+                </div>
+              </div>,
+              document.body
+      )}
+
+    <PhotoIcon className="w-[1.7rem] h-[1.7rem] text-muted-foreground cursor-pointer" onClick={() => previewGoalImage(goal.image)}/>
+
     <div className="flex items-center gap-[1rem]">
       <Badge className="flex items-center gap-[.3rem]">
       <div className="text-[.8rem]">{goal.projectId.emoji}</div>{" "}
@@ -120,9 +153,10 @@ const GoalCard = ({ goal }: { goal: Goal}) => {
       </Badge>
     </div>
 
-    <Badge className="flex items-center gap-[.3rem] text-rose-500 border-dashed border-rose-500">
-          Deadline: {new Date(goal.endDeadlineDate).toLocaleString('en-US', { month: 'short', day: 'numeric' })}
+    <Badge className="flex items-center gap-[.3rem] text-white bg-red-600 border-none">
+         {differenceInDays(new Date(goal.endDeadlineDate), new Date(goal.startDeadlineDate))} days left
       </Badge>
+      
 
    <DropdownMenu
           open={openActions}

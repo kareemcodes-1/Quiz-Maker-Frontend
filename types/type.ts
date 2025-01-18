@@ -51,6 +51,7 @@ export type Goal = {
     time: string;
     startDeadlineDate: Date;
     endDeadlineDate: Date;
+    image: string;
     completed: boolean;
 }
 
