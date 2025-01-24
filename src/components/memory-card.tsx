@@ -8,8 +8,9 @@ import toast from "react-hot-toast";
 import { deleteMemories, editMemory } from "../slices/memorySlice";
 import { useState } from "react";
 import { createPortal } from "react-dom";
+import { Skeleton } from "./ui/skeleton";
 
-const MemoryCard = ({ memory }: { memory: Memory }) => {
+const MemoryCard = ({ memory, isLoading }: { memory: Memory, isLoading: boolean }) => {
   const dispatch = useDispatch();
   const [deleteMemory] = useDeleteMemoryMutation();
   const [showImagePreview, setShowImagePreview] = useState<string>("");
@@ -34,12 +35,16 @@ const MemoryCard = ({ memory }: { memory: Memory }) => {
 
   return (
     <div className="rounded shadow-lg">
-      <img
+      {isLoading ? (
+      <Skeleton className=" w-full h-[15rem] rounded-xl" />
+      ) : (
+        <img
         onClick={() => showImage(memory.image)}
         className="w-full h-[15rem] object-cover cursor-pointer"
         src={memory.image}
         alt={memory.name}
       />
+      )}
 
       {showImagePreview &&
         createPortal(
@@ -55,7 +60,7 @@ const MemoryCard = ({ memory }: { memory: Memory }) => {
               <img
                 src={showImagePreview}
                 className="lg:w-[30rem] w-[20rem] lg:h-screen h-[20rem] lg:mt-0 mt-[10rem] z-[100] rounded-[.5rem] object-cover"
-                alt=""
+                alt={memory.name}
               />
             </div>
           </div>,

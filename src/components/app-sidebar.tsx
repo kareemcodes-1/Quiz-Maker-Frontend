@@ -15,7 +15,7 @@ import { RootState } from "../../store/store"
 import { allProjects, setOpenProjectModal } from "../../src/slices/projectSlice"
 import { useGetAllProjectsQuery } from "../../src/slices/projectApiSlice"
 import { useEffect } from "react"
-import { AcademicCapIcon, ArchiveBoxIcon,  BeakerIcon,  PhotoIcon, PresentationChartBarIcon, RectangleStackIcon, SparklesIcon } from "@heroicons/react/24/outline"
+import { AcademicCapIcon,  PhotoIcon, PresentationChartBarIcon, RectangleStackIcon} from "@heroicons/react/24/outline"
 import { Dialog } from "@radix-ui/react-dialog"
 import ProjectModal from "../modal/project-modal"
 
@@ -25,21 +25,6 @@ const items = [
     title: "Todos",
     url: "/",
     icon: Home,
-  },
-  {
-    title: "Focus",
-    url: "/focus",
-    icon: ArchiveBoxIcon,
-  },
-  {
-    title: "What I Learnt",
-    url: "/learnings",
-    icon: BeakerIcon,
-  },
-  {
-    title: "Gratitude",
-    url: "/gratitudes",
-    icon: SparklesIcon,
   },
   {
     title: "Philosophy",
