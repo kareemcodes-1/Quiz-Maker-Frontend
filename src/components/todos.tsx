@@ -24,9 +24,9 @@ const Todos = () => {
   return (
       <div className='flex flex-col gap-[1rem] mt-[2rem]'>
            <div className="flex items-center gap-[1rem] mb-[1rem]">
-               <div className={`yena-btn  ${value === 'morning' && '--black'} !h-[2.3rem] cursor-pointer`} onClick={() => dispatch(handleFilter('morning'))}>Morning 🌤️</div>
-               <div className={`yena-btn ${value === 'afternoon' && '--black'} !h-[2.3rem] cursor-pointer`} onClick={() => dispatch(handleFilter('afternoon'))}>Afternoon 🌇</div>
-               <div className={`yena-btn ${value === 'night' && '--black'} !h-[2.3rem] cursor-pointer`} onClick={() => dispatch(handleFilter('night'))}>Night 🌆</div>
+               <div className={`yena-btn  ${value === 'morning' && 'yena-btn-black'} !h-[2.3rem] cursor-pointer`} onClick={() => dispatch(handleFilter('morning'))}>Morning 🌤️</div>
+               <div className={`yena-btn ${value === 'afternoon' && 'yena-btn-black'} !h-[2.3rem] cursor-pointer`} onClick={() => dispatch(handleFilter('afternoon'))}>Afternoon 🌇</div>
+               <div className={`yena-btn ${value === 'night' && 'yena-btn-black'} !h-[2.3rem] cursor-pointer`} onClick={() => dispatch(handleFilter('night'))}>Night 🌆</div>
            </div>
 
             {filteredTodo.length > 0 ? (

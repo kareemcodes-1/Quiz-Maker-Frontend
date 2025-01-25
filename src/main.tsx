@@ -14,11 +14,16 @@ import PlanEditPage from './plans/edit/page.tsx';
 import Philosophies from './philosophies/page.tsx';
 import PhilosophyNew from './philosophies/new/page.tsx';
 import PhilosophyEdit from './philosophies/edit/page.tsx';
+import Register from './auth/Register.tsx';
+import Login from './auth/Login.tsx';
+import Profile from './settings/profile/page.tsx';
+import { ThemeProvider } from './providers/theme-provider.tsx';
 
 createRoot(document.getElementById('root')!).render(
   // <StrictMode>
             <Provider store={store}>
               <ToastProvider />
+              <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
             <BrowserRouter>
                <Routes>
                    <Route path='/' element={<App />}></Route>
@@ -28,10 +33,14 @@ createRoot(document.getElementById('root')!).render(
                    <Route path='/philosophies/edit/:id' element={<PhilosophyEdit />}></Route>
                    <Route path='/goals' element={<Goals />}></Route>
                    <Route path='/plans' element={<Plans />}></Route>
+                   <Route path='/register' element={<Register />}></Route>
+                   <Route path='/login' element={<Login />}></Route>
                    <Route path='/plans/new' element={<NewPlan />}></Route>
                    <Route path='/plans/edit/:id' element={<PlanEditPage />}></Route>
+                   <Route path="/settings/profile" element={<Profile />} />
                </Routes>
            </BrowserRouter>
+           </ThemeProvider>
             </Provider>
   // </StrictMode>,
 )

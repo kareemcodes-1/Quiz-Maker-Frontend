@@ -11,6 +11,8 @@ import { useCreateProjectMutation } from "../../src/slices/projectApiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { addProject } from "../slices/projectSlice";
+import { Label } from "../components/ui/label";
+import { Input } from "../components/ui/input";
 
 const SubmitBtn = () => {
   const { pending } = useFormStatus();
@@ -19,7 +21,7 @@ const SubmitBtn = () => {
     <button
       disabled={pending}
       type="submit"
-      className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      className="yena-btn dark:yena-btn-black"
     >
       Save
     </button>
@@ -32,7 +34,7 @@ const ProjectModal = ({closeModal}: {closeModal: () => void;}) => {
   const dispatch = useDispatch();
 
   const [createProject] = useCreateProjectMutation();
-  const formAction = async (formData: any) => {
+  const formAction = async (formData: FormData) => {
     const project = {
       name: formData.get("name"),
       emoji: formData.get("emoji"),
@@ -54,19 +56,17 @@ const ProjectModal = ({closeModal}: {closeModal: () => void;}) => {
         <form action={formAction} className="space-y-6">
           <div className="flex items-center w-full gap-[.5rem]">
             <div className="w-full">
-              <label
+              <Label
                 htmlFor="name"
-                className="block text-sm/6 font-medium text-gray-900 text-start"
               >
                 Name
-              </label>
+              </Label>
               <div className="mt-2">
-                <input
+                <Input
                   id="name"
                   name="name"
                   type="text"
                   required
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
             </div>
@@ -75,19 +75,17 @@ const ProjectModal = ({closeModal}: {closeModal: () => void;}) => {
 
           <div className="flex items-center w-full gap-[.5rem]">
             <div className="w-full">
-              <label
+              <Label
                 htmlFor="emoji"
-                className="block text-sm/6 font-medium text-gray-900 text-start"
               >
                 Emoji
-              </label>
+              </Label>
               <div className="mt-2">
-                <input
+                <Input
                   id="emoji"
                   name="emoji"
                   type="text"
                   required
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                 />
               </div>
             </div>

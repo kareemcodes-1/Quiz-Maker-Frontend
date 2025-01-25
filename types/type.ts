@@ -66,3 +66,13 @@ export type Project = {
     name: string;
     emoji: string;
 }
+
+
+export type User = {
+    _id: string;
+    name: string;
+    email: string;
+    avatar: string;
+    password: string;
+    role: string;
+}

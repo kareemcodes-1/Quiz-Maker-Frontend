@@ -64,7 +64,7 @@ const Philosophies = () => {
                   philosophies.map((philosophy, index) => (
                     <button
                     type="button"
-                    className="border hover:bg-gray-50 transition rounded-[.5rem] shadow-md w-full p-[.8rem] cursor-pointer flex flex-col lg:flex-row items-start lg:items-center justify-between gap-[1rem]"
+                    className="border bg-popover transition rounded-[.5rem] shadow-md w-full p-[.8rem] cursor-pointer flex flex-col lg:flex-row items-start lg:items-center justify-between gap-[1rem]"
                   >
                     <div className="flex items-center gap-[.5rem] lg:gap-[1rem] w-full lg:w-auto">
                       {/* <AcademicCapIcon className="text-gray-500 w-[1.2rem] lg:w-[1.5rem]" /> */}
@@ -81,7 +81,7 @@ const Philosophies = () => {
                     </div>
                   
                     <div className="flex items-center gap-[.5rem] lg:gap-[1rem] w-full lg:w-auto justify-between lg:justify-end">
-                      <Badge>{format(new Date(philosophy.createdAt).toISOString(), "dd-MM-yyyy")}</Badge>
+                      <Badge className="text-muted-foreground">{format(new Date(philosophy.createdAt).toISOString(), "dd-MM-yyyy")}</Badge>
                       <button
                         type="button"
                         onClick={() => handleDelete(philosophy._id)}

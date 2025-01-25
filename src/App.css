@@ -14,7 +14,6 @@ body {
   height: 100vh;
   width: 100%;
   font-family: 'CabinetGrotesk-Medium', sans-serif;
-  background: #fff;
 }
 
 
@@ -36,6 +35,119 @@ body {
 .ql-toolbar.ql-snow{
   font-family: 'CabinetGrotesk-Medium', sans-serif !important; 
 }
+
+
+
+.yena-btn{
+  display: inline-flex;
+ -webkit-appearance: none;
+ -moz-appearance: none;
+ appearance: none;
+ align-items: center;
+ justify-content: center;
+ -webkit-user-select: none;
+ -moz-user-select: none;
+ user-select: none;
+ position: relative;
+ white-space: nowrap;
+ vertical-align: middle;
+ outline: transparent solid 2px;
+ outline-offset: 2px;
+ line-height: 1.2;
+ border-radius: .375rem;
+ font-weight: 600;
+ transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
+ transition-duration: .2s;
+ height: 2.5rem;
+ min-width: 2.5rem;
+ font-size: 1rem;
+ padding-left: 1rem;
+ padding-right: 1rem;
+ color: #3c3838;
+ box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1),0 2px 4px -1px rgba(0, 0, 0, .06);
+ background: linear-gradient(180deg, #FFFFFF 0%, #FCF9F5 100%);
+ border-width: 1px;
+ border-style: solid;
+ border-color: #e5e0df;
+}
+
+
+.yena-btn-small{
+display: inline-flex;
+-webkit-appearance: none;
+-moz-appearance: none;
+appearance: none;
+align-items: center;
+justify-content: center;
+-webkit-user-select: none;
+-moz-user-select: none;
+user-select: none;
+position: relative;
+white-space: nowrap;
+vertical-align: middle;
+outline: transparent solid 2px;
+outline-offset: 2px;
+line-height: 1.2;
+border-radius: .375rem;
+font-weight: 600;
+transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
+transition-duration: .2s;
+padding-left: 1rem;
+padding-right: 1rem;
+color: #3c3838;
+box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1),0 2px 4px -1px rgba(0, 0, 0, .06);
+background: linear-gradient(180deg, #FFFFFF 0%, #FCF9F5 100%);
+border-width: 1px;
+border-style: solid;
+border-color: #e5e0df;
+}
+
+.yena-btn-black{
+display: inline-flex;
+ -webkit-appearance: none;
+ -moz-appearance: none;
+ appearance: none;
+ align-items: center;
+ justify-content: center;
+ -webkit-user-select: none;
+ -moz-user-select: none;
+ user-select: none;
+ position: relative;
+ white-space: nowrap;
+ vertical-align: middle;
+ outline: transparent solid 2px;
+ outline-offset: 2px;
+ line-height: 1.2;
+ border-radius: .375rem;
+ font-weight: 600;
+ transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
+ transition-duration: .2s;
+ height: 2.5rem;
+ min-width: 2.5rem;
+ font-size: 1rem;
+ padding-left: 1rem;
+ padding-right: 1rem;
+ color: #fff;
+ box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1),0 2px 4px -1px rgba(0, 0, 0, .06);
+ background: linear-gradient(180deg, #000 0%, #000000d8 100%);
+ border-width: 1px;
+ border-style: solid;
+ border-color: #e5e0df;
+}
+
+.checkbox{
+color: #fff !important;
+}
+
+.checkbox:checked{
+color: #fff !important;
+}
+
+.checkbox-success:checked{
+color: #fff !important;
+}
+
+
 
 @layer base {
   :root {
@@ -109,113 +221,12 @@ body {
   }
 }
 
-
-
-.yena-btn{
-     display: inline-flex;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    align-items: center;
-    justify-content: center;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-    position: relative;
-    white-space: nowrap;
-    vertical-align: middle;
-    outline: transparent solid 2px;
-    outline-offset: 2px;
-    line-height: 1.2;
-    border-radius: .375rem;
-    font-weight: 600;
-    transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
-    transition-duration: .2s;
-    height: 2.5rem;
-    min-width: 2.5rem;
-    font-size: 1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    color: #3c3838;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1),0 2px 4px -1px rgba(0, 0, 0, .06);
-    background: linear-gradient(180deg, #FFFFFF 0%, #FCF9F5 100%);
-    border-width: 1px;
-    border-style: solid;
-    border-color: #e5e0df;
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
-
-.yena-btn-small{
-  display: inline-flex;
- -webkit-appearance: none;
- -moz-appearance: none;
- appearance: none;
- align-items: center;
- justify-content: center;
- -webkit-user-select: none;
- -moz-user-select: none;
- user-select: none;
- position: relative;
- white-space: nowrap;
- vertical-align: middle;
- outline: transparent solid 2px;
- outline-offset: 2px;
- line-height: 1.2;
- border-radius: .375rem;
- font-weight: 600;
- transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
- transition-duration: .2s;
- padding-left: 1rem;
- padding-right: 1rem;
- color: #3c3838;
- box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1),0 2px 4px -1px rgba(0, 0, 0, .06);
- background: linear-gradient(180deg, #FFFFFF 0%, #FCF9F5 100%);
- border-width: 1px;
- border-style: solid;
- border-color: #e5e0df;
-}
-
-.yena-btn.--black{
-  display: inline-flex;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    align-items: center;
-    justify-content: center;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-    position: relative;
-    white-space: nowrap;
-    vertical-align: middle;
-    outline: transparent solid 2px;
-    outline-offset: 2px;
-    line-height: 1.2;
-    border-radius: .375rem;
-    font-weight: 600;
-    transition-property: background-color,border-color,color,fill,stroke,opacity,box-shadow,transform;
-    transition-duration: .2s;
-    height: 2.5rem;
-    min-width: 2.5rem;
-    font-size: 1rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    color: #fff;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, .1),0 2px 4px -1px rgba(0, 0, 0, .06);
-    background: linear-gradient(180deg, #000 0%, #000000d8 100%);
-    border-width: 1px;
-    border-style: solid;
-    border-color: #e5e0df;
-}
-
-.checkbox{
-  color: #fff !important;
-}
-
-.checkbox:checked{
-  color: #fff !important;
-}
-
-.checkbox-success:checked{
-  color: #fff !important;
-}

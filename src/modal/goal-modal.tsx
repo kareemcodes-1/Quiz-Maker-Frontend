@@ -32,6 +32,8 @@ import {
   PopoverTrigger,
 } from "../components/ui/popover";
 import { PencilIcon, PhotoIcon } from "@heroicons/react/24/outline";
+import { Label } from "../components/ui/label";
+import { Input } from "../components/ui/input";
 
 const SubmitBtn = () => {
   const { pending } = useFormStatus();
@@ -164,21 +166,19 @@ const GoalModal = ({ closeModal }: { closeModal: () => void }) => {
           <form action={formAction} className="space-y-6">
             <div className="flex items-center w-full gap-[.5rem]">
               <div className="w-full">
-                <label
+                <Label
                   htmlFor="name"
-                  className="block text-sm/6 font-medium text-gray-900 text-start"
                 >
                   Name
-                </label>
+                </Label>
                 <div className="mt-2">
-                  <input
+                  <Input
                     id="name"
                     name="name"
                     type="text"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     required
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   />
                 </div>
               </div>
@@ -288,7 +288,7 @@ const GoalModal = ({ closeModal }: { closeModal: () => void }) => {
                   >
                     <PencilIcon className="w-[1rem]" />
                   </div>
-                  <input
+                  <Input
                     ref={imageRef}
                     id="file-upload"
                     name="file-upload"
@@ -298,12 +298,11 @@ const GoalModal = ({ closeModal }: { closeModal: () => void }) => {
                   />
                 </>
               )}
-              <label
+              <Label
                 htmlFor="cover-photo"
-                className="block text-sm/6 font-medium text-gray-900 text-start"
               >
                 Goal photo
-              </label>
+              </Label>
               {imagePreview ? (
                 <img
                   src={imagePreview}

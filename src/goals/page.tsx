@@ -20,9 +20,9 @@ const Goals = () => {
           </div>
 
           <div className="flex items-center gap-[.5rem] mb-[1rem]">
-              <div className={`yena-btn ${value === 'past' && '--black'} !h-[2.3rem] cursor-pointer`} onClick={() => dispatch(handleFilter('past'))}>Past</div>
-              <div className={`yena-btn ${value === 'present' && '--black'} !h-[2.3rem] cursor-pointer`} onClick={() => dispatch(handleFilter('present'))}>Present</div>
-              <div className={`yena-btn ${value === 'future' && '--black'} !h-[2.3rem] cursor-pointer`} onClick={() => dispatch(handleFilter('future'))}>Future</div>
+              <div className={`yena-btn ${value === 'past' && 'yena-btn-black'} !h-[2.3rem] cursor-pointer`} onClick={() => dispatch(handleFilter('past'))}>Past</div>
+              <div className={`yena-btn ${value === 'present' && 'yena-btn-black'} !h-[2.3rem] cursor-pointer`} onClick={() => dispatch(handleFilter('present'))}>Present</div>
+              <div className={`yena-btn ${value === 'future' && 'yena-btn-black'} !h-[2.3rem] cursor-pointer`} onClick={() => dispatch(handleFilter('future'))}>Future</div>
          </div>
 
           <AllGoals />

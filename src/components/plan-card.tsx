@@ -35,7 +35,7 @@ const PlanCard = ({plan} : {plan: Plan}) => {
   return (
     <button
     type="button"
-    className="border hover:bg-gray-50 transition rounded-[.5rem] shadow-md w-full p-[.8rem] cursor-pointer"
+    className="border transition rounded-[.5rem] shadow-md w-full p-[.8rem] cursor-pointer"
   >
     <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-[1rem]">
       <div className="flex items-center gap-[1rem]">
@@ -52,7 +52,7 @@ const PlanCard = ({plan} : {plan: Plan}) => {
       </div>
   
       <div className="flex items-center gap-[1rem]">
-        <Badge className="flex items-center gap-[.3rem]">
+        <Badge className="flex items-center gap-[.3rem] text-muted-foreground">
         <div className="text-[.8rem]">{plan.projectId.emoji}</div>{" "}
           <div className="text-[.8rem]">{plan.projectId.name}</div>
         </Badge>

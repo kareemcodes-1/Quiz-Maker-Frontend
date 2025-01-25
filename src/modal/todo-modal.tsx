@@ -20,6 +20,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../components/ui/select";
+import { Input } from "../components/ui/input";
+import { Label } from "../components/ui/label";
 
 const SubmitBtn = () => {
   const { pending } = useFormStatus();
@@ -28,7 +30,7 @@ const SubmitBtn = () => {
     <button
       disabled={pending}
       type="submit"
-      className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      className="yena-btn dark:yena-btn-black w-full"
     >
       Save
     </button>
@@ -143,39 +145,36 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
   return (
     <DialogContent>
       <DialogHeader>
-        <DialogTitle className="text-start lg:text-[1.5rem] text-[1.3rem]">
+        <DialogTitle className="text-start text-black dark:text-white lg:text-[1.5rem] text-[1.3rem]">
           {editingMode ? "Edit" : "Create"} Todo
         </DialogTitle>
         <form action={formAction} className="space-y-6">
           <div className="flex items-center w-full gap-[.5rem]">
             <div className="w-full">
-              <label
+              <Label
                 htmlFor="name"
-                className="block text-sm/6 font-medium text-gray-900 text-start"
+                className="block text-sm/6 font-medium text-muted-foreground text-start"
               >
                 Name
-              </label>
+              </Label>
               <div className="mt-2">
-                <input
-                  id="name"
+                <Input id="name"
                   name="name"
                   type="text"
                   required
                   value={state.name}
                   onChange={(e) =>
                     dispatch({ type: "SET_NAME", payload: e.target.value })
-                  }
-                  className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
-                />
+                  }/>
               </div>
             </div>
           </div>
 
           <div className="flex items-center gap-[.5rem]">
-            <h1>Select Date: </h1>
+            <h1 className="text-black dark:text-white">Select Date: </h1>
             <button
               type="button"
-              className={`yena-btn ${today ? "--black" : ""} !h-[2rem]`}
+              className={`yena-btn ${today ? "yena-btn-black" : ""} !h-[2rem]`}
               onClick={() => {
                 setToday(true);
                 setTomorrow(false);
@@ -185,7 +184,7 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
             </button>
             <button
               type="button"
-              className={`yena-btn ${tomorrow ? "--black" : ""} !h-[2rem]`}
+              className={`yena-btn ${tomorrow ? "yena-btn-black" : ""} !h-[2rem]`}
               onClick={() => {
                 setTomorrow(true);
                 setToday(false);
@@ -199,6 +198,7 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
           <Select onValueChange={(value) => setSelectedProjectId(value)}>
             <SelectTrigger className="w-full">
               <SelectValue
+              className=" placeholder:text-black dark:placeholder:text-white"
                 placeholder={editingMode ? editingTodo?.projectId.name : projects?.[0]?.name}
               />
             </SelectTrigger>

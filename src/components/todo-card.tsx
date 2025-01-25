@@ -194,13 +194,13 @@ const TodoCard = ({ todo }: { todo: Todo }) => {
 
       <div className="flex flex-col lg:flex-row items-start lg:items-center gap-[1rem] lg:gap-[2rem] w-full lg:w-auto">
         <div className="flex items-center gap-[.5rem] lg:gap-[1rem]">
-          <Badge>
+          <Badge className="text-muted-foreground">
             {renderTime(todo.time)} {displayDate()}
           </Badge>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <Badge className="flex items-center gap-[.3rem]">
+                <Badge className="flex items-center gap-[.3rem] text-muted-foreground">
                   {todo.projectId?.emoji && (
                     <div className="truncate">{todo.projectId?.emoji}</div>
                   )}

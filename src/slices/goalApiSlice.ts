@@ -13,12 +13,14 @@ export const goalApi = createApi({
           "Content-Type": "application/json",
         },
         body: data,
+        credentials: "include",
       }),
     }),
     getAllGoals: builder.query({
       query: () => ({
         url: "/",
         method: "GET",
+        credentials: "include",
       }),
     }),
 
@@ -30,12 +32,14 @@ export const goalApi = createApi({
           "Content-Type": "application/json",
         },
         body: data,
+        credentials: "include",
       }),
     }),
     deleteGoal: builder.mutation({
       query: (id: string) => ({
         url: `/delete/${id}`,
         method: "DELETE",
+        credentials: "include",
       }),
     }),
 
@@ -47,6 +51,7 @@ export const goalApi = createApi({
           "Comtent-Type": "application/json",
         },
         body: data,
+        credentials: "include",
       }),
     }),
   }),

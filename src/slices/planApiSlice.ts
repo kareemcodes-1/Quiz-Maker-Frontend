@@ -12,13 +12,15 @@ export const planApi = createApi({
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: data
+                body: data,
+                credentials: "include",
             })
         }),
         getAllPlans: builder.query({
             query: () => ({
                 url: '/',
                 method: "GET",
+                credentials: "include",
             })
         }),
 
@@ -29,7 +31,8 @@ export const planApi = createApi({
                         headers: {
                             'Content-Type': 'application/json',
                         },
-                        body: data
+                        body: data,
+                        credentials: "include",
                     })
          }),
 
@@ -37,6 +40,7 @@ export const planApi = createApi({
             query: (id: string) => ({
                 url: `/delete/${id}`,
                 method: "DELETE",
+                credentials: "include",
             })
         }),
     })

@@ -8,7 +8,8 @@ export const todoApi = createApi({
         fetchTodos: builder.query({
             query: () => ({
                 url: '/',
-                method: "GET"
+                method: "GET",
+                credentials: "include",
             })
         }),
         createTodo: builder.mutation({
@@ -18,7 +19,8 @@ export const todoApi = createApi({
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: data
+                body: data,
+                credentials: "include",
             })
         }),
         updateTodo: builder.mutation({
@@ -28,13 +30,15 @@ export const todoApi = createApi({
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: data
+                body: data,
+                credentials: "include",
             })
         }),
         deleteTodo: builder.mutation({
             query: (id: string) => ({
                 url: `/delete/${id}`,
                 method: "DELETE",
+                credentials: "include",
             })
         }),
 
@@ -46,6 +50,7 @@ export const todoApi = createApi({
                    'Content-Type' : 'application/json',
                 },
                 body: {completed: data},
+                credentials: "include",
             })
         }),
     })

@@ -12,13 +12,15 @@ export const memoryApi = createApi({
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: data
+                body: data,
+                credentials: "include",
             })
         }),
         getAllMemories: builder.query({
             query: () => ({
                 url: '/',
                 method: "GET",
+                credentials: "include",
             })
         }),
 
@@ -30,6 +32,7 @@ export const memoryApi = createApi({
                 "Content-Type": "application/json",
               },
               body: data,
+              credentials: "include",
             }),
           }),
 
@@ -37,6 +40,7 @@ export const memoryApi = createApi({
             query: (id: string) => ({
               url: `/delete/${id}`,
               method: "DELETE",
+              credentials: "include",
             }),
           }),
     })

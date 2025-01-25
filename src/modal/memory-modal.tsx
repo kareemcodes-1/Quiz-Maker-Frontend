@@ -20,6 +20,8 @@ import {
   SelectValue,
 } from "../components/ui/select";
 import { PencilIcon } from "@heroicons/react/24/outline";
+import { Label } from "../components/ui/label";
+import { Input } from "../components/ui/input";
 
 
 const SubmitBtn = () => {
@@ -29,7 +31,7 @@ const SubmitBtn = () => {
     <button
       disabled={pending}
       type="submit"
-      className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      className="yena-btn dark:yena-btn-black w-full"
     >
      {pending ? 'Submitting': ' Save'}
     </button>
@@ -222,18 +224,17 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
           <form onSubmit={formAction} className="space-y-6">
             <div className="flex items-center w-full gap-[.5rem]">
               <div className="w-full">
-                <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900 text-start">
+                <Label htmlFor="name">
                   Name
-                </label>
+                </Label>
                 <div className="mt-2">
-                  <input
+                  <Input
                     id="name"
                     name="name"
                     type="text"
                     value={name}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
                     required
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   />
                 </div>
               </div>
@@ -243,12 +244,12 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
               {editingMode && (
                 <>
                 <div className="yena-btn !absolute !right-0 cursor-pointer" onClick={() => imageRef.current?.click()}><PencilIcon className="w-[1rem]"/></div>
-                <input ref={imageRef} id="file-upload" name="file-upload" type="file" onChange={handleImageChange} className="sr-only" />
+                <Input ref={imageRef} id="file-upload" name="file-upload" type="file" onChange={handleImageChange} className="sr-only" />
                 </>
               )}
-              <label htmlFor="cover-photo" className="block text-sm/6 font-medium text-gray-900 text-start">
+              <Label htmlFor="cover-photo">
                 Cover photo
-              </label>
+              </Label>
               {imagePreview ? (
                 <img
                   src={imagePreview}
@@ -262,7 +263,6 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
                     <div className="mt-4 flex text-sm/6 text-gray-600">
                       <label
                         htmlFor="file-upload"
-                        className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
                       >
                         <span>Upload a file</span>
                         <input id="file-upload" name="file-upload" type="file" onChange={handleImageChange} className="sr-only" />
@@ -302,33 +302,31 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
               <>
               <div className="flex items-center w-full gap-[.5rem]">
               <div className="w-full">
-                <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900 text-start">
+                <Label htmlFor="name">
                   Steps
-                </label>
+                </Label>
                 <div className="mt-2">
-                  <input
+                  <Input
                     id="steps"
                     name="steps"
                     type="text"
                     value={steps}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setSteps(e.target.value)}
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   />
                 </div>
               </div>
 
               <div className="w-full">
-                <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900 text-start">
+                <Label htmlFor="name">
                 Kilometers
-                </label>
+                </Label>
                 <div className="mt-2">
-                  <input
+                  <Input
                     id="kilometers"
                     name="kilometers"
                     type="text"
                     value={kilometers}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setKilometers(e.target.value)}
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   />
                 </div>
               </div>
@@ -336,27 +334,26 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
 
             <div className="flex items-center w-full gap-[.5rem]">
               <div className="w-full">
-                <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900 text-start">
+                <Label htmlFor="name" >
                   Calories
-                </label>
+                </Label>
                 <div className="mt-2">
-                  <input
+                  <Input
                     id="calories"
                     name="calories"
                     type="text"
                     value={calories}
                     onChange={(e: ChangeEvent<HTMLInputElement>) => setCalories(e.target.value)}
-                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                   />
                 </div>
               </div>
 
               <div className="w-full">
-                <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900 text-start">
+                <Label htmlFor="name" >
                   Mins
-                </label>
+                </Label>
                 <div className="mt-2">
-                  <input
+                  <Input
                     id="mins"
                     name="mins"
                     type="text"

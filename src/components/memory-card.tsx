@@ -91,20 +91,20 @@ const MemoryCard = ({ memory, isLoading }: { memory: Memory, isLoading: boolean 
         {memory.mins && memory.calories && memory.kilometers && memory.steps ? (
           <div className="flex items-start flex-col gap-[.5rem] lg:overflow-auto overflow-x-scroll">
             <div className="flex items-center gap-[.5rem]">
-              <Badge>{memory.mins}</Badge>
-              <Badge>{memory.steps}</Badge>
-              <Badge>{memory.calories}</Badge>
-              <Badge>{memory.kilometers}</Badge>
+              <Badge className="text-muted-foreground">{memory.mins}</Badge>
+              <Badge className="text-muted-foreground">{memory.steps}</Badge>
+              <Badge className="text-muted-foreground">{memory.calories}</Badge>
+              <Badge className="text-muted-foreground">{memory.kilometers}</Badge>
             </div>
           </div>
         ) : null}
 
         <div className="flex items-center gap-[.5rem]">
           <Badge className="flex items-center gap-[.3rem]">
-            <div>{memory.projectId.emoji}</div>{" "}
-            <div>{memory.projectId.name}</div>
+            <div className="text-muted-foreground">{memory.projectId.emoji}</div>{" "}
+            <div className="text-muted-foreground">{memory.projectId.name}</div>
           </Badge>
-          <Badge>
+          <Badge  className="text-muted-foreground">
             {format(new Date(memory.createdAt).toISOString(), "dd-MM-yyyy")}
           </Badge>
         </div>

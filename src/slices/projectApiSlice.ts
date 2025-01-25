@@ -11,13 +11,15 @@ export const projectApi = createApi({
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: data
+                body: data,
+                credentials: "include",
             })
         }),
         getAllProjects: builder.query({
             query: () => ({
                 url: '/',
                 method: "GET",
+                credentials: "include",
             })
         })
     })

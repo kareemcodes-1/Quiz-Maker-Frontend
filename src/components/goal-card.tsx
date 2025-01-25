@@ -147,7 +147,7 @@ const GoalCard = ({ goal }: { goal: Goal}) => {
     <PhotoIcon className="w-[1.7rem] h-[1.7rem] text-muted-foreground cursor-pointer" onClick={() => previewGoalImage(goal.image)}/>
 
     <div className="flex items-center gap-[1rem]">
-      <Badge className="flex items-center gap-[.3rem]">
+      <Badge className="flex items-center gap-[.3rem] text-muted-foreground">
       <div className="text-[.8rem]">{goal.projectId.emoji}</div>{" "}
         <div className="text-[.8rem]">{goal.projectId.name}</div>
       </Badge>
