@@ -18,6 +18,7 @@ import Register from './auth/Register.tsx';
 import Login from './auth/Login.tsx';
 import Profile from './settings/profile/page.tsx';
 import { ThemeProvider } from './providers/theme-provider.tsx';
+import ProtectRoutes from './providers/protect-route.tsx';
 
 createRoot(document.getElementById('root')!).render(
   // <StrictMode>
@@ -26,6 +27,10 @@ createRoot(document.getElementById('root')!).render(
               <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
             <BrowserRouter>
                <Routes>
+               <Route path='/register' element={<Register />}></Route>
+               <Route path='/login' element={<Login />}></Route>
+
+               <Route element={<ProtectRoutes />}>
                    <Route path='/' element={<App />}></Route>
                    <Route path='/memories' element={<Memories />}></Route>
                    <Route path='/philosophies' element={<Philosophies />}></Route>
@@ -33,11 +38,10 @@ createRoot(document.getElementById('root')!).render(
                    <Route path='/philosophies/edit/:id' element={<PhilosophyEdit />}></Route>
                    <Route path='/goals' element={<Goals />}></Route>
                    <Route path='/plans' element={<Plans />}></Route>
-                   <Route path='/register' element={<Register />}></Route>
-                   <Route path='/login' element={<Login />}></Route>
                    <Route path='/plans/new' element={<NewPlan />}></Route>
                    <Route path='/plans/edit/:id' element={<PlanEditPage />}></Route>
                    <Route path="/settings/profile" element={<Profile />} />
+                </Route>
                </Routes>
            </BrowserRouter>
            </ThemeProvider>
