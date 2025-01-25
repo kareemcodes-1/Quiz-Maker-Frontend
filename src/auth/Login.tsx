@@ -14,7 +14,7 @@ import Loader from '../components/ui/loading';
 
 const SubmitBtn = () => {
   const {pending} = useFormStatus();
-  return <button disabled={pending} type="submit" className="yena-btn --black text-white w-full">{pending ? <Loader /> : 'Sign in'}</button>
+  return <button disabled={pending} type="submit" className="yena-btn-black dark:yena-btn text-white w-full">{pending ? <Loader /> : 'Sign in'}</button>
 }
 
 const Login = () => {

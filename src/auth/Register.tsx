@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 
 const SubmitBtn = () => {
   const {pending} = useFormStatus();
-  return <button disabled={pending} type="submit" className="yena-btn --black text-white w-full">Sign up</button>
+  return <button disabled={pending} type="submit" className="yena-btn-black dark:yena-btn text-white w-full">Sign up</button>
 }
 
 const Register = () => {
