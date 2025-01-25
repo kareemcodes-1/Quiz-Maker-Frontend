@@ -19,7 +19,7 @@ export const projectApi = createApi({
             query: () => ({
                 url: '/',
                 method: "GET",
-                // credentials: "include",
+                credentials: "include",
             })
         })
     })
