@@ -16,7 +16,7 @@ const SubmitBtn = () => {
     const {pending} = useFormStatus();
 
     return (
-      <button type="submit" disabled={pending} className='yena-btn --black w-[10%]'>{pending ? <Loader /> : 'Save'}</button>
+      <button type="submit" disabled={pending} className='yena-btn --black lg:w-[10%] w-full'>{pending ? <Loader /> : 'Save'}</button>
     )
   }
 
@@ -112,22 +112,22 @@ const Profile = () => {
 
                   <div className='flex flex-col'>
                        <Label htmlFor='name'>Name</Label>
-                       <Input className='w-1/2 mt-2' type="text" name="name" value={name} id="name" onChange={(e) => setName(e.target.value)}/>
+                       <Input className='lg:w-1/2 mt-2' type="text" name="name" value={name} id="name" onChange={(e) => setName(e.target.value)}/>
                   </div>
 
                   <div className='flex flex-col'>
                       <Label htmlFor='email'>Email</Label>
-                       <Input className='w-1/2 mt-2' type='email' name="email" value={email} id="email" onChange={(e) => setEmail(e.target.value)}/>
+                       <Input className='lg:w-1/2 mt-2' type='email' name="email" value={email} id="email" onChange={(e) => setEmail(e.target.value)}/>
                   </div>
 
                   <div className='flex flex-col'>
                        <Label htmlFor='old-password'>Old Password</Label>
-                       <Input className='w-1/2 mt-2' type="password" name="old-password" id="old-password" onChange={(e: ChangeEvent<HTMLInputElement>) => setOldPassword(e.target.value)}/>
+                       <Input className='lg:w-1/2 mt-2' type="password" name="old-password" id="old-password" onChange={(e: ChangeEvent<HTMLInputElement>) => setOldPassword(e.target.value)}/>
                   </div>
 
                   <div className='flex flex-col'>
                       <Label htmlFor='new-password'>New Password</Label>
-                       <Input className='w-1/2 mt-2' type="password" name="new-password" id="new-password" onChange={(e: ChangeEvent<HTMLInputElement>) => setNewPassword(e.target.value)}/>
+                       <Input className='lg:w-1/2 mt-2' type="password" name="new-password" id="new-password" onChange={(e: ChangeEvent<HTMLInputElement>) => setNewPassword(e.target.value)}/>
                   </div>
 
                   <SubmitBtn />

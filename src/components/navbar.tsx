@@ -79,7 +79,7 @@ const Navbar = () => {
 
         <Select open={openThemeSelect} onOpenChange={(open) => setOpenThemeSelect(open)} onValueChange={(value: Theme) => setTheme(value)}> {/* No need for `onOpenChange` unless tracking state */}
   
-      <SelectContent className="absolute top-[2.5rem] left-[28.3rem]">
+      <SelectContent className="absolute top-[2.5rem] lg:left-[28.3rem] left-[15rem]">
         <SelectItem value="light">Light</SelectItem>
         <SelectItem value="dark">Dark</SelectItem>
         <SelectItem value="system">System</SelectItem>
