@@ -22,7 +22,7 @@ const Navbar = () => {
 
     async function Logout (){
         try {
-            const res = await logoutUser();
+            const res = await logoutUser('');
             if(res){
                 dispatch(logout());
                 navigate('/login');
