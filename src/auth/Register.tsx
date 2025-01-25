@@ -47,7 +47,7 @@ const Register = () => {
 <div className="min-h-screen flex">
   <div className="flex flex-col justify-center w-full px-6 py-12 lg:px-8">
     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-      <h2 className="mt-10 text-center text-[2rem] font-semibold text-black flex items-center justify-center gap-[1rem]">
+      <h2 className="mt-10 text-center text-[2rem] font-semibold  flex items-center justify-center gap-[1rem]">
        Create account <img src="https://img.icons8.com/?size=100&id=LuXk2sw4rJVF&format=png&color=000000" alt="" className='w-[3rem] h-[3rem]'/>
       </h2>
     </div>
@@ -107,11 +107,11 @@ const Register = () => {
         </div>
       </form>
 
-      <p className="mt-10 text-center text-sm text-gray-500">
+      <p className="mt-10 text-center text-sm text-muted-foreground">
       Already have an account?{' '}
         <a
           href="/login"
-          className="font-semibold text-black underline"
+          className="font-semibold underline"
         >
           Sign in.
         </a>

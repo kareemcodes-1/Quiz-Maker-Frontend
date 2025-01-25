@@ -16,15 +16,16 @@ export const authApi = createApi({
         }),
         registerUser: builder.mutation({
             query: (data: User) => ({
-                url: '/auth/register',
-                method: "POST",
-                headers: {
-                    'Content-Type': "application/json"
-                },
-                body: data,
-                credentials: "include"
-            })
-        }),
+              url: '/auth/register',
+              method: "POST",
+              headers: {
+                'Content-Type': "application/json",
+              },
+              body: data,
+              credentials: "include", // Ensures cookies or auth headers are included
+            }),
+          }),
+          
         loginUser: builder.mutation({
             query: (data: User) => ({
                 url: '/auth/login',
