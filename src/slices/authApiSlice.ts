@@ -21,7 +21,8 @@ export const authApi = createApi({
                 headers: {
                     'Content-Type': "application/json"
                 },
-                body: data
+                body: data,
+                credentials: "include"
             })
         }),
         loginUser: builder.mutation({
@@ -32,7 +33,7 @@ export const authApi = createApi({
                     'Content-Type': "application/json"
                 },
                 body: data,
-                // credentials: "include"
+                credentials: "include"
             })
         }),
         logoutUser: builder.mutation({
