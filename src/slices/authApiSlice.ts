@@ -32,7 +32,7 @@ export const authApi = createApi({
                     'Content-Type': "application/json"
                 },
                 body: data,
-                credentials: "include"
+                // credentials: "include"
             })
         }),
         logoutUser: builder.mutation({
