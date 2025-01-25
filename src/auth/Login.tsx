@@ -106,7 +106,7 @@ const Login = () => {
         Dont have an account?{' '}
         <a
           href="/register"
-          className="font-semibold text-black underline text"
+          className="font-semibold  underline text"
         >
           Sign up.
         </a>
