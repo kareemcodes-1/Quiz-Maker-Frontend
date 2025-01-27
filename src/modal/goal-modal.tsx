@@ -34,6 +34,7 @@ import {
 import { PencilIcon, PhotoIcon } from "@heroicons/react/24/outline";
 import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
+import Loader from "../components/ui/loading";
 
 const SubmitBtn = () => {
   const { pending } = useFormStatus();
@@ -42,9 +43,9 @@ const SubmitBtn = () => {
     <button
       disabled={pending}
       type="submit"
-      className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+      className="yena-btn-black dark:yena-btn w-full"
     >
-      Save
+      {pending ? <Loader /> : ' Save'}
     </button>
   );
 };
@@ -56,6 +57,7 @@ const GoalModal = ({ closeModal }: { closeModal: () => void }) => {
   const imageRef = useRef<HTMLInputElement | null>(null);
   const { projects } = useSelector((state: RootState) => state.project);
   const [selectedProjectId, setSelectedProjectId] = useState<string>("");
+  const {userInfo} = useSelector((state: RootState) => state.auth);
   const [time, setTime] = useState<string>("present");
   const [name, setName] = useState<string>("");
   const [startDeadlineDate, setStartDeadlineDate] = useState<Date>();
@@ -118,6 +120,7 @@ const GoalModal = ({ closeModal }: { closeModal: () => void }) => {
     if (editingMode && editingGoal) {
       const goal = {
         _id: editingGoal._id,
+        userId: userInfo?._id as string,
         projectId: {
           ...editingGoal?.projectId,
           _id: selectedProjectId,
@@ -138,6 +141,7 @@ const GoalModal = ({ closeModal }: { closeModal: () => void }) => {
     } else {
       const goal = {
         _id: "",
+        userId: userInfo?._id as string,
         projectId: selectedProjectId,
         name: formData.get("name"),
         time,
@@ -166,7 +170,7 @@ const GoalModal = ({ closeModal }: { closeModal: () => void }) => {
           <form action={formAction} className="space-y-6">
             <div className="flex items-center w-full gap-[.5rem]">
               <div className="w-full">
-                <Label
+                <Label className="text-start"
                   htmlFor="name"
                 >
                   Name

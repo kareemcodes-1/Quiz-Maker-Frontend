@@ -22,6 +22,7 @@ import {
 } from "../components/ui/select";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
+import Loader from "../components/ui/loading";
 
 const SubmitBtn = () => {
   const { pending } = useFormStatus();
@@ -30,9 +31,9 @@ const SubmitBtn = () => {
     <button
       disabled={pending}
       type="submit"
-      className="yena-btn dark:yena-btn-black w-full"
+      className="yena-btn-black dark:yena-btn w-full"
     >
-      Save
+      {pending ? <Loader /> : 'Save'}
     </button>
   );
 };
@@ -62,6 +63,9 @@ const reducer = (state: State, action: Action): State => {
 const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
   const { editingMode, editingTodo } = useSelector(
     (state: RootState) => state.todo
+  );
+  const { userInfo } = useSelector(
+    (state: RootState) => state.auth
   );
   const { projects } = useSelector((state: RootState) => state.project);
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -100,6 +104,7 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
     if (editingMode && editingTodo) {
         const todo = {
           _id: editingTodo._id,
+          userId: userInfo?._id as string,
           projectId: {
             ...editingTodo.projectId,
             _id: selectedProjectId,
@@ -121,6 +126,7 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
         if(findProject){
           const todo = {
             _id: "",
+            userId: userInfo?._id as string,
             projectId: {
               ...findProject,
               _id: selectedProjectId

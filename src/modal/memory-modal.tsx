@@ -51,6 +51,7 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
   
   const imageRef = useRef<HTMLInputElement | null>(null);
   const [showField, setShowField] = useState<boolean>(false);
+  const {userInfo} = useSelector((state: RootState) => state.auth);
 
   const dispatch = useDispatch();
   const [createMemory] = useCreateMemoryMutation();
@@ -114,6 +115,7 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
       if(foundProject?.name === 'Fitness'){
         const memory = {
           _id: editingMemory._id,
+          userId: userInfo?._id as string,
           projectId: {
             ...foundProject,
             _id: selectedProjectId
@@ -140,6 +142,7 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
         if(foundProject){
           const memory = {
             _id: editingMemory._id,
+            userId: userInfo?._id as string,
             projectId: {
               ...foundProject,
               _id: selectedProjectId
@@ -169,6 +172,7 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
       const foundProject = projects.find((project) => project._id === selectedProjectId);
       if(foundProject?.name === 'Fitness') {
         const memory = {
+          userId: userInfo?._id,
           projectId: selectedProjectId,
           name: formData.get("name"),
           image: imagePreview,
@@ -189,6 +193,7 @@ const MemoryModal = ({ closeModal }: { closeModal: () => void }) => {
         }
       }else{
         const memory = {
+          userId: userInfo?._id,
           projectId: selectedProjectId,
           name: formData.get("name"),
           image: imagePreview,

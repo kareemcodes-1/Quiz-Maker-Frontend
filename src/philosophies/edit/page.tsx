@@ -8,12 +8,15 @@ import { RootState } from "../../../store/store";
 import { useNavigate } from "react-router";
 import { updatePhilosophy } from "../../slices/philosophySlice";
 import { useUpdatePhilosophyMutation } from "../../slices/philosophyApiSlice";
+import Loader from "../../components/ui/loading";
 
 const PhilosophyEdit = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const quillInstance = useRef<Quill | null>(null);
   const [value, setValue] = useState<string>('');
   const {editingPhilosophy} = useSelector((state: RootState) => state.philosophy);
+  const {userInfo} = useSelector((state: RootState) => state.auth);
+  const [loading, setLoading] = useState<boolean>(false);
   const [updatedPhilosophy] = useUpdatePhilosophyMutation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -51,8 +54,10 @@ const PhilosophyEdit = () => {
   }, []);
 
   const handleSubmit = async () => {
+    setLoading(true);
      if(editingPhilosophy){
         const philosophy = {
+             userId: userInfo?._id as string,
             _id: editingPhilosophy._id,
             content: value,
             createdAt: editingPhilosophy.createdAt
@@ -67,6 +72,8 @@ const PhilosophyEdit = () => {
           }
         } catch (error) {
           console.log(error);
+        }finally{
+          setLoading(false);
         }
      }
   }
@@ -76,7 +83,7 @@ const PhilosophyEdit = () => {
       <div className="flex lg:tems-center items-start lg:flex-row flex-col justify-between w-full">
       <h1 className="text-[2.5rem]">Edit Philosophy</h1>
       <div className="flex items-center gap-[.5rem] relative">
-      <button type="button" className="yena-btn" onClick={handleSubmit}>Save Philosophy</button>
+      <button type="button" className="yena-btn-black dark:yena-btn" onClick={handleSubmit}>{loading ? <Loader /> : 'Save Philosophy'}</button>
       </div>
       </div>
       <div className="border rounded-[.5rem] mt-[1.5rem]">

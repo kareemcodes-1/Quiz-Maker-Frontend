@@ -21,7 +21,7 @@ const SubmitBtn = () => {
     <button
       disabled={pending}
       type="submit"
-      className="yena-btn dark:yena-btn-black"
+      className="yena-btn-black dark:yena-btn w-full"
     >
       Save
     </button>
@@ -31,20 +31,24 @@ const SubmitBtn = () => {
 const ProjectModal = ({closeModal}: {closeModal: () => void;}) => {
 
   const {openProjectModal} = useSelector((state: RootState) => state.project);
+  const {userInfo} = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
 
   const [createProject] = useCreateProjectMutation();
   const formAction = async (formData: FormData) => {
-    const project = {
-      name: formData.get("name"),
-      emoji: formData.get("emoji"),
-    };
-
-    const res = await createProject(project).unwrap();
-    if(res){
-       toast.success('Created Project');
-       dispatch(addProject(res));
-       closeModal()
+    if(userInfo){
+      const project = {
+        userId: userInfo._id,
+        name: formData.get("name"),
+        emoji: formData.get("emoji"),
+      };
+  
+      const res = await createProject(project).unwrap();
+      if(res){
+         toast.success('Created Project');
+         dispatch(addProject(res));
+         closeModal()
+      }
     }
   };
 

@@ -24,7 +24,7 @@ const Plans = () => {
                <h1 className='text-[3rem]'>Plans</h1>
                
                <div className='flex items-center gap-[.3rem]'>
-                <a href='/plans/new' className='yena-btn'><span className='lg:block hidden'>Create Plan</span><PlusIcon className='lg:hidden block w-[1.3rem]'/><span></span></a>
+                <a href='/plans/new' className='yena-btn-black dark:yena-btn'><span className='lg:block hidden'>Create Plan</span><PlusIcon className='lg:hidden block w-[1.3rem]'/><span></span></a>
 
                <Select onValueChange={(value) => dispatch(handlePlansFilter(value))}>
             <SelectTrigger className="w-[180px]">

@@ -2,11 +2,13 @@ import  { useEffect, useRef, useState } from "react";
 import Layout from "../../layout";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
 import { addPhilosophy } from "../../slices/philosophySlice";
 import { useCreatePhilosophyMutation } from "../../slices/philosophyApiSlice";
+import { RootState } from "../../../store/store";
+import Loader from "../../components/ui/loading";
 
 
 const PhilosophyNew = () => {
@@ -14,6 +16,8 @@ const PhilosophyNew = () => {
   const quillInstance = useRef<Quill | null>(null);
   const [value, setValue] = useState<string>('');
   const [createPhilosophy] = useCreatePhilosophyMutation();
+  const [loading, setLoading] = useState<boolean>(false);
+  const {userInfo} = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -45,22 +49,28 @@ const PhilosophyNew = () => {
   }, []);
 
   const handleSubmit = async () => {
-      const philosophy = {
-           _id: '',
-          content: value,
-          createdAt: '',
-      }
+      setLoading(true);
+      if(userInfo){
+        const philosophy = {
+          _id: '',
+          userId: userInfo._id,
+         content: value,
+         createdAt: '',
+     }
 
-      try {
-        const res = await createPhilosophy(philosophy).unwrap();
-        if(res){
-            toast.success('Created Philosophy');
-            dispatch(addPhilosophy(res));
-            navigate('/philosophies');
-        }
-      } catch (error) {
-        console.log(error);
-      }
+     try {
+       const res = await createPhilosophy(philosophy).unwrap();
+       if(res){
+           toast.success('Created Philosophy');
+           dispatch(addPhilosophy(res));
+           navigate('/philosophies');
+       }
+     } catch (error) {
+       console.log(error);
+     }finally{
+        setLoading(false);
+     }
+    }
 
   }
 
@@ -69,7 +79,7 @@ const PhilosophyNew = () => {
       <div className="flex lg:flex-row flex-col lg:items-center items-start justify-between w-full">
       <h1 className="text-[2.5rem]">Create Philosophy</h1>
       <div className="flex items-center gap-[.5rem] relative">
-      <button type="button" className="yena-btn" onClick={handleSubmit}>Save Philosophy</button>
+      <button type="button" className="yena-btn-black dark:yena-btn" onClick={handleSubmit}>{loading ? <Loader /> : 'Save Philosophy'}</button>
       </div>
       </div>
       <div className="border rounded-[.5rem] mt-[1.5rem]">

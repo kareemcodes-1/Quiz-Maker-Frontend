@@ -16,7 +16,7 @@ const Goals = () => {
      <Layout>
           <div className='flex lg:flex-row flex-col lg:items-center items-start justify-between w-full mb-[2rem]'>
               <h1 className='lg:text-[3rem] text-[2.5rem]'>Goals for {new Date().getFullYear()}</h1>
-              <button type="button" className='yena-btn' onClick={() => {dispatch(setOpenGoalModal(true)); dispatch(setEditing())}}>Create new</button>
+              <button type="button" className='yena-btn-black dark:yena-btn' onClick={() => {dispatch(setOpenGoalModal(true)); dispatch(setEditing())}}>Create new</button>
           </div>
 
           <div className="flex items-center gap-[.5rem] mb-[1rem]">

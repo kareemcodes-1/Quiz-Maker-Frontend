@@ -15,15 +15,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../components/ui/select";
+import Loader from "../../components/ui/loading";
 
 const PlanEditPage = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const quillInstance = useRef<Quill | null>(null);
   const [value, setValue] = useState<string>('');
   const {editingPlan} = useSelector((state: RootState) => state.plan);
+  const { userInfo } = useSelector((state: RootState) => state.auth);
   const [updatePlan] = useUpdatePlanMutation();
   const {projects} = useSelector((state: RootState) => state.project);
   const [selectedProjectId, setSelectedProjectId] = useState<string | undefined>(editingPlan?.projectId._id);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -61,9 +64,11 @@ const PlanEditPage = () => {
   }, []);
 
   const handleSubmit = async () => {
+    setLoading(true);
      if(editingPlan && selectedProjectId){
         const plan = {
             _id: editingPlan._id,
+            userId: userInfo?._id as string,
             content: value,
             projectId: {
                 ...editingPlan.projectId,
@@ -80,6 +85,8 @@ const PlanEditPage = () => {
           }
         } catch (error) {
           console.log(error);
+        }finally{
+          setLoading(false);
         }
      }
   }
@@ -90,7 +97,7 @@ const PlanEditPage = () => {
      <h1 className="lg:text-[2.5rem] text-[2rem] mb-[.5rem]">Edit Plan</h1>
 
       <div className="flex items-center gap-[.5rem] relative">
-      <button type="button" className="yena-btn" onClick={handleSubmit}>Save Note</button>
+      <button type="button" className="yena-btn-black dark:yena-btn" onClick={handleSubmit}>{loading ? <Loader /> : 'Update Plan'}</button>
 
       <Select onValueChange={(value) => setSelectedProjectId(value)}>
             <SelectTrigger className="w-[180px]">

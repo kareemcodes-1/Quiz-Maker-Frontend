@@ -53,7 +53,7 @@ const Philosophies = () => {
              <h1 className='lg:text-[3rem] text-[2.5rem]'>Philosophies </h1>
 
             <div className='relative flex items-center gap-[.5rem]'>
-               <a href='/philosophies/new' className='yena-btn'><span className='lg:block hidden'>Create new</span><PlusIcon className='lg:hidden block w-[1.3rem]'/><span></span></a>
+               <a href='/philosophies/new' className='yena-btn-black !dark:yena-btn'><span className='lg:block hidden'>Create new</span><PlusIcon className='lg:hidden block w-[1.3rem]'/><span></span></a>
             </div>
         </div>
 

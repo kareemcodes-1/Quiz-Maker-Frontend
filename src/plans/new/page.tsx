@@ -14,14 +14,17 @@ import {
 } from "../../components/ui/select";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
+import Loader from "../../components/ui/loading";
 
 const NewPlan = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const quillInstance = useRef<Quill | null>(null);
   const { projects } = useSelector((state: RootState) => state.project);
+  const { userInfo } = useSelector((state: RootState) => state.auth);
   const [value, setValue] = useState<string>("");
   const [selectedProjectId, setSelectedProjectId] = useState<string>(projects?.[0]?._id);
   const [createPlan] = useCreatePlanMutation();
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   
@@ -61,7 +64,9 @@ const NewPlan = () => {
 
 
   const handleSubmit = async () => {
+    setLoading(true);
     const note = {
+      userId: userInfo?._id as string,
       content: value,
       projectId: selectedProjectId,
     };
@@ -74,6 +79,8 @@ const NewPlan = () => {
       }
     } catch (error) {
       console.log(error);
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -85,8 +92,8 @@ const NewPlan = () => {
         </h1>
 
         <div className="flex items-center gap-[.5rem] relative">
-          <button type="button" className="yena-btn" onClick={handleSubmit}>
-            Save Note
+          <button type="button" className="yena-btn-black dark:yena-btn" onClick={handleSubmit}>
+          {loading ? <Loader /> : 'Save Plan'}
           </button>
 
           <Select onValueChange={(value) => setSelectedProjectId(value)}>
