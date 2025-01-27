@@ -31,7 +31,7 @@ const SubmitBtn = () => {
     <button
       disabled={pending}
       type="submit"
-      className="yena-btn dark:yena-btn-black w-full"
+      className="yena-btn-black dark:yena-btn w-full"
     >
      {pending ? 'Submitting': ' Save'}
     </button>
