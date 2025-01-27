@@ -26,10 +26,10 @@ const Dashboard = () => {
              <h1 className='lg:text-[3rem] text-[2rem]'>Todos</h1>
 
              <div className='flex items-center gap-[.5rem] relative'>
-             <button type="button" className='yena-btn-black dark:yena-btn' onClick={() => {dispatch(setOpenTodoModal(true)); dispatch(setEditing())}}><span className='lg:block hidden'>Create Todo</span><PlusIcon className='lg:hidden block w-[1.3rem]'/><span></span></button>
+             <button type="button" className='dark:yena-btn yena-btn-black ' onClick={() => {dispatch(setOpenTodoModal(true)); dispatch(setEditing())}}><span className='lg:block hidden'>Create Todo</span><PlusIcon className='lg:hidden block w-[1.3rem]'/><span></span></button>
 
           <Select onValueChange={(value) => dispatch(handleTodosFilter(value))}>
-            <SelectTrigger className="w-[120px] outline-none yena-btn">
+            <SelectTrigger className="w-[120px]">
               <SelectValue placeholder="Today" />
             </SelectTrigger>
             <SelectContent>
