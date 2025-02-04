@@ -2,12 +2,12 @@ import  {useEffect, useRef, useState } from "react";
 import Layout from "../../layout";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
-import {useUpdatePlanMutation } from "../../../src/slices/planApiSlice";
+import {useUpdateNoteMutation } from "../../slices/noteApiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import toast from "react-hot-toast";
 import { RootState } from "../../../store/store";
 import {useNavigate } from "react-router";
-import { updatePlans } from "../../slices/planSlice";
+import { updateNotes } from "../../slices/noteSlice";
 import {
   Select,
   SelectContent,
@@ -17,15 +17,15 @@ import {
 } from "../../components/ui/select";
 import Loader from "../../components/ui/loading";
 
-const PlanEditPage = () => {
+const NoteEditPage = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const quillInstance = useRef<Quill | null>(null);
   const [value, setValue] = useState<string>('');
-  const {editingPlan} = useSelector((state: RootState) => state.plan);
+  const {editingNote} = useSelector((state: RootState) => state.note);
   const { userInfo } = useSelector((state: RootState) => state.auth);
-  const [updatePlan] = useUpdatePlanMutation();
+  const [updateNote] = useUpdateNoteMutation();
   const {projects} = useSelector((state: RootState) => state.project);
-  const [selectedProjectId, setSelectedProjectId] = useState<string | undefined>(editingPlan?.projectId._id);
+  const [selectedProjectId, setSelectedProjectId] = useState<string | undefined>(editingNote?.projectId._id);
   const [loading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
@@ -35,7 +35,7 @@ const PlanEditPage = () => {
     if (editorRef.current) {
       quillInstance.current = new Quill(editorRef.current, {
         theme: "snow", 
-        placeholder: "Write your plan",
+        placeholder: "Write your thoughts?",
         modules: {
           toolbar: [
             [{ header: [1, 2, false] }],
@@ -46,9 +46,9 @@ const PlanEditPage = () => {
         },
       });
 
-      if (editingPlan?.content) {
-        quillInstance.current.root.innerHTML = editingPlan.content;
-        setValue(editingPlan?.content);
+      if (editingNote?.content) {
+        quillInstance.current.root.innerHTML = editingNote.content;
+        setValue(editingNote?.content);
       }
 
       quillInstance.current.on("text-change", () => {
@@ -65,23 +65,23 @@ const PlanEditPage = () => {
 
   const handleSubmit = async () => {
     setLoading(true);
-     if(editingPlan && selectedProjectId){
-        const plan = {
-            _id: editingPlan._id,
+     if(editingNote && selectedProjectId){
+        const note = {
+            _id: editingNote._id,
             userId: userInfo?._id as string,
             content: value,
             projectId: {
-                ...editingPlan.projectId,
+                ...editingNote.projectId,
                 _id: selectedProjectId
             },
         }
   
         try {
-          const res = await updatePlan({id: editingPlan._id, data: plan});
+          const res = await updateNote({id: editingNote._id, data: note});
           if(res.data){
-              toast.success('Updated Plan');
-              dispatch(updatePlans(res.data));
-              navigate('/plans')
+              toast.success('Updated Note');
+              dispatch(updateNotes(res.data));
+              navigate('/notes')
           }
         } catch (error) {
           console.log(error);
@@ -94,15 +94,15 @@ const PlanEditPage = () => {
   return (
     <Layout>
      <div className="flex lg:flex-row flex-col lg:items-center items-start justify-between w-full">
-     <h1 className="lg:text-[2.5rem] text-[2rem] mb-[.5rem]">Edit Plan</h1>
+     <h1 className="lg:text-[2.5rem] text-[2rem] mb-[.5rem]">Edit Note</h1>
 
       <div className="flex items-center gap-[.5rem] relative">
-      <button type="button" className="yena-btn-black dark:yena-btn" onClick={handleSubmit}>{loading ? <Loader /> : 'Update Plan'}</button>
+      <button type="button" className="yena-btn-black dark:yena-btn" onClick={handleSubmit}>{loading ? <Loader /> : 'Update note'}</button>
 
       <Select onValueChange={(value) => setSelectedProjectId(value)}>
             <SelectTrigger className="w-[180px]">
               <SelectValue
-                placeholder={editingPlan?.projectId.name || "Select a project"}
+                placeholder={editingNote?.projectId.name || "Select a project"}
               />
             </SelectTrigger>
             <SelectContent>
@@ -124,10 +124,10 @@ const PlanEditPage = () => {
       </div>
       <div className="border rounded-[.5rem] mt-[1.5rem]">
         {/* Editor container */}
-        <div ref={editorRef} className="rounded-[.5rem] w-full" style={{height: "60vh"}}/>
+        <div ref={editorRef} className="rounded-[.5rem] w-full dark:[&_.ql-editor.ql-blank::before]:text-muted-foreground !cabinetgrotesk" style={{height: "60vh"}}/>
       </div>
     </Layout>
   );
 };
 
-export default PlanEditPage;
+export default NoteEditPage;

@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { Plan } from '../../types/type';
+import {FlashCard } from '../../types/type';
 
-export const planApi = createApi({
-    reducerPath: 'planApi',
-    baseQuery: fetchBaseQuery({baseUrl: `${import.meta.env.VITE_BACKEND_URL}/api/plans`}),
+export const flashCardApi = createApi({
+    reducerPath: 'flashCardApi',
+    baseQuery: fetchBaseQuery({baseUrl: `${import.meta.env.VITE_BACKEND_URL}/api/flashcards`}),
     endpoints: (builder) => ({
-        createPlan: builder.mutation({
+        createFlashCard: builder.mutation({
             query: (data) => ({
                 url: '/',
                 method: "POST",
@@ -16,7 +16,7 @@ export const planApi = createApi({
                 credentials: "include",
             })
         }),
-        getAllPlans: builder.query({
+        getAllFlashCards: builder.query({
             query: () => ({
                 url: '/',
                 method: "GET",
@@ -24,8 +24,8 @@ export const planApi = createApi({
             })
         }),
 
-        updatePlan: builder.mutation({
-                    query: ({id, data}: {id: string, data: Plan}) => ({
+        updateFlashCard: builder.mutation({
+                    query: ({id, data}: {id: string, data: FlashCard}) => ({
                         url: `/edit/${id}`,
                         method: "PUT",
                         headers: {
@@ -36,7 +36,7 @@ export const planApi = createApi({
                     })
          }),
 
-         deletePlan: builder.mutation({
+         deleteFlashCard: builder.mutation({
             query: (id: string) => ({
                 url: `/delete/${id}`,
                 method: "DELETE",
@@ -46,4 +46,4 @@ export const planApi = createApi({
     })
 });
 
-export const {useCreatePlanMutation, useGetAllPlansQuery, useUpdatePlanMutation, useDeletePlanMutation} = planApi;
+export const {useCreateFlashCardMutation, useGetAllFlashCardsQuery, useUpdateFlashCardMutation, useDeleteFlashCardMutation} = flashCardApi;

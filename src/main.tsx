@@ -8,9 +8,6 @@ import {Provider} from "react-redux";
 import ToastProvider from './providers/ToastProvider.tsx';
 import Memories from './memories/page.tsx';
 import Goals from './goals/page.tsx';
-import Plans from './plans/page.tsx';
-import NewPlan from './plans/new/page.tsx';
-import PlanEditPage from './plans/edit/page.tsx';
 import Philosophies from './philosophies/page.tsx';
 import PhilosophyNew from './philosophies/new/page.tsx';
 import PhilosophyEdit from './philosophies/edit/page.tsx';
@@ -19,6 +16,11 @@ import Login from './auth/Login.tsx';
 import Profile from './settings/profile/page.tsx';
 import { ThemeProvider } from './providers/theme-provider.tsx';
 import ProtectRoutes from './providers/protect-route.tsx';
+import NoteEditPage from './notes/edit/page.tsx';
+import NewNote from './notes/new/page.tsx';
+import Notes from './notes/page.tsx';
+import FlashCards from './flashcards/page.tsx';
+import CreateFlashCards from './flashcards/new/page.tsx';
 
 createRoot(document.getElementById('root')!).render(
   // <StrictMode>
@@ -37,10 +39,12 @@ createRoot(document.getElementById('root')!).render(
                    <Route path='/philosophies/new' element={<PhilosophyNew />}></Route>
                    <Route path='/philosophies/edit/:id' element={<PhilosophyEdit />}></Route>
                    <Route path='/goals' element={<Goals />}></Route>
-                   <Route path='/plans' element={<Plans />}></Route>
-                   <Route path='/plans/new' element={<NewPlan />}></Route>
-                   <Route path='/plans/edit/:id' element={<PlanEditPage />}></Route>
+                   <Route path='/notes' element={<Notes />}></Route>
+                   <Route path='/notes/new' element={<NewNote />}></Route>
+                   <Route path='/notes/edit/:id' element={<NoteEditPage />}></Route>
                    <Route path="/settings/profile" element={<Profile />} />
+                   <Route path='/flashcards' element={<FlashCards />}></Route>
+                   <Route path='/flashcards/new' element={<CreateFlashCards />}></Route>
                 </Route>
                </Routes>
            </BrowserRouter>

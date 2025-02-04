@@ -88,7 +88,7 @@ const PhilosophyEdit = () => {
       </div>
       <div className="border rounded-[.5rem] mt-[1.5rem]">
         {/* Editor container */}
-        <div ref={editorRef} className="rounded-[.5rem] w-full text-muted-foreground placeholder:!text-muted-foreground" style={{height: "60vh"}}/>
+        <div ref={editorRef} className="rounded-[.5rem] w-full dark:[&_.ql-editor.ql-blank::before]:text-muted-foreground !cabinetgrotesk" style={{height: "60vh"}}/>
       </div>
     </Layout>
   );

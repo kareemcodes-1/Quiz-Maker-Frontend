@@ -7,28 +7,18 @@ export type Todo = {
     time: string;
 }
 
-export type Focus = {
-    _id: string;
-    content: string;
-    date: string | null;
-}
-
-export type WIL = {
-    _id: string;
-    content: string;
-    projectId: Project;
-    createdAt: string;
-}
-
-export type Gratitude = {
-    _id: string;
-    content: string;
-    createdAt: string;
-}
 
 export type Philosophy = {
     readonly _id: string;
     content: string;
+    createdAt: string;
+}
+
+export type FlashCard = {
+    readonly _id: string;
+    projectId: Project;
+    frontContent: string;
+    backContent: string;
     createdAt: string;
 }
 
@@ -55,7 +45,7 @@ export type Goal = {
     completed: boolean;
 }
 
-export type Plan = {
+export type Note = {
     _id: string;
     content: string;
     projectId: Project;

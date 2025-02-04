@@ -4,11 +4,13 @@ import projectReducer from "../src/slices/projectSlice";
 import memoryReducer from "../src/slices/memorySlice";
 import authReducer from "../src/slices/authSlice";
 import goalReducer from "../src/slices/goalSlice";
-import planReducer from "../src/slices/planSlice";
+import flashCardReducer from "../src/slices/flashCardSlice";
+import noteReducer from "../src/slices/noteSlice";
 import philosophyReducer from "../src/slices/philosophySlice";
 import {todoApi} from "../src/slices/todoApiSlice";
 import {goalApi} from "../src/slices/goalApiSlice";
-import {planApi} from "../src/slices/planApiSlice";
+import {noteApi} from "../src/slices/noteApiSlice";
+import {flashCardApi} from "../src/slices/flashCardApiSlice";
 import {authApi} from "../src/slices/authApiSlice";
 import {projectApi} from "../src/slices/projectApiSlice";
 import {memoryApi} from "../src/slices/memoryApiSlice";
@@ -21,18 +23,20 @@ export const store = configureStore({
         project: projectReducer,
         memory: memoryReducer,
         goal: goalReducer,
-        plan: planReducer,
+        note: noteReducer,
+        flashcard: flashCardReducer,
         philosophy: philosophyReducer,
         [todoApi.reducerPath] : todoApi.reducer,
         [authApi.reducerPath] : authApi.reducer,
         [projectApi.reducerPath] : projectApi.reducer,
         [memoryApi.reducerPath] : memoryApi.reducer,
         [goalApi.reducerPath] : goalApi.reducer,
-        [planApi.reducerPath] : planApi.reducer,
+        [noteApi.reducerPath] : noteApi.reducer,
+        [flashCardApi.reducerPath]: flashCardApi.reducer,
         [philosophyApi.reducerPath] : philosophyApi.reducer
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(todoApi.middleware, authApi.middleware, projectApi.middleware, memoryApi.middleware, goalApi.middleware, planApi.middleware, philosophyApi.middleware),
+        getDefaultMiddleware().concat(todoApi.middleware, authApi.middleware, projectApi.middleware, memoryApi.middleware, goalApi.middleware, noteApi.middleware, philosophyApi.middleware, flashCardApi.middleware),
     devTools: true
 });
 

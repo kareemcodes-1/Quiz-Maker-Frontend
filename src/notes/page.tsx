@@ -1,6 +1,6 @@
 
 import Layout from '../layout'
-import AllPlans from '../components/all-plans'
+import AllNotes from '../components/all-notes'
 import { PlusIcon } from '@heroicons/react/24/outline'
 import {
   Select,
@@ -11,9 +11,9 @@ import {
 } from "../components/ui/select";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
-import { handlePlansFilter } from '../slices/planSlice';
+import { handleNotesFilter } from '../slices/noteSlice';
 
-const Plans = () => {
+const Notes = () => {
 
   const {projects} = useSelector((state: RootState) => state.project);
   const dispatch = useDispatch();
@@ -21,12 +21,12 @@ const Plans = () => {
   return (
     <Layout>
           <div className='flex lg:items-center items-start lg:flex-row flex-col justify-between w-full mb-[1.5rem]'>
-               <h1 className='text-[3rem]'>Plans</h1>
+               <h1 className='text-[3rem]'>Notes</h1>
                
                <div className='flex items-center gap-[.3rem]'>
-                <a href='/plans/new' className='yena-btn-black dark:yena-btn'><span className='lg:block hidden'>Create Plan</span><PlusIcon className='lg:hidden block w-[1.3rem]'/><span></span></a>
+                <a href='/notes/new' className='yena-btn-black dark:yena-btn'><span className='lg:block hidden'>Create Note</span><PlusIcon className='lg:hidden block w-[1.3rem]'/><span></span></a>
 
-               <Select onValueChange={(value) => dispatch(handlePlansFilter(value))}>
+               <Select onValueChange={(value) => dispatch(handleNotesFilter(value))}>
             <SelectTrigger className="w-[180px]">
               <SelectValue
                 placeholder={'All'}
@@ -53,9 +53,9 @@ const Plans = () => {
                </div>
           </div>
 
-          <AllPlans />
+          <AllNotes />
     </Layout>
   )
 }
 
-export default Plans
+export default Notes

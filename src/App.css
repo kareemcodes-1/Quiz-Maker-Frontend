@@ -24,6 +24,10 @@ body {
        font-style: normal;
 }
 
+.cabinetgrotesk{
+  font-family: 'CabinetGrotesk-Medium', sans-serif;
+}
+
 .logo{
   font-family: "Bebas Neue", serif;
 }
@@ -201,6 +205,7 @@ h1{
 }
 
 
+
 @layer base {
   * {
     @apply border-border;
@@ -210,5 +215,8 @@ h1{
   }
 }
 
+.ql-editor::placeholder.dark{
+  color: #ffff;
+}
 
 

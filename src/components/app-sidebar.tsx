@@ -15,16 +15,21 @@ import { RootState } from "../../store/store"
 import { allProjects, setOpenProjectModal } from "../../src/slices/projectSlice"
 import { useGetAllProjectsQuery } from "../../src/slices/projectApiSlice"
 import { useEffect } from "react"
-import { AcademicCapIcon,  PhotoIcon, PresentationChartBarIcon, RectangleStackIcon} from "@heroicons/react/24/outline"
+import { AcademicCapIcon,  BoltIcon,  BookOpenIcon,  PencilSquareIcon,  PhotoIcon, RectangleStackIcon} from "@heroicons/react/24/outline"
 import { Dialog } from "@radix-ui/react-dialog"
 import ProjectModal from "../modal/project-modal"
 
 // Menu items.
 const items = [
   {
-    title: "Todos",
+    title: "Dashboard",
     url: "/",
     icon: Home,
+  },
+  {
+    title: "Todos",
+    url: "/",
+    icon: PencilSquareIcon,
   },
   {
     title: "Philosophy",
@@ -42,10 +47,22 @@ const items = [
     icon: RectangleStackIcon,
   },
   {
-    title: "Plans",
-    url: "/plans",
-    icon: PresentationChartBarIcon,
+    title: "Notes",
+    url: "/notes",
+    icon: BookOpenIcon,
   },
+
+  {
+    title: "Flashcards",
+    url: "/flashcards",
+    icon: BoltIcon,
+  },
+
+  // {
+  //   title: "Transcript",
+  //   url: "/notes",
+  //   icon: PresentationChartBarIcon,
+  // },
   // {
   //   title: "Calendar",
   //   url: "/calendar",

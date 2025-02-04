@@ -3,7 +3,7 @@ import Layout from "../../layout";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import toast from "react-hot-toast";
-import { useCreatePlanMutation } from "../../../src/slices/planApiSlice";
+import { useCreateNoteMutation } from "../../slices/noteApiSlice";
 import { useNavigate } from "react-router";
 import {
   Select,
@@ -16,14 +16,14 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import Loader from "../../components/ui/loading";
 
-const NewPlan = () => {
+const NewNote = () => {
   const editorRef = useRef<HTMLDivElement | null>(null);
   const quillInstance = useRef<Quill | null>(null);
   const { projects } = useSelector((state: RootState) => state.project);
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const [value, setValue] = useState<string>("");
   const [selectedProjectId, setSelectedProjectId] = useState<string>(projects?.[0]?._id);
-  const [createPlan] = useCreatePlanMutation();
+  const [createNote] = useCreateNoteMutation();
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
@@ -33,7 +33,7 @@ const NewPlan = () => {
     if (editorRef.current) {
       quillInstance.current = new Quill(editorRef.current, {
         theme: "snow",
-        placeholder: "Any plans??",
+        placeholder: "Any notes??",
         modules: {
           toolbar: [
             [{ header: [1, 2, false] }],
@@ -72,10 +72,10 @@ const NewPlan = () => {
     };
 
     try {
-      const res = await createPlan(note);
+      const res = await createNote(note);
       if (res.data) {
-        toast.success("Created Plan");
-        navigate("/plans");
+        toast.success("Created Note");
+        navigate("/notes");
       }
     } catch (error) {
       console.log(error);
@@ -88,12 +88,12 @@ const NewPlan = () => {
     <Layout>
       <div className="flex lg:flex-row flex-col lg:items-center items-start justify-between w-full">
         <h1 className="lg:text-[2.5rem] text-[2rem] mb-[.5rem]">
-          Create Plans
+          Create Notes
         </h1>
 
         <div className="flex items-center gap-[.5rem] relative">
           <button type="button" className="yena-btn-black dark:yena-btn" onClick={handleSubmit}>
-          {loading ? <Loader /> : 'Save Plan'}
+          {loading ? <Loader /> : 'Save Note'}
           </button>
 
           <Select onValueChange={(value) => setSelectedProjectId(value)}>
@@ -106,6 +106,7 @@ const NewPlan = () => {
               {projects?.length > 0 ? (
                 projects.map((project) => (
                   <SelectItem key={project._id} value={project._id}>
+                    {project.emoji}
                     {project.name}
                   </SelectItem>
                 ))
@@ -122,7 +123,7 @@ const NewPlan = () => {
         {/* Editor container */}
         <div
           ref={editorRef}
-          className="rounded-[.5rem] w-full"
+          className="rounded-[.5rem] w-full dark:[&_.ql-editor.ql-blank::before]:text-muted-foreground !cabinetgrotesk"
           style={{ height: "60vh" }}
         />
       </div>
@@ -130,4 +131,4 @@ const NewPlan = () => {
   );
 };
 
-export default NewPlan;
+export default NewNote;
