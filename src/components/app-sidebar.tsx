@@ -28,7 +28,7 @@ const items = [
   },
   {
     title: "Todos",
-    url: "/",
+    url: "/todos",
     icon: PencilSquareIcon,
   },
   {
