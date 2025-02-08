@@ -17,8 +17,9 @@ const EmptyState = () => {
         />
       </picture> */}
       {/* <img src="https://img.icons8.com/?size=100&id=jIy074vqGJN0&format=png&color=000000" alt="" /> */}
-      <img src="/empty-box.png" alt="" className="w-[10rem]"/>
-      <h1 className="text-[2rem]">Here is empty.</h1>
+      <img src="https://img.icons8.com/?size=100&id=C8gfz6xPL7TZ&format=png&color=000000" alt="" />
+      {/* <img src="/empty-box.png" alt="" className="w-[10rem]"/> */}
+      <h1 className="text-[1.5rem]">Here is empty .</h1>
     </div>
   );
 };

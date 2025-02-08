@@ -15,6 +15,7 @@ import { useGetAllPhilosophyQuery } from './slices/philosophyApiSlice';
 import { useGetAllGoalsQuery } from './slices/goalApiSlice';
 import { allGoals } from './slices/goalSlice';
 import { allPhilosophy } from './slices/philosophySlice';
+import EmptyState from './components/empty-state';
 
 const Dashboard = () => {
 
@@ -122,9 +123,13 @@ const Dashboard = () => {
           <Link to={'/todos'}><ArrowUpRight size={24} className='cursor-pointer'/></Link>
           </div>
           <div className='mt-[.5rem]  flex flex-col gap-[.5rem]'>
-                {filteredTodo?.slice(0, 3)?.map((todo) => (
+                {filteredTodos.length < 0 ? (
+                  filteredTodo?.slice(0, 3)?.map((todo) => (
                     <TodoCard todo={todo}/>
-                ))}
+                ))
+                ) : (
+                  <EmptyState />
+                )}
           </div>
           </div>
 
@@ -134,9 +139,13 @@ const Dashboard = () => {
           <Link to={'/notes'}><ArrowUpRight size={24} className='cursor-pointer'/></Link>
           </div>
           <div className='flex flex-col gap-[.5rem] mt-[.5rem]'>
-               {notes?.slice(0,3)?.map((note) => (
-                  <NoteCard note={note} key={note._id}/>
-                ))}
+               {notes?.length < 0 ? (
+                  notes?.slice(0,3)?.map((note) => (
+                    <NoteCard note={note} key={note._id}/>
+                ))
+                ) : (
+                  <EmptyState />
+                )}
           </div>
           </div>
         </div>
