@@ -15,7 +15,7 @@ import { RootState } from "../../store/store"
 import { allProjects, setOpenProjectModal } from "../../src/slices/projectSlice"
 import { useGetAllProjectsQuery } from "../../src/slices/projectApiSlice"
 import { useEffect } from "react"
-import { AcademicCapIcon,  ArchiveBoxIcon,  ArrowTrendingDownIcon,  BoltIcon,  BookOpenIcon,  ChartBarIcon,  PencilSquareIcon,  PhotoIcon, RectangleStackIcon} from "@heroicons/react/24/outline"
+import { AcademicCapIcon,  ArchiveBoxIcon,  ArrowTrendingDownIcon,  BoltIcon,  BookOpenIcon,  ChartBarIcon,  PencilSquareIcon} from "@heroicons/react/24/outline"
 import { Dialog } from "@radix-ui/react-dialog"
 import ProjectModal from "../modal/project-modal"
 
@@ -32,7 +32,7 @@ const items = [
     icon: PencilSquareIcon,
   },
   {
-    title: "Philosophy",
+    title: "Philosophies",
     url: "/philosophies",
     icon: AcademicCapIcon,
   },

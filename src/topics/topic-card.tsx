@@ -13,20 +13,20 @@ import {
   import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuItem,
+    // DropdownMenuItem,
     DropdownMenuTrigger,
   } from "../components/ui/dropdown-menu";
   import { Badge } from "../components/ui/badge";
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
-import { useGetAllFlashCardsQuery } from '../slices/flashCardApiSlice';
-import { allFlashCards } from '../slices/flashCardSlice';
+// import { useDispatch } from 'react-redux';
+// import { RootState } from '../../store/store';
+// import { useGetAllFlashCardsQuery } from '../slices/flashCardApiSlice';
+// import { allFlashCards } from '../slices/flashCardSlice';
 import { TbCards } from "react-icons/tb";
   
 
-const TopicCard = ({ topic, isLoading }: { topic: Topic, isLoading: boolean}) => {
+const TopicCard = ({ topic }: { topic: Topic, isLoading: boolean}) => {
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     // const [deleteTodo] = useDeleteTodoMutation();
     // const [completeTodo] = useCompleteTodoMutation();
     // const [createTodo] = useCreateTodoMutation();

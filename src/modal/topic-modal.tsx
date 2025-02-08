@@ -41,7 +41,7 @@ import { useState } from "react";
     const {openTopicModal} = useSelector((state: RootState) => state.topic);
     const {userInfo} = useSelector((state: RootState) => state.auth);
     const { projects } = useSelector((state: RootState) => state.project);
-    const [selectedProjectId, setSelectedProjectId] = useState<string>(projects[0]?._id);
+    const [, setSelectedProjectId] = useState<string>(projects[0]?._id);
     const { editingMode, editingTopic } = useSelector(
         (state: RootState) => state.topic
       );

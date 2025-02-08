@@ -34,18 +34,18 @@ const flashCardSlice = createSlice({
                 state.editingFlashCard = findFlashCard;
             }
         },
-        handleFlashCardFilter(state, action: PayloadAction<string>){
-            state.value = action.payload;
-            const updatedFlashCards = state.filteredFlashCards.filter((flashcard) => {
-               if(state.value === 'all'){
-                  return flashcard;
-               }else if(state.value === action.payload.toLowerCase()){
-                   return flashcard.projectId.name.toLowerCase() === state.value.toLowerCase();
-               }
-            });
+        // handleFlashCardFilter(state, action: PayloadAction<string>){
+        //     state.value = action.payload;
+        //     const updatedFlashCards = state.filteredFlashCards.filter((flashcard) => {
+        //        if(state.value === 'all'){
+        //           return flashcard;
+        //        }else if(state.value === action.payload.toLowerCase()){
+        //            return flashcard.projectId.name.toLowerCase() === state.value.toLowerCase();
+        //        }
+        //     });
       
-            state.flashcards = updatedFlashCards;
-          },
+        //     state.flashcards = updatedFlashCards;
+        //   },
         updateFlashCards(state, action: PayloadAction<FlashCard>) {
               const updatedFlashCard = state.flashcards.map((flashcard) => {
                 if (flashcard._id === action.payload._id) {
@@ -66,5 +66,5 @@ const flashCardSlice = createSlice({
     }
 });
 
-export const {allFlashCards, setOpenFlashCardModal, findFlashCard, deleteFlashCards, updateFlashCards, handleFlashCardFilter} = flashCardSlice.actions;
+export const {allFlashCards, setOpenFlashCardModal, findFlashCard, deleteFlashCards, updateFlashCards} = flashCardSlice.actions;
 export default flashCardSlice.reducer;
