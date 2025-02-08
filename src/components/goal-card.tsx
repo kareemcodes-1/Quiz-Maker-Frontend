@@ -153,8 +153,8 @@ const GoalCard = ({ goal }: { goal: Goal}) => {
       </Badge>
     </div>
 
-    <Badge className="flex items-center gap-[.3rem] text-white bg-red-600 border-none">
-         {differenceInDays(new Date(goal.endDeadlineDate), new Date(goal.startDeadlineDate))} days left
+    <Badge className="flex items-center gap-[.3rem] text-muted-foreground">
+         ⏱ {differenceInDays(new Date(goal.endDeadlineDate), new Date(new Date()))} days left
       </Badge>
       
 

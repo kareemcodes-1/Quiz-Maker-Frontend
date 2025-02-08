@@ -66,7 +66,7 @@ const Philosophies = () => {
                     type="button"
                     className="border bg-popover transition rounded-[.5rem] shadow-md w-full p-[.8rem] cursor-pointer flex flex-col lg:flex-row items-start lg:items-center justify-between gap-[1rem]"
                   >
-                    <div className="flex items-center gap-[.5rem] lg:gap-[1rem] w-full lg:w-auto">
+                    <div className="flex items-center gap-[1rem] w-full lg:w-auto">
                       {/* <AcademicCapIcon className="text-gray-500 w-[1.2rem] lg:w-[1.5rem]" /> */}
                       <div className='lg:text-[1.2rem] text-[1rem]'>#{index + 1}</div>
                                  <div

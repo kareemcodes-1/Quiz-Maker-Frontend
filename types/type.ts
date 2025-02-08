@@ -16,9 +16,18 @@ export type Philosophy = {
 
 export type FlashCard = {
     readonly _id: string;
-    projectId: Project;
+    // topicId: Topic;
+    topicId: string;
     frontContent: string;
     backContent: string;
+    createdAt: string;
+}
+
+export type Topic = {
+    readonly _id: string;
+    projectId: Project;
+    name: string;
+    description: string;
     createdAt: string;
 }
 

@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import { useCreateProjectMutation } from "../../src/slices/projectApiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import { addProject } from "../slices/projectSlice";
+import { addProject, setOpenProjectModal } from "../slices/projectSlice";
 import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
 
@@ -53,7 +53,7 @@ const ProjectModal = ({closeModal}: {closeModal: () => void;}) => {
   };
 
   return (
-    <Dialog open={openProjectModal}>
+    <Dialog open={openProjectModal} onOpenChange={(isOpen) => dispatch(setOpenProjectModal(isOpen))}>
     <DialogContent>
       <DialogHeader>
         <DialogTitle className="lg:text-[1.5rem] text-[1.3rem] text-start" >Create Project</DialogTitle>
@@ -62,6 +62,7 @@ const ProjectModal = ({closeModal}: {closeModal: () => void;}) => {
             <div className="w-full">
               <Label
                 htmlFor="name"
+                 className="flex text-start"
               >
                 Name
               </Label>
@@ -81,6 +82,7 @@ const ProjectModal = ({closeModal}: {closeModal: () => void;}) => {
             <div className="w-full">
               <Label
                 htmlFor="emoji"
+                className="flex text-start"
               >
                 Emoji
               </Label>

@@ -21,8 +21,16 @@ export const projectApi = createApi({
                 method: "GET",
                 credentials: "include",
             })
+        }),
+
+        getProjectById: builder.query({
+            query: (id) => ({
+                url: `/project/${id}`,
+                method: "GET",
+                credentials: "include",
+            })
         })
     })
 });
 
-export const {useCreateProjectMutation, useGetAllProjectsQuery} = projectApi;
+export const {useCreateProjectMutation, useGetAllProjectsQuery, useGetProjectByIdQuery} = projectApi;

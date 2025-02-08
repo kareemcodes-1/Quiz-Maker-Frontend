@@ -13,23 +13,35 @@ import {
 } from "../../components/ui/select";
 import Loader from "../../components/ui/loading";
 import { RootState } from "../../../store/store";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { useGetAllTopicsQuery } from "../../slices/topicApiSlice";
+import { allTopics } from "../../slices/topicSlice";
 
 const CreateFlashCards = () => {
   const [frontText, setFrontText] = useState("");
   const [backText, setBackText] = useState("");
   const [createFlashCard, {isLoading}] = useCreateFlashCardMutation();
-  const { projects } = useSelector((state: RootState) => state.project);
+  const { topics } = useSelector((state: RootState) => state.topic);
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const navigate = useNavigate();
-  const [selectedProjectId, setSelectedProjectId] = useState<string>(projects?.[0]?._id);
+  const [selectedTopicId, setSelectedTopicId] = useState<string>(topics?.[0]?._id);
+  const {data, isFetching} = useGetAllTopicsQuery('');
+  const dispatch = useDispatch();
 
   useEffect(() => {
-      if (projects?.[0]?._id) {
-        setSelectedProjectId(projects[0]._id);
+    if(data && !isFetching){   
+    dispatch(allTopics(data));
+    }
+  }, [data, isFetching])
+  
+
+  useEffect(() => {
+
+      if (topics?.[0]?._id) {
+        setSelectedTopicId(topics[0]._id);
       }
-    }, [projects]);
+    }, [topics]);
 
   function handleSwitch(){
    if(frontText && backText !== ""){
@@ -43,7 +55,7 @@ const CreateFlashCards = () => {
         const data = {
             frontContent: frontText,
             backContent: backText,
-            projectId: selectedProjectId,
+            topicId: selectedTopicId,
             userId: userInfo?._id as string,
         }
         const res = await createFlashCard(data).unwrap();
@@ -65,26 +77,25 @@ const CreateFlashCards = () => {
         
         <div className="flex items-center gap-[.5rem] relative lg:mt-0 mt-[1rem]">
           <button type="button" className="yena-btn-black dark:yena-btn" onClick={handleSubmit}>
-          {isLoading ? <Loader /> : 'Save Note'}
+          {isLoading ? <Loader /> : 'Save Card'}
           </button>
 
-          <Select onValueChange={(value) => setSelectedProjectId(value)}>
+          <Select onValueChange={(value) => setSelectedTopicId(value)}>
             <SelectTrigger className="w-[180px]">
               <SelectValue
-                placeholder={projects?.[0]?.name || "Select a project"}
+                placeholder={topics?.[0]?.name || "Select a topic"}
               />
             </SelectTrigger>
             <SelectContent>
-              {projects?.length > 0 ? (
-                projects.map((project) => (
-                  <SelectItem key={project._id} value={project._id}>
-                    {project.emoji}
-                    {project.name}
+              {topics?.length > 0 ? (
+                topics.map((topic) => (
+                  <SelectItem key={topic._id} value={topic._id}>
+                    {topic.name}
                   </SelectItem>
                 ))
               ) : (
-                <SelectItem disabled value="No projects">
-                  No projects available
+                <SelectItem disabled value="No topics">
+                  No topics.
                 </SelectItem>
               )}
             </SelectContent>

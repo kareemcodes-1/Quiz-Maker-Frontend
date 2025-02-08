@@ -1,55 +1,146 @@
-
-import Layout from './layout'
-import TodoModal from './modal/todo-modal';
-import { Dialog } from './components/ui/dialog';
-import Todos from './components/todos';
-import { useDispatch, useSelector } from 'react-redux';
+import TodoCard from './components/todo-card'
+import { Calendar } from './components/ui/calendar'
+import { useEffect } from 'react'
 import { RootState } from '../store/store';
-import { handleTodosFilter, setEditing, setOpenTodoModal } from '../src/slices/todoSlice';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./components/ui/select";
-import { PlusIcon } from '@heroicons/react/24/outline';
-   
+import { useDispatch, useSelector } from 'react-redux';
+import { useFetchTodosQuery } from '../src/slices/todoApiSlice';
+import { allTodos, handleTodosFilter } from '../src/slices/todoSlice';
+import Layout from './layout'
+import { allNotes } from './slices/noteSlice';
+import { useGetAllNotesQuery } from './slices/noteApiSlice';
+import NoteCard from './components/note-card';
+import { ArrowUpRight } from 'lucide-react';
+import { Link } from 'react-router';
+import { useGetAllPhilosophyQuery } from './slices/philosophyApiSlice';
+import { useGetAllGoalsQuery } from './slices/goalApiSlice';
+import { allGoals } from './slices/goalSlice';
+import { allPhilosophy } from './slices/philosophySlice';
 
 const Dashboard = () => {
-  const dispatch = useDispatch();
-    const {openTodoModal} = useSelector((state: RootState) => state.todo);
+
+     const {filteredTodos, value, todos} = useSelector((state: RootState) => state.todo);
+     const { notes } = useSelector((state: RootState) => state.note);
+     const { goals } = useSelector((state: RootState) => state.goal);
+     const { philosophies } = useSelector((state: RootState) => state.philosophy);
+     const dispatch = useDispatch();
+
+     const { data: todosData, isFetching: isFetchingTodos } = useFetchTodosQuery('');
+     const { data: notesData, isFetching: isFetchingNotes } = useGetAllNotesQuery('');
+     const { data: goalsData, isFetching: isFetchingGoals } = useGetAllGoalsQuery('');
+     const { data: philosophiesData, isFetching: isFetchingPhilosophies } = useGetAllPhilosophyQuery('');
+  
+
+     useEffect(() => {
+       if (todosData && !isFetchingTodos) {
+         dispatch(allTodos(todosData));
+         dispatch(handleTodosFilter("today"));
+       }
+     }, [todosData, isFetchingTodos, dispatch]);
+
+     
+       useEffect(() => {
+         if (notesData && !isFetchingNotes) {
+           dispatch(allNotes(notesData));
+         }
+       }, [notesData, dispatch, isFetchingNotes]);
+
+       useEffect(() => {
+          if (goalsData && !isFetchingGoals) {
+            dispatch(allGoals(goalsData));
+          }
+        }, [goalsData, dispatch, isFetchingGoals]);
+
+        useEffect(() => {
+          if (philosophiesData && !isFetchingPhilosophies) {
+            dispatch(allPhilosophy(philosophiesData));
+          }
+        }, [philosophiesData, dispatch, isFetchingPhilosophies]);
+     
+
+     const filteredTodo = filteredTodos.filter((todo) => todo.time === value);
+     const completedTodosCount = todos.filter((todo) => todo.completed === true);
+     const completedGoalsCount = goals.filter((goal) => goal.completed === true);
 
   return (
-    <Layout>
-        <div className='flex items-center justify-between mb-[1rem]'>
-             <h1 className='lg:text-[3rem] text-[2rem]'>Todos</h1>
-
-             <div className='flex items-center gap-[.5rem] relative'>
-             <button type="button" className='dark:yena-btn yena-btn-black ' onClick={() => {dispatch(setOpenTodoModal(true)); dispatch(setEditing())}}><span className='lg:block hidden'>Create Todo</span><PlusIcon className='lg:hidden block w-[1.3rem]'/><span></span></button>
-
-          <Select onValueChange={(value) => dispatch(handleTodosFilter(value))}>
-            <SelectTrigger className="w-[120px]">
-              <SelectValue placeholder="Today" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Todos</SelectItem>
-              <SelectItem value={'today'}>Today</SelectItem>
-              <SelectItem value="tomorrow">Tomorrow</SelectItem>
-            </SelectContent>
-          </Select>
-             </div>
+   <Layout>
+        <div className='flex items-center justify-between'>
+            <h1 className='lg:text-[3rem] text-[2rem] mb-[1rem]'>Dashboard</h1>
         </div>
 
-        
-        <Todos />
+        <div className='lg:grid flex flex-col grid-cols-3 gap-[1rem]'>
+        <div className='grid grid-cols-2  gap-[.5rem]'>
+                  <div className='border shadow-md p-[1rem] rounded-[.5rem]'>
+                       <div className='flex lg:items-center items-start lg:gap-[1rem]'>
+                            <div>
+                            <h1 className='text-[2.5rem]'>{completedTodosCount?.length}</h1>
+                            <span className='text-muted-foreground'>Completed Todos</span>
+                            </div>
+                            <img src="https://img.icons8.com/?size=100&id=9fp9k4lPT8us&format=png&color=000000" alt="" className='lg:w-[4rem] w-[3rem] lg:h-[4rem] h-[3rem]'/>
+                       </div>
+                  </div>
 
-        <Dialog open={openTodoModal} onOpenChange={(isOpen) => dispatch(setOpenTodoModal(isOpen))}>
-             <TodoModal closeModal={() => dispatch(setOpenTodoModal(false))}/>
-        </Dialog>
+                  <div className="border shadow-md p-[1rem] rounded-[.5rem]">
+                       <div className='flex lg:items-center items-start lg:gap-[1rem]'>
+                            <div>
+                            <h1 className='text-[2.5rem]'>{notes?.length}</h1>
+                            <span className='text-muted-foreground'>Personal Notes</span>
+                            </div>
+                            <img src="https://img.icons8.com/?size=100&id=wI5oV8wCkIXd&format=png&color=000000" alt="" className='lg:w-[4rem] w-[3rem] lg:h-[4rem] h-[3rem]' />
+                       </div>
+                  </div>
 
-        
-    </Layout>
+                  <div className='border shadow-md p-[1rem] rounded-[.5rem]'>
+                     <div className='flex lg:items-center items-start lg:gap-[1rem]'>
+                            <div>
+                            <h1 className='text-[2.5rem]'>{completedGoalsCount?.length}</h1>
+                            <span className='text-muted-foreground'>Completed goals</span>
+                            </div>
+                            <img src="https://img.icons8.com/?size=100&id=LZtGgAmh0n0e&format=png&color=000000" alt="" className='lg:w-[4rem] w-[3rem] lg:h-[4rem] h-[3rem]' />
+                       </div>
+                  </div>
+
+                  <div className='border shadow-md p-[1rem] rounded-[.5rem]'>
+                     <div className='flex lg:items-center items-start lg:gap-[.1rem]'>
+                            <div>
+                            <h1 className='text-[2.5rem]'>{philosophies?.length}</h1>
+                            <span className='text-muted-foreground'>Philosophies</span>
+                            </div>
+                            <img src="https://img.icons8.com/?size=100&id=RZ3Ux64yROj8&format=png&color=000000" alt=""className='lg:w-[4rem] w-[3rem] lg:h-[4rem] h-[3rem]' />
+                       </div>
+                  </div>
+            </div>
+
+            <div className="border rounded-[.5rem] h-full w-full">
+           <Calendar className='w-full h-full' />
+            </div>
+        </div>
+
+        <div className='lg:grid flex flex-col grid-cols-2 place-content-center gap-[1rem] mt-[2rem]'>
+          <div>
+          <div className='flex items-center justify-between'>
+          <h1 className='text-[1.3rem]'>Morning Todos</h1>
+          <Link to={'/todos'}><ArrowUpRight size={24} className='cursor-pointer'/></Link>
+          </div>
+          <div className='mt-[.5rem]  flex flex-col gap-[.5rem]'>
+                {filteredTodo?.slice(0, 3)?.map((todo) => (
+                    <TodoCard todo={todo}/>
+                ))}
+          </div>
+          </div>
+
+          <div>
+          <div className='flex items-center justify-between'>
+          <h1 className='text-[1.3rem]'>Notes</h1>
+          <Link to={'/notes'}><ArrowUpRight size={24} className='cursor-pointer'/></Link>
+          </div>
+          <div className='flex flex-col gap-[.5rem] mt-[.5rem]'>
+               {notes?.slice(0,3)?.map((note) => (
+                  <NoteCard note={note} key={note._id}/>
+                ))}
+          </div>
+          </div>
+        </div>
+   </Layout>
   )
 }
 

@@ -22,7 +22,6 @@ const projectSlice = createSlice({
             state.projects = action.payload;
         },
         setOpenProjectModal(state, action: PayloadAction<boolean>){
-            console.log(action.payload);
             state.openProjectModal = action.payload;
         }
     }

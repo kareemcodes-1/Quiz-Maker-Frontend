@@ -21,6 +21,11 @@ import NewNote from './notes/new/page.tsx';
 import Notes from './notes/page.tsx';
 import FlashCards from './flashcards/page.tsx';
 import CreateFlashCards from './flashcards/new/page.tsx';
+import Topics from './topics/page.tsx';
+import TopicPage from './topics/topic/page.tsx';
+import TodosPage from './todos/page.tsx';
+import ProjectsPage from './projects/page.tsx';
+import ProjectPage from './projects/project/page.tsx';
 
 createRoot(document.getElementById('root')!).render(
   // <StrictMode>
@@ -34,6 +39,9 @@ createRoot(document.getElementById('root')!).render(
 
                <Route element={<ProtectRoutes />}>
                    <Route path='/' element={<App />}></Route>
+                   <Route path='/todos' element={<TodosPage />}></Route>
+                   <Route path='/projects' element={<ProjectsPage />}></Route>
+                   <Route path='/projects/project/:id' element={<ProjectPage />}></Route>
                    <Route path='/memories' element={<Memories />}></Route>
                    <Route path='/philosophies' element={<Philosophies />}></Route>
                    <Route path='/philosophies/new' element={<PhilosophyNew />}></Route>
@@ -44,6 +52,8 @@ createRoot(document.getElementById('root')!).render(
                    <Route path='/notes/edit/:id' element={<NoteEditPage />}></Route>
                    <Route path="/settings/profile" element={<Profile />} />
                    <Route path='/flashcards' element={<FlashCards />}></Route>
+                   <Route path='/topics' element={<Topics />}></Route>
+                   <Route path='/topics/topic/:id' element={<TopicPage />}></Route>
                    <Route path='/flashcards/new' element={<CreateFlashCards />}></Route>
                 </Route>
                </Routes>

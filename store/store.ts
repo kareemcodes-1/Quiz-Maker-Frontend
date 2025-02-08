@@ -5,12 +5,14 @@ import memoryReducer from "../src/slices/memorySlice";
 import authReducer from "../src/slices/authSlice";
 import goalReducer from "../src/slices/goalSlice";
 import flashCardReducer from "../src/slices/flashCardSlice";
+import topicReducer from "../src/slices/topicSlice";
 import noteReducer from "../src/slices/noteSlice";
 import philosophyReducer from "../src/slices/philosophySlice";
 import {todoApi} from "../src/slices/todoApiSlice";
 import {goalApi} from "../src/slices/goalApiSlice";
 import {noteApi} from "../src/slices/noteApiSlice";
 import {flashCardApi} from "../src/slices/flashCardApiSlice";
+import {topicApi} from "../src/slices/topicApiSlice";
 import {authApi} from "../src/slices/authApiSlice";
 import {projectApi} from "../src/slices/projectApiSlice";
 import {memoryApi} from "../src/slices/memoryApiSlice";
@@ -25,6 +27,7 @@ export const store = configureStore({
         goal: goalReducer,
         note: noteReducer,
         flashcard: flashCardReducer,
+        topic: topicReducer,
         philosophy: philosophyReducer,
         [todoApi.reducerPath] : todoApi.reducer,
         [authApi.reducerPath] : authApi.reducer,
@@ -33,10 +36,11 @@ export const store = configureStore({
         [goalApi.reducerPath] : goalApi.reducer,
         [noteApi.reducerPath] : noteApi.reducer,
         [flashCardApi.reducerPath]: flashCardApi.reducer,
+        [topicApi.reducerPath]: topicApi.reducer,
         [philosophyApi.reducerPath] : philosophyApi.reducer
     },
     middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(todoApi.middleware, authApi.middleware, projectApi.middleware, memoryApi.middleware, goalApi.middleware, noteApi.middleware, philosophyApi.middleware, flashCardApi.middleware),
+        getDefaultMiddleware().concat(todoApi.middleware, authApi.middleware, projectApi.middleware, memoryApi.middleware, topicApi.middleware, goalApi.middleware, noteApi.middleware, philosophyApi.middleware, flashCardApi.middleware),
     devTools: true
 });
 
