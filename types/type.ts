@@ -5,6 +5,7 @@ export type Todo = {
     completed: boolean;
     date: string | null;
     time: string;
+    priority: string;
 }
 
 

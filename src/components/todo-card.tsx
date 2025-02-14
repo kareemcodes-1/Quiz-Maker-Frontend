@@ -15,7 +15,7 @@ import {
 } from "../../src/slices/todoApiSlice";
 import toast from "react-hot-toast";
 import JSConfetti from "js-confetti";
-import { addDays, format, isSameDay } from "date-fns";
+// import { addDays, format, isSameDay } from "date-fns";
 import {
   Tooltip,
   TooltipContent,
@@ -42,38 +42,38 @@ const TodoCard = ({ todo }: { todo: Todo }) => {
   const [createTodo] = useCreateTodoMutation();
   const [openActions, setOpenActions] = useState<boolean>(false);
 
-  const displayDate = () => {
-    const today = new Date();
-    const tomorrow = addDays(today, 1);
+  // const displayDate = () => {
+  //   const today = new Date();
+  //   const tomorrow = addDays(today, 1);
 
-    if (todo.date) {
-      const todoDate = new Date(todo.date);
+  //   if (todo.date) {
+  //     const todoDate = new Date(todo.date);
 
-      if (isSameDay(todoDate, today)) {
-        return "Today";
-      }
+  //     if (isSameDay(todoDate, today)) {
+  //       return "Today";
+  //     }
 
-      if (isSameDay(todoDate, tomorrow)) {
-        return "Tomorrow";
-      }
+  //     if (isSameDay(todoDate, tomorrow)) {
+  //       return "Tomorrow";
+  //     }
 
-      return format(todoDate, "dd-MM-yyyy");
-    }
+  //     return format(todoDate, "dd-MM-yyyy");
+  //   }
 
-    return "";
-  };
+  //   return "";
+  // };
 
-  const renderTime = (time: string) => {
-    if (time === "morning") {
-      return "🌤️";
-    } else if (time === "afternoon") {
-      return "🌇";
-    } else if (time === "night") {
-      return "🌆";
-    } else {
-      return "";
-    }
-  };
+  // const renderTime = (time: string) => {
+  //   if (time === "morning") {
+  //     return "🌤️";
+  //   } else if (time === "afternoon") {
+  //     return "🌇";
+  //   } else if (time === "night") {
+  //     return "🌆";
+  //   } else {
+  //     return "";
+  //   }
+  // };
 
   async function handleDeleteTodo(id: string) {
     try {
@@ -194,8 +194,9 @@ const TodoCard = ({ todo }: { todo: Todo }) => {
 
       <div className="flex flex-col lg:flex-row items-start lg:items-center gap-[1rem] lg:gap-[2rem] w-full lg:w-auto">
         <div className="flex items-center gap-[.5rem] lg:gap-[1rem]">
-          <Badge className="text-muted-foreground">
-            {renderTime(todo.time)} {displayDate()}
+          <Badge className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 dark:text-white flex items-center gap-[.2rem]">
+          <div className={`${todo.priority === 'High' ? 'bg-red-500' : todo.priority === 'Medium' ? 'bg-orange-400' : todo.priority === 'Low' ? 'bg-red-400' : ''} p-[.2rem] rounded-full`}></div>
+            {todo.priority}
           </Badge>
           <TooltipProvider>
             <Tooltip>

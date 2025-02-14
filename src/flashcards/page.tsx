@@ -34,6 +34,7 @@ const FlashCards = () => {
 
   return (
     <Layout>
+      <div className="mt-[1.2rem]">
       <div className="flex lg:flex-row flex-col lg:items-center items-start justify-between w-full mb-[2rem]">
         <h1 className="lg:text-[3rem] text-[2.5rem]">Flashcards </h1>
         <a href="/flashcards/new" type="button" className="yena-btn-black dark:yena-btn">
@@ -92,6 +93,7 @@ const FlashCards = () => {
         </DropdownMenu>
       </div>
       ))}
+      </div>
       </div>
 
 

@@ -22,6 +22,7 @@ const TodosPage = () => {
 
   return (
     <Layout>
+        <div className='mt-[1.2rem]'>
         <div className='flex items-center justify-between mb-[1rem]'>
              <h1 className='lg:text-[3rem] text-[2rem]'>Todos</h1>
 
@@ -43,6 +44,7 @@ const TodosPage = () => {
 
         
         <Todos />
+        </div>
 
         <Dialog open={openTodoModal} onOpenChange={(isOpen) => dispatch(setOpenTodoModal(isOpen))}>
              <TodoModal closeModal={() => dispatch(setOpenTodoModal(false))}/>

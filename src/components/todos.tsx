@@ -22,7 +22,7 @@ const Todos = () => {
       const filteredTodo = filteredTodos.filter((todo) => todo.time === value)
 
   return (
-      <div className='flex flex-col gap-[1rem] mt-[2rem]'>
+      <div className='flex flex-col gap-[1rem] mt-[1.3rem]'>
            <div className="flex items-center gap-[1rem] mb-[1rem]">
                <div className={`yena-btn  ${value === 'morning' && 'yena-btn-black'} !h-[2.3rem] cursor-pointer`} onClick={() => dispatch(handleFilter('morning'))}>Morning 🌤️</div>
                <div className={`yena-btn ${value === 'afternoon' && 'yena-btn-black'} !h-[2.3rem] cursor-pointer`} onClick={() => dispatch(handleFilter('afternoon'))}>Afternoon 🌇</div>

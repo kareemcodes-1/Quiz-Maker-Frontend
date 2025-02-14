@@ -20,6 +20,7 @@ const Notes = () => {
 
   return (
     <Layout>
+          <div className='mt-[1.2rem]'>
           <div className='flex lg:items-center items-start lg:flex-row flex-col justify-between w-full mb-[1.5rem]'>
                <h1 className='text-[3rem]'>Notes</h1>
                
@@ -54,6 +55,7 @@ const Notes = () => {
           </div>
 
           <AllNotes />
+          </div>
     </Layout>
   )
 }

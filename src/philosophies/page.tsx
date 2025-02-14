@@ -49,7 +49,8 @@ const Philosophies = () => {
 
   return (
     <Layout>
-        <div className='flex items-center justify-between w-full mb-[1.5rem]'>
+        <div className='mt-[1.2rem]'>
+        <div className='flex items-center justify-between w-full mb-[1.5rem] '>
              <h1 className='lg:text-[3rem] text-[2.5rem]'>Philosophies </h1>
 
             <div className='relative flex items-center gap-[.5rem]'>
@@ -96,6 +97,7 @@ const Philosophies = () => {
               ) : (
                 <EmptyState />
               )}
+        </div>
         </div>
     </Layout>
   )

@@ -69,8 +69,8 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
   );
   const { projects } = useSelector((state: RootState) => state.project);
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [today, setToday] = useState<boolean>(false);
-  const [tomorrow, setTomorrow] = useState<boolean>(false);
+  const [timeDate, setTimeDate] = useState<string>('today');
+  const [priority, setPriority] = useState<string>('medium');
   const [selectedProjectId, setSelectedProjectId] = useState<string>(
     ''
   );
@@ -86,6 +86,8 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
       dispatch({ type: "SET_NAME", payload: editingTodo.name });
       setSelectedProjectId(editingTodo.projectId._id);
       setTime(editingTodo.time);
+      setPriority(editingTodo.priority);
+      // setTimeDate(editingTodo.date);
     } else {
       dispatch({ type: "SET_NAME", payload: "" });
     }
@@ -95,11 +97,12 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
   const [updateTodo] = useUpdateTodoMutation();
 
   const formAction = async (formData: FormData) => {
-    const date = today
+    const date = timeDate === 'today'
       ? new Date().toISOString()
-      : tomorrow
+      : timeDate === 'tomorrow'
       ? new Date(new Date().setDate(new Date().getDate() + 1)).toISOString()
       : null;
+
 
     if (editingMode && editingTodo) {
         const todo = {
@@ -112,6 +115,7 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
           name: state.name,
           completed: editingTodo.completed,
           date,
+          priority,
           time,
         };
 
@@ -132,6 +136,7 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
               _id: selectedProjectId
             },
             name: formData.get("name") as string,
+            priority,
             date,
             time,
             completed: false,
@@ -176,7 +181,7 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
             </div>
           </div>
 
-          <div className="flex items-center gap-[.5rem]">
+          {/* <div className="flex items-center gap-[.5rem]">
             <h1 className="text-black dark:text-white">Select Date: </h1>
             <button
               type="button"
@@ -198,11 +203,57 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
             >
               Tomorrow
             </button>
+          </div> */}
+
+            <div className="flex items-center gap-[.5rem] justify-between w-full">
+            <div  className="w-1/2">
+            <Label
+                htmlFor="name"
+                className="block text-sm/6 mb-1 font-medium text-muted-foreground text-start"
+              >
+                Date
+              </Label>
+            <Select onValueChange={(value) => setTimeDate(value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="Today" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value={'today'}>Today</SelectItem>
+              <SelectItem value="tomorrow">Tomorrow</SelectItem>
+            </SelectContent>
+          </Select>
+            </div>
+
+          <div  className="w-1/2">
+          <Label
+                htmlFor="name"
+                className="block text-sm/6 mb-1 font-medium text-muted-foreground text-start"
+              >
+                Priority
+          </Label>
+          <Select onValueChange={(value) => setPriority(value)}>
+            <SelectTrigger>
+              <SelectValue placeholder="High" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value={'High'}>High</SelectItem>
+              <SelectItem value="Medium">Medium</SelectItem>
+              <SelectItem value="Low">Low</SelectItem>
+            </SelectContent>
+          </Select>
           </div>
+            </div>
 
           <div className="flex items-center gap-[.5rem]">
+          <div  className="w-full">
+          <Label
+                htmlFor="name"
+                className="block text-sm/6 mb-1 font-medium text-muted-foreground text-start"
+              >
+                Project
+          </Label>
           <Select onValueChange={(value) => setSelectedProjectId(value)}>
-            <SelectTrigger className="w-full">
+            <SelectTrigger>
               <SelectValue
               className=" placeholder:text-black dark:placeholder:text-white"
                 placeholder={editingMode ? editingTodo?.projectId.name : projects?.[0]?.name}
@@ -223,7 +274,15 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
               )}
             </SelectContent>
           </Select>
+          </div>
 
+          <div className="w-full">
+          <Label
+                htmlFor="name"
+                className="block text-sm/6 mb-1 font-medium text-muted-foreground text-start"
+              >
+                Time
+          </Label>
           <Select onValueChange={(value) => setTime(value)}>
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Morning" />
@@ -234,6 +293,7 @@ const TodoModal = ({ closeModal }: { closeModal: () => void }) => {
               <SelectItem value="night">Night</SelectItem>
             </SelectContent>
           </Select>
+          </div>
           </div>
 
           <SubmitBtn />

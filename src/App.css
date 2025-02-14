@@ -24,6 +24,26 @@ body {
        font-style: normal;
 }
 
+@keyframes flicker {
+  0% {
+    opacity: 1;
+    background-color: #48bb78; /* Green color */
+  }
+  50% {
+    opacity: 0.4;
+    background-color: #38a169; /* Slightly different green */
+  }
+  100% {
+    opacity: 1;
+    background-color: #48bb78;
+  }
+}
+
+.flickering {
+  animation: flicker 1s infinite;
+}
+
+
 .cabinetgrotesk{
   font-family: 'CabinetGrotesk-Medium', sans-serif;
 }
