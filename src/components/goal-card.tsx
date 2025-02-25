@@ -121,7 +121,7 @@ const GoalCard = ({ goal }: { goal: Goal}) => {
     <h1 className="text-[1.2rem]">{goal.name}</h1>
   </div>
 
-  <div className="flex flex-col lg:flex-row items-start lg:items-center gap-[1rem] lg:gap-[2rem]">
+  <div className="flex lg:flex-row items-center gap-[1rem] lg:gap-[1rem]">
 
        {showImage &&
             createPortal(

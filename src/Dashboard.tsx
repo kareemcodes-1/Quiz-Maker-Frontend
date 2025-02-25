@@ -94,7 +94,7 @@ const Dashboard = () => {
                      <div className='flex lg:items-center items-start lg:gap-[1rem]'>
                             <div>
                             <h1 className='text-[2.5rem]'>{completedGoalsCount?.length}</h1>
-                            <span className='text-muted-foreground'>Completed goals</span>
+                            <span className='text-muted-foreground'>Completed Goals</span>
                             </div>
                             <img src="https://img.icons8.com/?size=100&id=LZtGgAmh0n0e&format=png&color=000000" alt="" className='lg:w-[4rem] w-[3rem] lg:h-[4rem] h-[3rem]' />
                        </div>

@@ -6,7 +6,7 @@ import Layout from "../layout";
 //   TooltipProvider,
 //   TooltipTrigger,
 // } from "../components/ui/tooltip";
-import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
+import { EllipsisHorizontalIcon, PlusIcon } from "@heroicons/react/24/outline";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,11 +17,13 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { useGetAllFlashCardsQuery } from "../slices/flashCardApiSlice";
-import { allFlashCards } from "../slices/flashCardSlice";
+import { allFlashCards, setOpenFlashCardAIModal } from "../slices/flashCardSlice";
+import FlashCardAIModal from "../modal/flashcard-modal-ai";
 
 const FlashCards = () => {
       const [openActions, setOpenActions] = useState<boolean>(false);
       const {flashcards} = useSelector((state: RootState) => state.flashcard);
+      // const [createOr]
       const dispatch = useDispatch();
 
       const {data, isFetching} = useGetAllFlashCardsQuery('');
@@ -30,16 +32,19 @@ const FlashCards = () => {
         if(data && !isFetching){
           dispatch(allFlashCards(data));
         }
-      })
+      });
 
   return (
     <Layout>
       <div className="mt-[1.2rem]">
       <div className="flex lg:flex-row flex-col lg:items-center items-start justify-between w-full mb-[2rem]">
         <h1 className="lg:text-[3rem] text-[2.5rem]">Flashcards </h1>
-        <a href="/flashcards/new" type="button" className="yena-btn-black dark:yena-btn">
-          Create new
-        </a>
+        <div className="flex items-center gap-[.5rem]">
+        <a href="/flashcards/new" className='dark:yena-btn yena-btn-black '><span className='lg:block hidden'>Create new</span><PlusIcon className='lg:hidden block w-[1.3rem]'/><span></span></a>
+        <button onClick={() => dispatch(setOpenFlashCardAIModal(true))} type="button" className="yena-btn-black dark:yena-btn">
+          Create with AI ✨
+        </button>
+        </div>
       </div>
 
       {/* <FlashCards /> */}
@@ -97,7 +102,7 @@ const FlashCards = () => {
       </div>
 
 
-      {/* <GoalModal closeModal={() => dispatch(setOpenGoalModal(false))} /> */}
+      <FlashCardAIModal closeModal={() => dispatch(setOpenFlashCardAIModal(false))} />
     </Layout>
   );
 };

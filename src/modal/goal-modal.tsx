@@ -170,7 +170,7 @@ const GoalModal = ({ closeModal }: { closeModal: () => void }) => {
           <form action={formAction} className="space-y-6">
             <div className="flex items-center w-full gap-[.5rem]">
               <div className="w-full">
-                <Label className="text-start"
+                <Label className="text-start flex"
                   htmlFor="name"
                 >
                   Name
@@ -304,6 +304,7 @@ const GoalModal = ({ closeModal }: { closeModal: () => void }) => {
               )}
               <Label
                 htmlFor="cover-photo"
+                className="text-start flex"
               >
                 Goal photo
               </Label>

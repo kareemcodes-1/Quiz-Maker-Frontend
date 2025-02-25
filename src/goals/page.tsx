@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import AllGoals from '../components/all-goals'
 import { RootState } from '../../store/store'
 import { setEditing } from '../slices/goalSlice'
+import { PlusIcon } from '@heroicons/react/24/outline'
 
 const Goals = () => {
 
@@ -15,9 +16,9 @@ const Goals = () => {
   return (
      <Layout>
           <div className="mt-[1.2rem]">
-          <div className='flex lg:flex-row flex-col lg:items-center items-start justify-between w-full mb-[1rem]'>
+          <div className='flex flex-row items-center justify-between w-full mb-[1rem]'>
               <h1 className='lg:text-[3rem] text-[2.5rem]'>Goals for {new Date().getFullYear()}</h1>
-              <button type="button" className='yena-btn-black dark:yena-btn' onClick={() => {dispatch(setOpenGoalModal(true)); dispatch(setEditing())}}>Create new</button>
+              <button type="button" className='dark:yena-btn yena-btn-black ' onClick={() => {dispatch(setOpenGoalModal(true)); dispatch(setEditing())}}><span className='lg:block hidden'>Create Goal</span><PlusIcon className='lg:hidden block w-[1.3rem]'/><span></span></button>
           </div>
 
           <div className="flex items-center gap-[.5rem] mb-[1rem]">

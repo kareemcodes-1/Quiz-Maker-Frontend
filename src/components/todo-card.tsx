@@ -194,8 +194,8 @@ const TodoCard = ({ todo }: { todo: Todo }) => {
 
       <div className="flex flex-col lg:flex-row items-start lg:items-center gap-[1rem] lg:gap-[2rem] w-full lg:w-auto">
         <div className="flex items-center gap-[.5rem] lg:gap-[1rem]">
-          <Badge className="border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 dark:text-white flex items-center gap-[.2rem]">
-          <div className={`${todo.priority === 'High' ? 'bg-red-500' : todo.priority === 'Medium' ? 'bg-orange-400' : todo.priority === 'Low' ? 'bg-red-400' : ''} p-[.2rem] rounded-full`}></div>
+          <Badge className={`${todo.priority === 'High' ? 'bg-rose-200 text-red-600' : todo.priority === 'Medium' ? 'bg-yellow-200 text-yellow-800' : todo.priority === 'Low' ? 'bg-green-200 text-green-700' : ''} border border-gray-300 dark:border-gray-600  flex items-center gap-[.2rem]`}>
+          {/* <div className={`${todo.priority === 'High' ? 'bg-red-500' : todo.priority === 'Medium' ? 'bg-orange-400' : todo.priority === 'Low' ? 'bg-red-400' : ''} p-[.2rem] rounded-full`}></div> */}
             {todo.priority}
           </Badge>
           <TooltipProvider>

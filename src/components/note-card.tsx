@@ -1,6 +1,6 @@
 import { Note } from '../../types/type';
 import { deleteNotes, findNote } from '../slices/noteSlice';
-import { PresentationChartBarIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { BookOpenIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { Badge } from "./ui/badge";
 import { useDispatch, } from "react-redux";
 import { useNavigate } from "react-router";
@@ -39,7 +39,7 @@ const NoteCard = ({note} : {note: Note}) => {
   >
     <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-[1rem]">
       <div className="flex items-center gap-[1rem]">
-        <PresentationChartBarIcon className="text-gray-500 lg:w-[1.5rem] w-[1.2rem]" />
+        <BookOpenIcon className="text-gray-500 lg:w-[1.5rem] w-[1.2rem]" />
         <div
             onClick={() => {
               dispatch(findNote(note._id));

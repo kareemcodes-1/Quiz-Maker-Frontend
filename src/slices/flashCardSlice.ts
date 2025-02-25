@@ -5,6 +5,7 @@ type State = {
     flashcards: FlashCard[],
     filteredFlashCards: FlashCard[],
     openFlashCardModal: boolean;
+    openFlashCardAIModal: boolean;
     editingFlashCard: FlashCard | null;
     value: string;
 }
@@ -14,6 +15,7 @@ const initialState: State = {
     filteredFlashCards: [],
     openFlashCardModal: false,
     editingFlashCard: null,
+    openFlashCardAIModal: false,
     value: 'all',
 }
 
@@ -27,6 +29,9 @@ const flashCardSlice = createSlice({
         },
         setOpenFlashCardModal(state, action: PayloadAction<boolean>){
             state.openFlashCardModal = action.payload;
+        },
+        setOpenFlashCardAIModal(state, action: PayloadAction<boolean>){
+            state.openFlashCardAIModal = action.payload;
         },
         findFlashCard(state, action: PayloadAction<string>){
             const findFlashCard = state.flashcards.find((flashcard) => flashcard._id === action.payload);
@@ -66,5 +71,5 @@ const flashCardSlice = createSlice({
     }
 });
 
-export const {allFlashCards, setOpenFlashCardModal, findFlashCard, deleteFlashCards, updateFlashCards} = flashCardSlice.actions;
+export const {allFlashCards, setOpenFlashCardModal, findFlashCard, deleteFlashCards, updateFlashCards, setOpenFlashCardAIModal} = flashCardSlice.actions;
 export default flashCardSlice.reducer;
