@@ -36,11 +36,11 @@ const SubmitBtn = () => {
   );
 };
 
-const FlashCardAIModal = ({ closeModal }: { closeModal: () => void }) => {
+const FlashCardAIModal = ({  }: { closeModal: () => void }) => {
   const { topics } = useSelector((state: RootState) => state.topic);
   const dispatch = useDispatch();
 
-  const { data, isFetching, isLoading } = useGetAllTopicsQuery("");
+  const { data, isFetching } = useGetAllTopicsQuery("");
 
   useEffect(() => {
     if (data && !isFetching) {
