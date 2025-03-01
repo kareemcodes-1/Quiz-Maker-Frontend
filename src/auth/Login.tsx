@@ -34,6 +34,7 @@ const Login = () => {
 
     const formAction = async (formData: any) => {
         try {
+            
             const userData = {
                 _id: '',
                 role: 'user',
@@ -42,6 +43,8 @@ const Login = () => {
                 email: formData.get('email'),
                 password: formData.get('password'),
             }
+
+            console.log(userData);
     
             const res = await loginUser(userData).unwrap();
             if(res){

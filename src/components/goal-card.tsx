@@ -144,7 +144,7 @@ const GoalCard = ({ goal }: { goal: Goal}) => {
               document.body
       )}
 
-    <PhotoIcon className="w-[1.7rem] h-[1.7rem] text-muted-foreground cursor-pointer" onClick={() => previewGoalImage(goal.image)}/>
+    {goal.image && <PhotoIcon className="w-[1.7rem] h-[1.7rem] text-muted-foreground cursor-pointer" onClick={() => previewGoalImage(goal.image)}/>}
 
     <div className="flex items-center gap-[1rem]">
       <Badge className="flex items-center gap-[.3rem] text-muted-foreground">
@@ -153,9 +153,11 @@ const GoalCard = ({ goal }: { goal: Goal}) => {
       </Badge>
     </div>
 
-    <Badge className="flex items-center gap-[.3rem] text-muted-foreground">
-         ⏱ {differenceInDays(new Date(goal.endDeadlineDate), new Date(new Date()))} days left
-      </Badge>
+   {goal.startDeadlineDate && goal.endDeadlineDate && (
+     <Badge className="flex items-center gap-[.3rem] text-muted-foreground">
+     ⏱ {differenceInDays(new Date(goal.endDeadlineDate), new Date(new Date()))} days left
+  </Badge>
+   )}
       
 
    <DropdownMenu
