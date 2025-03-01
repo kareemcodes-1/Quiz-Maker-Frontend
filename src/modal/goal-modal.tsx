@@ -25,12 +25,12 @@ import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Calendar } from "../components/ui/calendar";
-import { cn } from "../lib/utils";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "../components/ui/popover";
+// import { cn } from "../lib/utils";
+// import {
+//   Popover,
+//   PopoverContent,
+//   PopoverTrigger,
+// } from "../components/ui/popover";
 import { PencilIcon, PhotoIcon } from "@heroicons/react/24/outline";
 import { Label } from "../components/ui/label";
 import { Input } from "../components/ui/input";
