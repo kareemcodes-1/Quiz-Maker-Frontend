@@ -51,6 +51,16 @@ const SubmitBtn = () => {
 };
 
 const GoalModal = ({ closeModal }: { closeModal: () => void }) => {
+
+  const [isStartCalendarOpen, setStartCalendarOpen] = useState(false);
+  const [isEndCalendarOpen, setEndCalendarOpen] = useState(false);
+
+
+  // Toggle functions to show/hide the calendar
+  const toggleStartCalendar = () => {setStartCalendarOpen(!isStartCalendarOpen); setEndCalendarOpen(false)}
+  const toggleEndCalendar = () => {setEndCalendarOpen(!isEndCalendarOpen); setStartCalendarOpen(false)};
+
+
   const { openGoalModal, editingGoal, editingMode } = useSelector(
     (state: RootState) => state.goal
   );
@@ -226,9 +236,8 @@ const GoalModal = ({ closeModal }: { closeModal: () => void }) => {
                 </SelectContent>
               </Select>
             </div>
-{/* 
-            <div className="flex gap-[.5rem]"> */}
-              <Popover>
+
+              {/* <Popover>
                 <PopoverTrigger asChild>
                   <Button
                     variant={"outline"}
@@ -280,8 +289,71 @@ const GoalModal = ({ closeModal }: { closeModal: () => void }) => {
                     initialFocus
                   />
                 </PopoverContent>
-              </Popover>
-            {/* </div> */}
+              </Popover> */}
+
+<div className="relative flex flex-col gap-[1rem]">
+      {/* Start Deadline */}
+      <div>
+        <Button
+        type="button"
+          variant={"outline"}
+          className={`w-full justify-start text-left font-normal ${!startDeadlineDate && "text-muted-foreground"}`}
+          onClick={toggleStartCalendar}
+        >
+          <CalendarIcon />
+          {startDeadlineDate ? (
+            format(startDeadlineDate, "PPP")
+          ) : (
+            <span>Start deadline</span>
+          )}
+        </Button>
+
+        {isStartCalendarOpen && (
+          <div className="absolute mt-2 left-0 w-full z-10 bg-popover">
+            <Calendar
+              mode="single"
+              selected={startDeadlineDate}
+              onSelect={(date) => {
+                setStartDeadlineDate(date);
+                setStartCalendarOpen(false); // Close calendar on select
+              }}
+              initialFocus
+            />
+          </div>
+        )}
+      </div>
+
+      {/* End Deadline */}
+      <div>
+        <Button
+          variant={"outline"}
+          type="button"
+          className={`w-full justify-start text-left font-normal ${!endDeadlineDate && "text-muted-foreground"}`}
+          onClick={toggleEndCalendar}
+        >
+          <CalendarIcon />
+          {endDeadlineDate ? (
+            format(endDeadlineDate, "PPP")
+          ) : (
+            <span>Ending deadline</span>
+          )}
+        </Button>
+
+        {isEndCalendarOpen && (
+          <div className="absolute mt-2 left-0 w-full z-10 bg-popover">
+            <Calendar
+              mode="single"
+              selected={endDeadlineDate}
+              onSelect={(date) => {
+                setEndDeadlineDate(date);
+                setEndCalendarOpen(false); // Close calendar on select
+              }}
+              initialFocus
+            />
+          </div>
+        )}
+      </div>
+    </div>
 
             <div className="col-span-full relative">
               {editingMode && (

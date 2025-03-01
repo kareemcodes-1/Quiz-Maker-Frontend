@@ -16,6 +16,10 @@ body {
   width: 100%;
 }
 
+.bg{
+  background: var(--background);
+}
+
 @font-face {
   font-family: 'CabinetGrotesk-Medium';
   src: url('../font/CabinetGrotesk-Medium.ttf') format('truetype');
