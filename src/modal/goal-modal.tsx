@@ -155,6 +155,8 @@ const GoalModal = ({ closeModal }: { closeModal: () => void }) => {
         projectId: selectedProjectId,
         name: formData.get("name"),
         time,
+        startDeadlineDate: startDeadlineDate as Date,
+        endDeadlineDate: endDeadlineDate as Date,
         image: imagePreview,
         completed: false,
       };
