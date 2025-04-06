@@ -26,14 +26,18 @@ const Topics = () => {
 
   return (      
    <>
-      {topics.map((topic, index) => (
-        <div className="border relative w-full shadow-md rounded-[.5rem] p-[.8rem] flex items-center justify-between gap-[1rem] lg:gap-[.5rem]" key={index}>
-        <Link to={`/topic/${topic._id}/questions/new`} className="text-[1.2rem] hover:underline transition" >{topic.name}</Link>
-        <Link to={`/topic/${topic._id}/quizzes`} className="yena-btn" >
-            Start
-        </Link>
-        </div>
-      ))}
+      {topics.length > 0 ? (
+              topics.map((topic, index) => (
+                <div className="border relative w-full shadow-md rounded-[.5rem] p-[.8rem] flex items-center justify-between gap-[1rem] lg:gap-[.5rem]" key={index}>
+                <Link to={`/topic/${topic._id}/questions/new`} className="text-[1.2rem] hover:underline transition" >{topic.name}</Link>
+                <Link to={`/topic/${topic._id}/quizzes`} className="yena-btn" >
+                    Start
+                </Link>
+                </div>
+              ))
+      ) : (
+        <div>No Topics.</div>
+      )}
    </>
   )
 }
