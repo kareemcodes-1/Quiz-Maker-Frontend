@@ -1,9 +1,10 @@
-import Dashboard from './Dashboard'
+import Quotes from "./components/quotes"
+
 
 const App = () => {
   return (
      <>
-        <Dashboard />
+        <Quotes />
      </>
   )
 }
