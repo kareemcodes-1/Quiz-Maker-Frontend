@@ -5,6 +5,8 @@ import App from './App.tsx'
 import {BrowserRouter, Routes, Route} from "react-router";
 import ToastProvider from './providers/ToastProvider.tsx';
 import { ThemeProvider } from './providers/theme-provider.tsx';
+import TopicPage from './topic/questions/new/page.tsx';
+import QuizzesPage from './topic/quizzes/page.tsx';
 // import ProtectRoutes from './providers/protect-route.tsx';
 
 createRoot(document.getElementById('root')!).render(
@@ -20,6 +22,8 @@ createRoot(document.getElementById('root')!).render(
 
                {/* <Route element={<ProtectRoutes />}> */}
                    <Route path='/' element={<App />}></Route>
+                   <Route path='/topic/:id/questions/new' element={<TopicPage />}></Route>
+                   <Route path='/topic/:id/quizzes' element={<QuizzesPage />}></Route>
                 {/* </Route> */}
                </Routes>
            </BrowserRouter>
