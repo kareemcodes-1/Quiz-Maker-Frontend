@@ -31,7 +31,7 @@ const TopicPage = () => {
 
       <Quizzes />
 
-       <QuizModal quizModalOpen={quizModalOpen} setQuizModalOpen={setQuizModalOpen}/>
+       <QuizModal topicId={id as string} quizModalOpen={quizModalOpen} setQuizModalOpen={setQuizModalOpen}/>
     </div>
   )
 }

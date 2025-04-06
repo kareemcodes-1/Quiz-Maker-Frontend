@@ -35,7 +35,9 @@ const SubmitButton = () => {
 const QuizModal = ({
   quizModalOpen,
   setQuizModalOpen,
+  topicId
 }: {
+  topicId: string;
   quizModalOpen: boolean;
   setQuizModalOpen: (open: boolean) => void;
 }) => {
@@ -57,10 +59,13 @@ const QuizModal = ({
 
   async function createQuiz(formData: FormData) {
     const data = {
+      topicId,
       question: formData.get("question"),
       options,
       answer: Number(answer)
     };
+
+    console.log(data);
 
     try {
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/quizzes`, {
