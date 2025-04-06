@@ -5,7 +5,7 @@ import App from './App.tsx'
 import {BrowserRouter, Routes, Route} from "react-router";
 import ToastProvider from './providers/ToastProvider.tsx';
 import { ThemeProvider } from './providers/theme-provider.tsx';
-import TopicPage from './topic/questions/new/page.tsx';
+import TopicPage from './topic/quizzes/new/page.tsx';
 import QuizzesPage from './topic/quizzes/page.tsx';
 // import ProtectRoutes from './providers/protect-route.tsx';
 
