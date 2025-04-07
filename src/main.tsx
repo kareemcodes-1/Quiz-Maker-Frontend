@@ -22,7 +22,7 @@ createRoot(document.getElementById('root')!).render(
 
                {/* <Route element={<ProtectRoutes />}> */}
                    <Route path='/' element={<App />}></Route>
-                   <Route path='/topic/:id/quzzies/new' element={<TopicPage />}></Route>
+                   <Route path='/topic/:id/quizzes/new' element={<TopicPage />}></Route>
                    <Route path='/topic/:id/quizzes' element={<QuizzesPage />}></Route>
                 {/* </Route> */}
                </Routes>
