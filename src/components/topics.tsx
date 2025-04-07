@@ -56,7 +56,7 @@ const Topics = () => {
 
   return (
     <>
-      {topics.length < 0 ? (
+      {topics.length > 0 ? (
         topics.map((topic, index) => (
           <div
             className="border relative w-full shadow-md rounded-[.5rem] p-[.8rem] flex items-center justify-between gap-[1rem] lg:gap-[.5rem]"
