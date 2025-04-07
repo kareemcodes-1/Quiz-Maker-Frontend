@@ -8,6 +8,7 @@ import {
 import { useStore } from '../store/store';
 import { useParams } from 'react-router';
 import { Skeleton } from './ui/skeleton';
+import EmptyState from './ui/empty-state';
 
 
 const Quizzes = () => {
@@ -61,9 +62,7 @@ const Quizzes = () => {
               </AccordionItem>
               ))
        ) : (
-         <div>
-            No quizzes.
-         </div>
+             <EmptyState />
        )}
   </Accordion>
   )

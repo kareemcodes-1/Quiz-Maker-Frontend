@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { Link, useParams } from 'react-router'
 import { useStore } from '../../../store/store';
 
 import QuizModal from '../../../modal/QuizModal';
@@ -23,7 +23,7 @@ const TopicPage = () => {
   return (
     <div className='mx-[1rem] pt-[2rem]'>
         <div className='flex items-center justify-between'>
-        <h1 className='text-[1.5rem]'>{topic?.name}</h1>
+        <Link to={'/'} className='text-[1.5rem]'>{topic?.name}</Link>
         <button className="yena-btn" onClick={() => setQuizModalOpen(true)}>
                 Add
             </button>

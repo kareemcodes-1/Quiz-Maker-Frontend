@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
 import toast from 'react-hot-toast';
+import EmptyState from './ui/empty-state';
 
 const Topics = () => {
   const { topics, setTopics, deleteTopic } = useStore();
@@ -55,7 +56,7 @@ const Topics = () => {
 
   return (
     <>
-      {topics.length > 0 ? (
+      {topics.length < 0 ? (
         topics.map((topic, index) => (
           <div
             className="border relative w-full shadow-md rounded-[.5rem] p-[.8rem] flex items-center justify-between gap-[1rem] lg:gap-[.5rem]"
@@ -94,7 +95,7 @@ const Topics = () => {
           </div>
         ))
       ) : (
-        <div>No Topics.</div>
+        <EmptyState />
       )}
     </>
   );
