@@ -23,7 +23,7 @@ const TopicPage = () => {
   return (
     <div className='mx-[1rem] pt-[2rem]'>
         <div className='flex items-center justify-between'>
-        <h1 className='text-[1.2rem]'>{topic?.name}</h1>
+        <h1 className='text-[1.5rem]'>{topic?.name}</h1>
         <button className="yena-btn" onClick={() => setQuizModalOpen(true)}>
                 Add
             </button>

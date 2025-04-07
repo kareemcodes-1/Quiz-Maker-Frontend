@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router';
 import { useStore } from '../../store/store';
+import { Skeleton } from '../../components/ui/skeleton';
 
 const QuizzesPage = () => {
   const { id } = useParams();
@@ -10,6 +11,7 @@ const QuizzesPage = () => {
   const [isAnswered, setIsAnswered] = useState<boolean>(false);
   const [correctAnswers, setCorrectAnswers] = useState<number>(0); // To track correct answers
   const [quizEnded, setQuizEnded] = useState<boolean>(false); // To track quiz end state
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate(); // For navigation
 
@@ -22,7 +24,7 @@ const QuizzesPage = () => {
     })
       .then((res) => res.json())
       .then((data) => setQuizzes(data))
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err)).finally(() => setLoading(false));
   }, [id]);
 
   const handleOptionClick = (option: string, index: number) => {
@@ -65,12 +67,13 @@ const QuizzesPage = () => {
     <div className="mx-[1.5rem] pt-[2rem]">
       {!quizEnded ? (
         <>
+          {loading ? <Skeleton className="h-[1.5rem] mt-[.5rem] w-[30%]" /> : 
           <span className="text-[1.3rem]">
             {currentQuiz + 1} / {quizzes.length}
-          </span>
+          </span>}
 
           <div className="mt-[3rem]">
-            <h1 className="text-[1.5rem]">{currentQuizData?.question}</h1>
+          {loading ? <Skeleton className="h-[1.5rem] mt-[.5rem] w-full" /> : <h1 className="text-[1.5rem]">{currentQuizData?.question}</h1>}
 
             <div className="flex flex-col gap-[.5rem] mt-[1rem]">
               {options?.map((option, index) => {
@@ -87,13 +90,13 @@ const QuizzesPage = () => {
                   : '';
 
                 return (
-                  <div
-                    key={index}
-                    className={`rounded-md border px-4 py-2 font-mono text-sm shadow-sm ${isSelected ? '' : 'hover:bg-accent'} cursor-pointer ${optionClass}`}
-                    onClick={() => handleOptionClick(option, index)}
-                  >
-                    {option}
-                  </div>
+                  loading ? <Skeleton className="h-[2.5rem] mt-[.5rem] w-full" /> : <div
+                  key={index}
+                  className={`rounded-md border px-4 py-2 font-mono text-sm shadow-sm ${isSelected ? '' : 'hover:bg-accent'} cursor-pointer ${optionClass}`}
+                  onClick={() => handleOptionClick(option, index)}
+                >
+                  {option}
+                </div>
                 );
               })}
             </div>

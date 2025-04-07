@@ -21,6 +21,7 @@ import {
 } from "../components/ui/select";
 import { Trash } from "lucide-react";
 import toast from "react-hot-toast";
+import { useStore } from "../store/store";
 
 const SubmitButton = () => {
   const { pending } = useFormStatus();
@@ -44,6 +45,7 @@ const QuizModal = ({
   const [options, setOptions] = useState<string[]>([]);
   const [option, setOption] = useState<string>("");
   const [answer, setAnswer] = useState<string>('');
+  const {addQuiz} = useStore();
 
   function addOption(value: string) {
     if (value !== "") {
@@ -65,7 +67,6 @@ const QuizModal = ({
       answer: Number(answer)
     };
 
-    console.log(data);
 
     try {
       const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/quizzes`, {
@@ -78,6 +79,7 @@ const QuizModal = ({
 
       const result = await res.json();
       if(result){
+        addQuiz(result);
         toast.success('Created Quiz');
         setOptions([]);
         setOption('');

@@ -1,5 +1,5 @@
 import { useState } from "react"
-import QuizModal from "../modal/TopicModal";
+import TopicModal from "../modal/TopicModal";
 import Topics from "./topics";
 
 
@@ -17,9 +17,11 @@ const Dashboard = () => {
             </button>
            </div>
 
-           <Topics />
+          <div className="flex flex-col gap-[.8rem]">
+          <Topics />
+          </div>
     </div>
-    <QuizModal topicModalOpen={topicModalOpen} setTopicModalOpen={setTopicModalOpen}/>
+    <TopicModal topicModalOpen={topicModalOpen} setTopicModalOpen={setTopicModalOpen}/>
     </>
   )
 }

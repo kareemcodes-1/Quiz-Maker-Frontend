@@ -12,6 +12,7 @@ import {
   import { Label } from "../components/ui/label"
 import Loader from "../components/ui/loading";
 import { useFormStatus } from "react-dom";
+import { useStore } from "../store/store";
 
 const SubmitButton = () => {
 
@@ -25,6 +26,8 @@ const SubmitButton = () => {
 }
 
 const TopicModal = ({topicModalOpen, setTopicModalOpen} : {topicModalOpen: boolean, setTopicModalOpen: (open: boolean) => void;}) => {
+
+    const {addTopic} = useStore();
 
     async function createTopic (formData: FormData){
       const data = {
@@ -42,6 +45,8 @@ const TopicModal = ({topicModalOpen, setTopicModalOpen} : {topicModalOpen: boole
   
         const result = await res.json();
         if(result){
+          addTopic(result);
+          setTopicModalOpen(false);
           toast.success('Created Topic');
         }
         else{

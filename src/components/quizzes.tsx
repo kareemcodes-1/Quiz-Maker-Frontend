@@ -1,4 +1,4 @@
-import  { useEffect } from 'react'
+import  { useEffect, useState } from 'react'
 import {
     Accordion,
     AccordionContent,
@@ -7,11 +7,14 @@ import {
   } from "../components/ui/accordion"
 import { useStore } from '../store/store';
 import { useParams } from 'react-router';
+import { Skeleton } from './ui/skeleton';
+
 
 const Quizzes = () => {
 
      const {quizzes, setQuizzes} = useStore();
      const {id} = useParams();
+     const [loading, setLoading] = useState(true);
 
       useEffect(() => {
         fetch(`${import.meta.env.VITE_BACKEND_URL}/api/quizzes/topic/${id}`, {
@@ -19,7 +22,7 @@ const Quizzes = () => {
           headers: {
             'Content-Type': 'application/json'
           }
-        }).then((res) => res.json()).then((data) => setQuizzes(data)).catch((err) => console.log(err));
+        }).then((res) => res.json()).then((data) => setQuizzes(data)).catch((err) => console.log(err)).finally(() => setLoading(false));
       }, [])
 
   return (
@@ -28,9 +31,9 @@ const Quizzes = () => {
                quizzes.map((quiz, index) => (
                 <AccordionItem value={`item-${index + 1}`}>
                 <AccordionTrigger>
-                  <div>
+                  <div className='w-full'>
                     <span className='opacity-[.5] text-[.9rem]'>Question</span>
-                    <h1 className="text-[1.2rem] hover:underline transition  mt-[.5rem]" >{quiz.question}</h1>
+                    {loading ? <Skeleton className="h-[1.5rem] mt-[.5rem] w-full" />  : <h1 className="text-[1.2rem] hover:underline transition  mt-[.5rem]" >{quiz.question}</h1>}
                   </div>
                   </AccordionTrigger>
                 <AccordionContent>
@@ -42,14 +45,14 @@ const Quizzes = () => {
                     <span className='opacity-[.5] text-[.9rem]  mb-[.8rem]'>Options</span>
                        <div className='flex flex-col gap-[.3rem]'>
                            {quiz.options.map((option) => (
-                                <div>{option}</div>
+                               loading ? <Skeleton className="h-[1rem] mt-[.5rem] w-full" /> : <div>{option}</div>
                            ))}
                        </div>
                     </div>
           
                     <div>
                     <span className='opacity-[.5] text-[.9rem]  mb-[.8rem]'>Correct Answer</span>
-                            <div>{quiz.options[quiz.answer]}</div>
+                          {loading ? <Skeleton className="h-[1rem] mt-[.5rem] w-full" /> : <div>{quiz.options[quiz.answer]}</div>}
                     </div>
                     </div>
                   {/* </div>

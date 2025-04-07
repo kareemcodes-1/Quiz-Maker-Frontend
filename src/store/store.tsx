@@ -9,6 +9,10 @@ type State = {
     setTopics: (topics: Topic[]) => void;
     setQuizzes: (quizzes: Quiz[]) => void;
     setTopic: (topic: Topic) => void;
+    addTopic: (topic: Topic) => void;
+    deleteTopic: (topic: Topic) => void;
+    addQuiz: (quiz: Quiz) => void;
+    deleteQuiz: (quiz: Quiz) => void;
 }
 
 export const useStore = create<State>((set) => ({
@@ -23,5 +27,27 @@ export const useStore = create<State>((set) => ({
     })),
     setTopic: (topic) => set(() => ({
         topic
-    }))
+    })),
+    addTopic: (topic) => set((state) => {
+        return {
+            topics: [...state.topics, topic]
+        }
+    }),
+    deleteTopic: (topic) => set((state) => {
+        const updatedTopics = state.topics.filter((t) => t._id != topic._id);
+        return {
+            topics: updatedTopics
+        }
+    }),
+    addQuiz: (quiz) => set((state) => {
+        return {
+            quizzes: [...state.quizzes, quiz]
+        }
+    }),
+    deleteQuiz: (quiz) => set((state) => {
+        const updatedQuizzes = state.quizzes.filter((q) => q._id != quiz._id);
+        return {
+            quizzes: updatedQuizzes
+        }
+    })
 }))
